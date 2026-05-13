@@ -97,56 +97,69 @@ IInteractive::ButtonData WebInteractive::buttonData(Button b) const
 
 IInteractive::Result WebInteractive::questionSync(const std::string& contentTitle, const Text& text,
                                                   const ButtonDatas& buttons, int defBtn,
-                                                  const Options& options, const std::string& dialogTitle)
+                                                  const Options& options,
+                                                  const std::string& dialogTitle)
 {
     return m_origin->questionSync(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> WebInteractive::question(const std::string& contentTitle, const Text& text,
-                                                              const ButtonDatas& buttons, int defBtn,
-                                                              const Options& options, const std::string& dialogTitle)
+async::Promise<IInteractive::Result> WebInteractive::question(const std::string& contentTitle,
+                                                              const Text& text,
+                                                              const ButtonDatas& buttons,
+                                                              int defBtn,
+                                                              const Options& options,
+                                                              const std::string& dialogTitle)
 {
     return m_origin->question(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
 IInteractive::Result WebInteractive::infoSync(const std::string& contentTitle, const Text& text,
                                               const ButtonDatas& buttons, int defBtn,
-                                              const Options& options, const std::string& dialogTitle)
+                                              const Options& options,
+                                              const std::string& dialogTitle)
 {
     return m_origin->infoSync(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> WebInteractive::info(const std::string& contentTitle, const Text& text,
+async::Promise<IInteractive::Result> WebInteractive::info(const std::string& contentTitle,
+                                                          const Text& text,
                                                           const ButtonDatas& buttons, int defBtn,
-                                                          const Options& options, const std::string& dialogTitle)
+                                                          const Options& options,
+                                                          const std::string& dialogTitle)
 {
     return m_origin->info(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
 IInteractive::Result WebInteractive::warningSync(const std::string& contentTitle, const Text& text,
                                                  const ButtonDatas& buttons, int defBtn,
-                                                 const Options& options, const std::string& dialogTitle)
+                                                 const Options& options,
+                                                 const std::string& dialogTitle)
 {
     return m_origin->warningSync(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> WebInteractive::warning(const std::string& contentTitle, const Text& text,
+async::Promise<IInteractive::Result> WebInteractive::warning(const std::string& contentTitle,
+                                                             const Text& text,
                                                              const ButtonDatas& buttons, int defBtn,
-                                                             const Options& options, const std::string& dialogTitle)
+                                                             const Options& options,
+                                                             const std::string& dialogTitle)
 {
     return m_origin->warning(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
 IInteractive::Result WebInteractive::errorSync(const std::string& contentTitle, const Text& text,
                                                const ButtonDatas& buttons, int defBtn,
-                                               const Options& options, const std::string& dialogTitle)
+                                               const Options& options,
+                                               const std::string& dialogTitle)
 {
     return m_origin->errorSync(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> WebInteractive::error(const std::string& contentTitle, const Text& text,
+async::Promise<IInteractive::Result> WebInteractive::error(const std::string& contentTitle,
+                                                           const Text& text,
                                                            const ButtonDatas& buttons, int defBtn,
-                                                           const Options& options, const std::string& dialogTitle)
+                                                           const Options& options,
+                                                           const std::string& dialogTitle)
 {
     return m_origin->error(contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
@@ -156,7 +169,8 @@ void WebInteractive::showProgress(const std::string& title, Progress progress)
     m_origin->showProgress(title, progress);
 }
 
-async::Promise<io::path_t> WebInteractive::selectOpeningFile(const std::string& title, const io::path_t& dir,
+async::Promise<io::path_t> WebInteractive::selectOpeningFile(const std::string& title,
+                                                             const io::path_t& dir,
                                                              const std::vector<std::string>& filter)
 {
 #ifdef Q_OS_WASM
@@ -171,7 +185,8 @@ async::Promise<io::path_t> WebInteractive::selectOpeningFile(const std::string& 
             g_fileOpenData.lastOpenedFileName.clear();
         }
 
-        g_fileOpenData.callback = [resolve, reject](const std::string& fileName, const ByteArray& data) {
+        g_fileOpenData.callback
+            = [resolve, reject](const std::string& fileName, const ByteArray& data) {
             if (fileName.empty()) {
                 (void)reject((int)Ret::Code::Cancel, "Cancel");
                 return;
@@ -198,7 +213,8 @@ async::Promise<io::path_t> WebInteractive::selectOpeningFile(const std::string& 
 #endif
 }
 
-io::path_t WebInteractive::selectOpeningFileSync(const std::string& title, const io::path_t& dir, const std::vector<std::string>& filter,
+io::path_t WebInteractive::selectOpeningFileSync(const std::string& title, const io::path_t& dir,
+                                                 const std::vector<std::string>& filter,
                                                  const int options)
 {
 #ifdef Q_OS_WASM
@@ -213,8 +229,10 @@ io::path_t WebInteractive::selectOpeningFileSync(const std::string& title, const
 #endif
 }
 
-muse::io::paths_t WebInteractive::selectOpeningFilesSync(const std::string& title, const muse::io::path_t& dir,
-                                                         const std::vector<std::string>& filter, const int options)
+muse::io::paths_t WebInteractive::selectOpeningFilesSync(const std::string& title,
+                                                         const muse::io::path_t& dir,
+                                                         const std::vector<std::string>& filter,
+                                                         const int options)
 {
 #ifdef Q_OS_WASM
     UNUSED(title);
@@ -228,7 +246,8 @@ muse::io::paths_t WebInteractive::selectOpeningFilesSync(const std::string& titl
 #endif
 }
 
-io::path_t WebInteractive::selectSavingFileSync(const std::string& title, const io::path_t& dir, const std::vector<std::string>& filter,
+io::path_t WebInteractive::selectSavingFileSync(const std::string& title, const io::path_t& dir,
+                                                const std::vector<std::string>& filter,
                                                 bool confirmOverwrite)
 {
 #ifdef Q_OS_WASM
@@ -255,7 +274,8 @@ io::path_t WebInteractive::selectDirectory(const std::string& title, const io::p
 #endif
 }
 
-io::paths_t WebInteractive::selectMultipleDirectories(const std::string& title, const io::path_t& dir,
+io::paths_t WebInteractive::selectMultipleDirectories(const std::string& title,
+                                                      const io::path_t& dir,
                                                       const io::paths_t& selectedDirectories)
 {
 #ifdef Q_OS_WASM
@@ -269,7 +289,9 @@ io::paths_t WebInteractive::selectMultipleDirectories(const std::string& title, 
 #endif
 }
 
-muse::async::Promise<muse::Color> WebInteractive::selectColor(const muse::Color& color, const std::string& title, bool allowAlpha)
+muse::async::Promise<muse::Color> WebInteractive::selectColor(const muse::Color& color,
+                                                              const std::string& title,
+                                                              bool allowAlpha)
 {
     return m_origin->selectColor(color, title, allowAlpha);
 }

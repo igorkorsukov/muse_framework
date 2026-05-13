@@ -65,7 +65,8 @@ void SvgRenderer::render(Painter* painter, const RectF& rect)
 {
 #ifndef DRAW_NO_QSVGRENDER
     IPaintProviderPtr paintProvider = painter->provider();
-    std::shared_ptr<QPainterProvider> qPaintProvider = std::dynamic_pointer_cast<QPainterProvider>(paintProvider);
+    std::shared_ptr<QPainterProvider> qPaintProvider = std::dynamic_pointer_cast<QPainterProvider>(
+        paintProvider);
     if (qPaintProvider) {
         m_qSvgRenderer->render(qPaintProvider->qpainter(), rect.toQRectF());
     }

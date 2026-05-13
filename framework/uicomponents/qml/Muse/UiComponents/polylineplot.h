@@ -43,25 +43,33 @@ struct GhostPoint {
     qreal distToSegment = 1e18;
 };
 
-class PolylinePlot : public QQuickPaintedItem, public muse::async::Asyncable, public muse::actions::Actionable, public muse::Contextable
+class PolylinePlot : public QQuickPaintedItem, public muse::async::Asyncable,
+    public muse::actions::Actionable, public muse::Contextable
 {
     Q_OBJECT
 
     Q_PROPERTY(QColor lineColor READ lineColor WRITE setLineColor NOTIFY lineColorChanged)
     Q_PROPERTY(qreal lineWidth READ lineWidth WRITE setLineWidth NOTIFY lineWidthChanged)
-    Q_PROPERTY(bool drawBackground READ drawBackground WRITE setDrawBackground NOTIFY drawBackgroundChanged)
+    Q_PROPERTY(
+        bool drawBackground READ drawBackground WRITE setDrawBackground NOTIFY drawBackgroundChanged)
     Q_PROPERTY(qreal baselineN READ baselineN WRITE setBaselineN NOTIFY baselineNChanged)
     Q_PROPERTY(qreal pointRadius READ pointRadius WRITE setPointRadius NOTIFY pointRadiusChanged)
-    Q_PROPERTY(qreal ghostPointRadius READ ghostPointRadius WRITE setGhostPointRadius NOTIFY ghostPointRadiusChanged)
-    Q_PROPERTY(qreal pointOutlineWidth READ pointOutlineWidth WRITE setPointOutlineWidth NOTIFY pointOutlineWidthChanged)
-    Q_PROPERTY(QColor pointOutlineColor READ pointOutlineColor WRITE setPointOutlineColor NOTIFY pointOutlineColorChanged)
-    Q_PROPERTY(QColor pointCentreColor READ pointCentreColor WRITE setPointCentreColor NOTIFY pointCentreColorChanged)
+    Q_PROPERTY(
+        qreal ghostPointRadius READ ghostPointRadius WRITE setGhostPointRadius NOTIFY ghostPointRadiusChanged)
+    Q_PROPERTY(
+        qreal pointOutlineWidth READ pointOutlineWidth WRITE setPointOutlineWidth NOTIFY pointOutlineWidthChanged)
+    Q_PROPERTY(
+        QColor pointOutlineColor READ pointOutlineColor WRITE setPointOutlineColor NOTIFY pointOutlineColorChanged)
+    Q_PROPERTY(
+        QColor pointCentreColor READ pointCentreColor WRITE setPointCentreColor NOTIFY pointCentreColorChanged)
     Q_PROPERTY(
         QColor ghostPointOutlineColor READ ghostPointOutlineColor WRITE setGhostPointOutlineColor NOTIFY ghostPointOutlineColorChanged)
     Q_PROPERTY(qreal hitRadius READ hitRadius WRITE setHitRadius NOTIFY hitRadiusChanged)
 
-    Q_PROPERTY(bool isSnapEnabled READ isSnapEnabled WRITE setIsSnapEnabled NOTIFY isSnapEnabledChanged)
-    Q_PROPERTY(qreal snapThresholdPx READ snapThresholdPx WRITE setSnapThresholdPx NOTIFY snapThresholdPxChanged)
+    Q_PROPERTY(
+        bool isSnapEnabled READ isSnapEnabled WRITE setIsSnapEnabled NOTIFY isSnapEnabledChanged)
+    Q_PROPERTY(
+        qreal snapThresholdPx READ snapThresholdPx WRITE setSnapThresholdPx NOTIFY snapThresholdPxChanged)
 
     Q_PROPERTY(QVector<QPointF> points READ points WRITE setPoints NOTIFY pointsChanged)
 
@@ -72,7 +80,8 @@ class PolylinePlot : public QQuickPaintedItem, public muse::async::Asyncable, pu
 
     Q_PROPERTY(qreal yRangeFrom READ yRangeFrom WRITE setYRangeFrom NOTIFY yRangeFromChanged)
     Q_PROPERTY(qreal yRangeTo READ yRangeTo WRITE setYRangeTo NOTIFY yRangeToChanged)
-    Q_PROPERTY(qreal ySplitNormalized READ ySplitNormalized WRITE setYSplitNormalized NOTIFY ySplitNormalizedChanged)
+    Q_PROPERTY(
+        qreal ySplitNormalized READ ySplitNormalized WRITE setYSplitNormalized NOTIFY ySplitNormalizedChanged)
     Q_PROPERTY(qreal ySplitValue READ ySplitValue WRITE setYSplitValue NOTIFY ySplitValueChanged)
 
     // TODO: dB or linear (separate setting for x and y axis)

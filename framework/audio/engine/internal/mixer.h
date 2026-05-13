@@ -79,7 +79,8 @@ private:
     void processTrackChannels(size_t outBufferSize, size_t samplesPerChannel);
     void mixOutputFromChannel(float* outBuffer, const float* inBuffer, size_t bufferSize) const;
     void prepareAuxBuffers(size_t outBufferSize);
-    void writeTrackToAuxBuffers(const float* trackBuffer, size_t outBufferSize, const AuxSendsParams& auxSends);
+    void writeTrackToAuxBuffers(const float* trackBuffer, size_t outBufferSize,
+                                const AuxSendsParams& auxSends);
     void processAuxChannels(float* buffer, samples_t samplesPerChannel);
 
     bool useMultithreading() const;

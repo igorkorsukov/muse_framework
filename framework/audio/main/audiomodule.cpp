@@ -148,7 +148,9 @@ void AudioContext::registerExports()
     m_transportEventsController = std::make_shared<TransportEventsController>(iocContext());
 
 #ifndef Q_OS_WASM
-    ioc()->registerExport<ISoundFontInstallScenario>(mname, new GeneralSoundFontInstallScenario(iocContext()));
+    ioc()->registerExport<ISoundFontInstallScenario>(mname,
+                                                     new GeneralSoundFontInstallScenario(
+                                                         iocContext()));
 #endif
 
     ioc()->registerExport<IPlayback>(mname, new Playback(iocContext()));

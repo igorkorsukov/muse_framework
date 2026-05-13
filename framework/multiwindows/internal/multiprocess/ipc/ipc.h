@@ -88,7 +88,8 @@ void deserialize(const QByteArray& data, Msg& msg);
 QString socketErrorToString(int err);
 
 bool writeToSocket(QLocalSocket* socket, const QByteArray& data);
-bool readFromSocket(QLocalSocket* socket, std::function<void(const QByteArray& data)> onPackageRead);
+bool readFromSocket(QLocalSocket* socket,
+                    std::function<void(const QByteArray& data)> onPackageRead);
 }
 
 #endif // MUSE_IPC_IPC_H

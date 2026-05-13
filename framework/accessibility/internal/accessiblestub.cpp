@@ -54,7 +54,8 @@ QWindow* AccessibleStub::window() const
     return nullptr;
 }
 
-QVector<QPair<QAccessibleInterface*, QAccessible::Relation> > AccessibleStub::relations(QAccessible::Relation) const
+QVector<QPair<QAccessibleInterface*, QAccessible::Relation> > AccessibleStub::relations(
+    QAccessible::Relation) const
 {
     return {};
 }

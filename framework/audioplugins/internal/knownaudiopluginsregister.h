@@ -41,7 +41,8 @@ public:
 
     Ret load() override;
 
-    AudioPluginInfoList pluginInfoList(PluginInfoAccepted accepted = PluginInfoAccepted()) const override;
+    AudioPluginInfoList pluginInfoList(PluginInfoAccepted accepted = PluginInfoAccepted()) const
+    override;
     muse::async::Notification pluginInfoListChanged() const override;
 
     const io::path_t& pluginPath(const audio::AudioResourceId& resourceId) const override;

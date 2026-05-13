@@ -27,7 +27,8 @@
 using namespace muse::audio;
 using namespace muse::audio::fx;
 
-std::vector<IFxProcessorPtr> AbstractFxResolver::resolveFxList(const TrackId trackId, const AudioFxChain& fxChain,
+std::vector<IFxProcessorPtr> AbstractFxResolver::resolveFxList(const TrackId trackId,
+                                                               const AudioFxChain& fxChain,
                                                                const OutputSpec& outputSpec)
 {
     if (fxChain.empty()) {
@@ -41,7 +42,8 @@ std::vector<IFxProcessorPtr> AbstractFxResolver::resolveFxList(const TrackId tra
     return muse::values(fxMap);
 }
 
-std::vector<IFxProcessorPtr> AbstractFxResolver::resolveMasterFxList(const AudioFxChain& fxChain, const OutputSpec& outputSpec)
+std::vector<IFxProcessorPtr> AbstractFxResolver::resolveMasterFxList(const AudioFxChain& fxChain,
+                                                                     const OutputSpec& outputSpec)
 {
     if (fxChain.empty()) {
         LOGE() << "invalid master fx params";
@@ -63,7 +65,8 @@ void AbstractFxResolver::clearAllFx()
     m_masterFxMap.clear();
 }
 
-void AbstractFxResolver::updateTrackFxMap(FxMap& fxMap, const audio::TrackId trackId, const AudioFxChain& newFxChain,
+void AbstractFxResolver::updateTrackFxMap(FxMap& fxMap, const audio::TrackId trackId,
+                                          const AudioFxChain& newFxChain,
                                           const OutputSpec& outputSpec)
 {
     AudioFxChain currentFxChain;
@@ -92,7 +95,8 @@ void AbstractFxResolver::updateTrackFxMap(FxMap& fxMap, const audio::TrackId tra
     }
 }
 
-void AbstractFxResolver::updateMasterFxMap(const AudioFxChain& newFxChain, const OutputSpec& outputSpec)
+void AbstractFxResolver::updateMasterFxMap(const AudioFxChain& newFxChain,
+                                           const OutputSpec& outputSpec)
 {
     AudioFxChain currentFxChain;
     for (const auto& pair : m_masterFxMap) {
@@ -124,7 +128,8 @@ void AbstractFxResolver::removeMasterFx(const AudioResourceId&, AudioFxChainOrde
 {
 }
 
-void AbstractFxResolver::removeTrackFx(const audio::TrackId, const AudioResourceId&, AudioFxChainOrder)
+void AbstractFxResolver::removeTrackFx(const audio::TrackId, const AudioResourceId&,
+                                       AudioFxChainOrder)
 {
 }
 

@@ -47,14 +47,16 @@ public:
         : m_iocContext(iocCtx) {}
 
     KDDockWidgets::Core::ClassicIndicatorWindowViewInterface*
-    createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay* classicIndicators,
-                                 KDDockWidgets::Core::View* parent = nullptr) const override
+    createClassicIndicatorWindow(
+        KDDockWidgets::Core::ClassicDropIndicatorOverlay* classicIndicators,
+        KDDockWidgets::Core::View* parent = nullptr) const override
     {
         return new DropController(classicIndicators, parent, m_iocContext);
     }
 
     KDDockWidgets::Core::View* createSeparator(KDDockWidgets::Core::Separator* controller,
-                                               KDDockWidgets::Core::View* parent = nullptr) const override
+                                               KDDockWidgets::Core::View* parent = nullptr) const
+    override
     {
         auto* parentItem = KDDockWidgets::QtQuick::asQQuickItem(parent);
         return new DockSeparator(controller, parentItem);
@@ -68,7 +70,8 @@ public:
     }
 
     KDDockWidgets::Core::View* createTabBar(KDDockWidgets::Core::TabBar* controller,
-                                            KDDockWidgets::Core::View* parent = nullptr) const override
+                                            KDDockWidgets::Core::View* parent = nullptr) const
+    override
     {
         auto* parentItem = KDDockWidgets::QtQuick::asQQuickItem(parent);
         return new DockTabBar(controller, parentItem);

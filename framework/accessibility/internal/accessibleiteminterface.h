@@ -30,8 +30,8 @@
 #include "interactive/iinteractive.h"
 
 namespace muse::accessibility {
-class AccessibleItemInterface : public QAccessibleInterface, public QAccessibleValueInterface, public QAccessibleTextInterface,
-    public QAccessibleTableCellInterface, public muse::Contextable
+class AccessibleItemInterface : public QAccessibleInterface, public QAccessibleValueInterface,
+    public QAccessibleTextInterface, public QAccessibleTableCellInterface, public muse::Contextable
 {
     ContextInject<IInteractive> interactive = { this };
 
@@ -74,9 +74,12 @@ public:
     void setCursorPosition(int position) override;
 
     QString text(int startOffset, int endOffset) const override;
-    QString textBeforeOffset(int offset, QAccessible::TextBoundaryType boundaryType, int* startOffset, int* endOffset) const override;
-    QString textAfterOffset(int offset, QAccessible::TextBoundaryType boundaryType, int* startOffset, int* endOffset) const override;
-    QString textAtOffset(int offset, QAccessible::TextBoundaryType boundaryType, int* startOffset, int* endOffset) const override;
+    QString textBeforeOffset(int offset, QAccessible::TextBoundaryType boundaryType,
+                             int* startOffset, int* endOffset) const override;
+    QString textAfterOffset(int offset, QAccessible::TextBoundaryType boundaryType,
+                            int* startOffset, int* endOffset) const override;
+    QString textAtOffset(int offset, QAccessible::TextBoundaryType boundaryType, int* startOffset,
+                         int* endOffset) const override;
     int characterCount() const override;
 
     QRect characterRect(int offset) const override;
@@ -102,7 +105,8 @@ protected:
 
 private:
 
-    IAccessible::TextBoundaryType muBoundaryType(QAccessible::TextBoundaryType qtBoundaryType) const;
+    IAccessible::TextBoundaryType muBoundaryType(
+        QAccessible::TextBoundaryType qtBoundaryType) const;
     QString announcement() const;
     QString description() const;
 

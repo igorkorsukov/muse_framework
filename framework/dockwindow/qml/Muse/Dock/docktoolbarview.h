@@ -45,7 +45,8 @@ class DockToolBarView : public DockBase
 {
     Q_OBJECT
 
-    Q_PROPERTY(Qt::Orientation orientation READ orientation WRITE setOrientation NOTIFY orientationChanged)
+    Q_PROPERTY(
+        Qt::Orientation orientation READ orientation WRITE setOrientation NOTIFY orientationChanged)
     Q_PROPERTY(int alignment READ alignment WRITE setAlignment NOTIFY alignmentChanged)
 
     QML_ELEMENT

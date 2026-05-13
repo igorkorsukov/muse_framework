@@ -131,7 +131,8 @@ RectF QFontProvider::boundingRect(const Font& f, const String& string) const
 RectF QFontProvider::boundingRect(const Font& f, char32_t ucs4) const
 {
     if (Char::requiresSurrogates(ucs4)) {
-        return RectF::fromQRectF(QFontMetrics(f.toQFont(), &device).boundingRect(String::fromUcs4(ucs4)));
+        return RectF::fromQRectF(QFontMetrics(f.toQFont(),
+                                              &device).boundingRect(String::fromUcs4(ucs4)));
     }
 
     if (f.type() == Font::Type::MusicSymbol || f.type() == Font::Type::MusicSymbolText) {
@@ -145,10 +146,12 @@ RectF QFontProvider::boundingRect(const Font& f, char32_t ucs4) const
         qf.setPointSizeF(qf.pointSizeF() * UPSCALING);
         QPainterPath path;
         path.addText(QPointF(), qf, QString(static_cast<char16_t>(ucs4)));
-        return RectF::fromQRectF(path.boundingRect()).scaled(SizeF(1.0 / UPSCALING, 1.0 / UPSCALING));
+        return RectF::fromQRectF(path.boundingRect()).scaled(SizeF(1.0 / UPSCALING,
+                                                                   1.0 / UPSCALING));
     }
 
-    return RectF::fromQRectF(QFontMetricsF(f.toQFont(), &device).boundingRect(static_cast<char16_t>(ucs4)));
+    return RectF::fromQRectF(QFontMetricsF(f.toQFont(),
+                                           &device).boundingRect(static_cast<char16_t>(ucs4)));
 }
 
 RectF QFontProvider::tightBoundingRect(const Font& f, const String& string) const

@@ -147,7 +147,8 @@ void VstView::init()
     m_vstWindow = new QWindow(window());
 
     Steinberg::tresult attached;
-    attached = m_view->attached(reinterpret_cast<void*>(m_vstWindow->winId()), currentPlatformUiType());
+    attached = m_view->attached(reinterpret_cast<void*>(m_vstWindow->winId()),
+                                currentPlatformUiType());
     if (attached != Steinberg::kResultOk) {
         LOGE() << "Unable to attach vst plugin view to window"
                << ", instance name: " << m_instance->name();
@@ -242,7 +243,8 @@ void VstView::deinitPluginView()
     }
 }
 
-Steinberg::tresult VstView::resizeView(Steinberg::IPlugView* view, Steinberg::ViewRect* requiredSize)
+Steinberg::tresult VstView::resizeView(Steinberg::IPlugView* view,
+                                       Steinberg::ViewRect* requiredSize)
 {
     IF_ASSERT_FAILED(m_vstWindow) {
         return Steinberg::kResultFalse;
@@ -263,7 +265,8 @@ Steinberg::tresult VstView::resizeView(Steinberg::IPlugView* view, Steinberg::Vi
     const int requiredHeight = requiredSize->getHeight() / m_screenMetrics.devicePixelRatio;
 
     const int availableWidth = m_screenMetrics.availableSize.width() - 2 * m_sidePadding;
-    const int availableHeight = m_screenMetrics.availableSize.height() - titleBarHeight - m_topPadding - m_bottomPadding;
+    const int availableHeight = m_screenMetrics.availableSize.height() - titleBarHeight
+                                - m_topPadding - m_bottomPadding;
 
     const int newWidth = std::min(requiredWidth, availableWidth);
     const int newHeight = std::min(requiredHeight, availableHeight);

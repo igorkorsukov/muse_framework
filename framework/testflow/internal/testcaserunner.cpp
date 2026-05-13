@@ -78,13 +78,15 @@ void TestCaseRunner::run(const TestCase& testCase)
 void TestCaseRunner::pause()
 {
     m_paused = true;
-    m_stepStatusChanged.send(StepInfo(m_testCase.lastStepName, StepStatus::Paused), muse::make_ok());
+    m_stepStatusChanged.send(StepInfo(m_testCase.lastStepName, StepStatus::Paused),
+                             muse::make_ok());
 }
 
 void TestCaseRunner::unpause(bool isNextStep)
 {
     m_paused = false;
-    m_stepStatusChanged.send(StepInfo(m_testCase.lastStepName, StepStatus::Started), muse::make_ok());
+    m_stepStatusChanged.send(StepInfo(m_testCase.lastStepName, StepStatus::Started),
+                             muse::make_ok());
     if (isNextStep) {
         nextStep(false);
     }
@@ -163,7 +165,8 @@ void TestCaseRunner::nextStep(bool byInterval)
             }
 
             LOGD() << "step: " << name << " Finished";
-            m_stepStatusChanged.send(StepInfo(step.name(), StepStatus::Finished, m_elapsed.elapsed()), muse::make_ok());
+            m_stepStatusChanged.send(StepInfo(step.name(), StepStatus::Finished,
+                                              m_elapsed.elapsed()), muse::make_ok());
         }
 
         bool withInterval = step.skip() ? false : true;

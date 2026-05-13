@@ -409,14 +409,16 @@ public:
     }
 
     template<typename ... Types>
-    void addReceiveStream(StreamName name, rpc::StreamId id, const async::Channel<Types...>& ch, const RpcStreamExec& exec = nullptr)
+    void addReceiveStream(StreamName name, rpc::StreamId id, const async::Channel<Types...>& ch,
+                          const RpcStreamExec& exec = nullptr)
     {
         auto s = new RpcStream<Types...>(this, name, id, StreamType::Receive, ch, exec);
         addStream(std::shared_ptr<IRpcStream>(s));
     }
 };
 
-inline StreamMsg make_stream_msg(CtxId ctxId, StreamId id, StreamName name, const ByteArray& data = ByteArray())
+inline StreamMsg make_stream_msg(CtxId ctxId, StreamId id, StreamName name,
+                                 const ByteArray& data = ByteArray())
 {
     return StreamMsg{ id, ctxId, name, MsgType::Stream, data };
 }

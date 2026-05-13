@@ -215,7 +215,8 @@ void QPainterProvider::drawPath(const PainterPath& path)
 
 void QPainterProvider::drawPolygon(const PointF* points, size_t pointCount, PolygonMode mode)
 {
-    static_assert(sizeof(QPointF) == sizeof(PointF), "sizeof(QPointF) and sizeof(PointF) must be equal");
+    static_assert(sizeof(QPointF) == sizeof(PointF),
+                  "sizeof(QPointF) and sizeof(PointF) must be equal");
 
     const QPointF* qpoints = reinterpret_cast<const QPointF*>(points);
 

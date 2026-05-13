@@ -31,7 +31,8 @@
 #include "global/types/config.h"
 
 namespace muse::shortcuts {
-class ShortcutsConfiguration : public IShortcutsConfiguration, public Contextable, public async::Asyncable
+class ShortcutsConfiguration : public IShortcutsConfiguration, public Contextable,
+    public async::Asyncable
 {
     GlobalInject<IGlobalConfiguration> globalConfiguration;
 

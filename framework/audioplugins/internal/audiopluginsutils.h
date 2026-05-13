@@ -31,7 +31,8 @@ inline AudioPluginType audioPluginTypeFromCategoriesString(const String& categor
         { u"Fx", AudioPluginType::Fx },
     };
 
-    for (auto it = STRING_TO_PLUGIN_TYPE_LIST.cbegin(); it != STRING_TO_PLUGIN_TYPE_LIST.cend(); ++it) {
+    for (auto it = STRING_TO_PLUGIN_TYPE_LIST.cbegin(); it != STRING_TO_PLUGIN_TYPE_LIST.cend();
+         ++it) {
         if (categoriesStr.contains(it->first)) {
             return it->second;
         }

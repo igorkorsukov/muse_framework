@@ -38,7 +38,8 @@ class DockSeparator : public KDDockWidgets::QtQuick::Separator
     Q_PROPERTY(bool showResizeCursor READ showResizeCursor NOTIFY showResizeCursorChanged)
 
 public:
-    explicit DockSeparator(KDDockWidgets::Core::Separator* controller, QQuickItem* parent = nullptr);
+    explicit DockSeparator(KDDockWidgets::Core::Separator* controller,
+                           QQuickItem* parent = nullptr);
 
     bool isSeparatorVisible() const;
     bool showResizeCursor() const;

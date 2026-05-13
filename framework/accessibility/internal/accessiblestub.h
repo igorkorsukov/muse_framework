@@ -36,7 +36,8 @@ public:
     QObject* object() const override;
     QWindow* window() const override;
 
-    QVector<QPair<QAccessibleInterface*, QAccessible::Relation> > relations(QAccessible::Relation) const override;
+    QVector<QPair<QAccessibleInterface*,
+                  QAccessible::Relation> > relations(QAccessible::Relation) const override;
 
     QAccessibleInterface* childAt(int, int) const override;
 

@@ -40,7 +40,8 @@ public:
     explicit ProcessApi(IApiEngine* e);
 
     Q_INVOKABLE int execute(const QString& program, const QStringList& arguments = QStringList());
-    Q_INVOKABLE bool startDetached(const QString& program, const QStringList& arguments = QStringList());
+    Q_INVOKABLE bool startDetached(const QString& program,
+                                   const QStringList& arguments = QStringList());
 };
 }
 

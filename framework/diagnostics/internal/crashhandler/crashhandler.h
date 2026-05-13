@@ -44,7 +44,8 @@ public:
     CrashHandler() = default;
     ~CrashHandler();
 
-    bool start(const muse::io::path_t& handlerFilePath, const muse::io::path_t& dumpsDir, const std::string& serverUrl);
+    bool start(const muse::io::path_t& handlerFilePath, const muse::io::path_t& dumpsDir,
+               const std::string& serverUrl);
 
 private:
     void removePendingLockFiles(const muse::io::path_t& dumpsDir);

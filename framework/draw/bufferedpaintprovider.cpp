@@ -312,10 +312,12 @@ void BufferedPaintProvider::drawSymbol(const PointF& point, char32_t ucs4Code)
 
 void BufferedPaintProvider::drawPixmap(const PointF& p, const Pixmap& pm)
 {
-    editableData().pixmaps.push_back(DrawPixmap { DrawPixmap::Single, RectF(p, SizeF()), pm, PointF() });
+    editableData().pixmaps.push_back(DrawPixmap { DrawPixmap::Single, RectF(p, SizeF()), pm,
+                                                  PointF() });
 }
 
-void BufferedPaintProvider::drawTiledPixmap(const RectF& rect, const Pixmap& pm, const PointF& offset)
+void BufferedPaintProvider::drawTiledPixmap(const RectF& rect, const Pixmap& pm,
+                                            const PointF& offset)
 {
     editableData().pixmaps.push_back(DrawPixmap { DrawPixmap::Tiled, rect, pm, offset });
 }
@@ -323,12 +325,16 @@ void BufferedPaintProvider::drawTiledPixmap(const RectF& rect, const Pixmap& pm,
 #ifndef NO_QT_SUPPORT
 void BufferedPaintProvider::drawPixmap(const PointF& p, const QPixmap& pm)
 {
-    editableData().pixmaps.push_back(DrawPixmap { DrawPixmap::Single, RectF(p, SizeF()), Pixmap::fromQPixmap(pm), PointF() });
+    editableData().pixmaps.push_back(DrawPixmap { DrawPixmap::Single, RectF(p,
+                                                                            SizeF()), Pixmap::fromQPixmap(
+                                                      pm), PointF() });
 }
 
-void BufferedPaintProvider::drawTiledPixmap(const RectF& rect, const QPixmap& pm, const PointF& offset)
+void BufferedPaintProvider::drawTiledPixmap(const RectF& rect, const QPixmap& pm,
+                                            const PointF& offset)
 {
-    editableData().pixmaps.push_back(DrawPixmap { DrawPixmap::Tiled, rect, Pixmap::fromQPixmap(pm), offset });
+    editableData().pixmaps.push_back(DrawPixmap { DrawPixmap::Tiled, rect, Pixmap::fromQPixmap(
+                                                      pm), offset });
 }
 
 #endif

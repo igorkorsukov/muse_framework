@@ -102,7 +102,8 @@ void RegisterAudioPluginsScenario::registerNewPlugins(const io::paths_t& pluginP
     knownPluginsRegister()->load();
 }
 
-Ret RegisterAudioPluginsScenario::unregisterRemovedPlugins(const audio::AudioResourceIdList& pluginIds)
+Ret RegisterAudioPluginsScenario::unregisterRemovedPlugins(
+    const audio::AudioResourceIdList& pluginIds)
 {
     TRACEFUNC;
 
@@ -142,7 +143,8 @@ void RegisterAudioPluginsScenario::processPluginsRegistration(const io::paths_t&
         LOGD() << "--register-audio-plugin " << pluginPathStr;
         int code = process()->execute(appPath, { "--register-audio-plugin", pluginPathStr });
         if (code != 0) {
-            code = process()->execute(appPath, { "--register-failed-audio-plugin", pluginPathStr, "--", std::to_string(code) });
+            code = process()->execute(appPath, { "--register-failed-audio-plugin", pluginPathStr,
+                                                 "--", std::to_string(code) });
         }
 
         if (code != 0) {
@@ -177,7 +179,8 @@ Ret RegisterAudioPluginsScenario::registerPlugin(const io::path_t& pluginPath)
 
     for (const AudioResourceMeta& meta : metaList.val) {
         AudioPluginInfo info;
-        info.type = audioPluginTypeFromCategoriesString(meta.attributeVal(audio::CATEGORIES_ATTRIBUTE));
+        info.type
+            = audioPluginTypeFromCategoriesString(meta.attributeVal(audio::CATEGORIES_ATTRIBUTE));
         info.meta = meta;
         info.path = pluginPath;
         info.enabled = true;
@@ -207,7 +210,8 @@ Ret RegisterAudioPluginsScenario::registerFailedPlugin(const io::path_t& pluginP
     return ret;
 }
 
-IAudioPluginMetaReaderPtr RegisterAudioPluginsScenario::metaReader(const io::path_t& pluginPath) const
+IAudioPluginMetaReaderPtr RegisterAudioPluginsScenario::metaReader(const io::path_t& pluginPath)
+const
 {
     for (const IAudioPluginMetaReaderPtr& reader : metaReaderRegister()->readers()) {
         if (reader->canReadMeta(pluginPath)) {

@@ -39,8 +39,10 @@ class VstView : public QQuickItem, public QAbstractNativeEventFilter, public Ste
     Q_PROPERTY(QString title READ title NOTIFY titleChanged FINAL)
     Q_PROPERTY(int sidePadding READ sidePadding WRITE setsidePadding NOTIFY sidePaddingChanged FINAL)
     Q_PROPERTY(int topPadding READ topPadding WRITE setTopPadding NOTIFY topPaddingChanged FINAL)
-    Q_PROPERTY(int bottomPadding READ bottomPadding WRITE setBottomPadding NOTIFY bottomPaddingChanged FINAL)
-    Q_PROPERTY(int minimumWidth READ minimumWidth WRITE setMinimumWidth NOTIFY minimumWidthChanged FINAL)
+    Q_PROPERTY(
+        int bottomPadding READ bottomPadding WRITE setBottomPadding NOTIFY bottomPaddingChanged FINAL)
+    Q_PROPERTY(
+        int minimumWidth READ minimumWidth WRITE setMinimumWidth NOTIFY minimumWidthChanged FINAL)
 
     QML_ELEMENT
 
@@ -59,7 +61,8 @@ public:
     Q_INVOKABLE void deinit();
 
     // IPlugFrame
-    Steinberg::tresult resizeView(Steinberg::IPlugView* view, Steinberg::ViewRect* requiredSize) override;
+    Steinberg::tresult resizeView(Steinberg::IPlugView* view,
+                                  Steinberg::ViewRect* requiredSize) override;
     // ----------
 
     QString title() const;

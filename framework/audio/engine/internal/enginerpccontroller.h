@@ -52,7 +52,8 @@ private:
 
     void onLongRequest(rpc::CtxId ctxId, rpc::MsgCode code, const rpc::RequestHandler& h);
     void onQuickRequest(rpc::CtxId ctxId, rpc::MsgCode code, const rpc::RequestHandler& h);
-    void onRequest(OperationType type, rpc::CtxId ctxId, rpc::MsgCode code, const rpc::RequestHandler& h);
+    void onRequest(OperationType type, rpc::CtxId ctxId, rpc::MsgCode code,
+                   const rpc::RequestHandler& h);
 
     IExecOperation* m_execOperation = nullptr;
 

@@ -153,7 +153,8 @@ static IVideoEncoderPtr tryCreateEncoder(const FFmpegLibPaths& paths)
     return nullptr;
 }
 
-VideoEncoderResolver::EncoderInfo VideoEncoderResolver::makeEncoder(const FFmpegLibPaths& ffmpegLibsPaths) const
+VideoEncoderResolver::EncoderInfo VideoEncoderResolver::makeEncoder(
+    const FFmpegLibPaths& ffmpegLibsPaths) const
 {
     EncoderInfo result;
 

@@ -57,7 +57,8 @@ public:
 
         m_buffer.readBlockWithGain(-m_impulses[0].offset, n, signal_out, m_impulses[0].gainFact);
         for (size_t i = 1; i < m_impulses.size(); ++i) {
-            m_buffer.readAddBlockWithGain(-m_impulses[i].offset, n, signal_out, m_impulses[i].gainFact);
+            m_buffer.readAddBlockWithGain(-m_impulses[i].offset, n, signal_out,
+                                          m_impulses[i].gainFact);
         }
 
         m_buffer.advance(n);

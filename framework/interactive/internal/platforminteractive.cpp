@@ -88,7 +88,8 @@ Ret PlatformInteractive::revealInFileBrowser(const io::path_t& filePath) const
     }
 #elif defined(Q_OS_WIN)
     QString program = "explorer.exe";
-    QString arg = QLatin1String("/select,\"%1\"").arg(QDir::toNativeSeparators(filePath.toQString()));
+    QString arg
+        = QLatin1String("/select,\"%1\"").arg(QDir::toNativeSeparators(filePath.toQString()));
     QProcess process;
     process.setProgram(program);
     process.setNativeArguments(arg);

@@ -88,7 +88,8 @@ public:
     template<typename FuncT, typename ... ArgsT>
     void push(FuncT&& task, ArgsT&&... args)
     {
-        std::function<void()> taskFunctor = std::bind(std::forward<FuncT>(task), std::forward<ArgsT>(args)...);
+        std::function<void()> taskFunctor = std::bind(std::forward<FuncT>(task), std::forward<ArgsT>(
+                                                          args)...);
         {
             const std::lock_guard lock(m_mutex);
             m_taskQueue.push(taskFunctor);
@@ -96,11 +97,14 @@ public:
         m_newTaskAvailableCv.notify_one();
     }
 
-    template<typename FuncT, typename ... ArgsT, typename ReturnT = std::invoke_result_t<std::decay_t<FuncT>, std::decay_t<ArgsT>...> >
+    template<typename FuncT, typename ... ArgsT,
+             typename ReturnT = std::invoke_result_t<std::decay_t<FuncT>, std::decay_t<ArgsT>...> >
     std::future<ReturnT> submit(FuncT&& task, ArgsT&&... args)
     {
-        std::function<ReturnT()> taskFunctor = std::bind(std::forward<FuncT>(task), std::forward<ArgsT>(args)...);
-        std::shared_ptr<std::promise<ReturnT> > promise = std::make_shared<std::promise<ReturnT> >();
+        std::function<ReturnT()> taskFunctor = std::bind(std::forward<FuncT>(task),
+                                                         std::forward<ArgsT>(args)...);
+        std::shared_ptr<std::promise<ReturnT> > promise
+            = std::make_shared<std::promise<ReturnT> >();
         push([taskFunctor, promise] {
             try {
                 if constexpr (std::is_void_v<ReturnT>) {

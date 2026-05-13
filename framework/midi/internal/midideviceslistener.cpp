@@ -42,7 +42,8 @@ void MidiDevicesListener::startWithCallback(const ActualDevicesCallback& callbac
 
     m_actualDevicesCallback = callback;
     m_isRunning = true;
-    m_devicesUpdateThread = std::make_shared<std::thread>(&MidiDevicesListener::th_updateDevices, this);
+    m_devicesUpdateThread = std::make_shared<std::thread>(&MidiDevicesListener::th_updateDevices,
+                                                          this);
 }
 
 void MidiDevicesListener::stop()

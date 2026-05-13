@@ -45,7 +45,8 @@ TableSortFilterProxyModel::TableSortFilterProxyModel(QObject* parent)
 {
     m_selectionModel->setModel(this);
     setDynamicSortFilter(true);
-    muse::uicomponents::ModelUtils::connectRowCountChangedSignal(this, &TableSortFilterProxyModel::rowCountChanged);
+    muse::uicomponents::ModelUtils::connectRowCountChangedSignal(this,
+                                                                 &TableSortFilterProxyModel::rowCountChanged);
 }
 
 QItemSelectionModel* TableSortFilterProxyModel::selectionModel() const
@@ -66,7 +67,8 @@ ColumnSortOrder::Type TableSortFilterProxyModel::sortIndicatorOrder() const
     if (m_sortPipeline.empty() || m_sortPipeline.back().column != m_sortIconColumn) {
         return ColumnSortOrder::Type::Unsorted;
     }
-    return m_sortPipeline.back().ascending ? ColumnSortOrder::Type::Ascending : ColumnSortOrder::Type::Descending;
+    return m_sortPipeline.back().ascending ? ColumnSortOrder::Type::Ascending : ColumnSortOrder::
+           Type::Descending;
 }
 
 void TableSortFilterProxyModel::setSourceModel(QAbstractItemModel* sourceModel)
@@ -144,7 +146,8 @@ void TableSortFilterProxyModel::reapplySort()
     emit sortChanged();
 }
 
-bool TableSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
+bool TableSortFilterProxyModel::filterAcceptsRow(int sourceRow,
+                                                 const QModelIndex& sourceParent) const
 {
     Q_UNUSED(sourceParent);
     return acceptsRow(sourceRow);

@@ -131,7 +131,8 @@ void ShortcutsRegister::reload(bool onlyDef)
     }
 }
 
-void ShortcutsRegister::mergeShortcuts(ShortcutList& shortcuts, const ShortcutList& defaultShortcuts) const
+void ShortcutsRegister::mergeShortcuts(ShortcutList& shortcuts,
+                                       const ShortcutList& defaultShortcuts) const
 {
     TRACEFUNC;
 
@@ -211,7 +212,9 @@ void ShortcutsRegister::expandStandardKeys(ShortcutList& shortcuts) const
     ShortcutList notbonded;
 
     for (Shortcut& shortcut : shortcuts) {
-        QKeySequence ignoredSeq = QKeySequence(muse::value(SHORTCUTS_EXPAND_IGNORE_MAP, shortcut.standardKey, Qt::Key_unknown));
+        QKeySequence ignoredSeq
+            = QKeySequence(muse::value(SHORTCUTS_EXPAND_IGNORE_MAP, shortcut.standardKey,
+                                       Qt::Key_unknown));
 
         if (!shortcut.sequences.empty()) {
             std::string ignoredSeqStr = ignoredSeq.toString().toStdString();
@@ -248,14 +251,16 @@ void ShortcutsRegister::expandStandardKeys(ShortcutList& shortcuts) const
     }
 
     if (!notbonded.empty()) {
-        LOGD() << "removed " << notbonded.size() << " shortcut, because they are not bound to standard key";
+        LOGD() << "removed " << notbonded.size() <<
+        " shortcut, because they are not bound to standard key";
         for (const Shortcut& sc : notbonded) {
             shortcuts.remove(sc);
         }
     }
 
     if (!expanded.empty()) {
-        LOGD() << "added " << expanded.size() << " shortcut, because they are alternative shortcuts for the given standard keys";
+        LOGD() << "added " << expanded.size() <<
+        " shortcut, because they are alternative shortcuts for the given standard keys";
 
         shortcuts.splice(shortcuts.end(), expanded);
     }
@@ -435,7 +440,8 @@ Notification ShortcutsRegister::shortcutsChanged() const
     return m_shortcutsChanged;
 }
 
-Ret ShortcutsRegister::setAdditionalShortcuts(const std::string& context, const ShortcutList& shortcuts)
+Ret ShortcutsRegister::setAdditionalShortcuts(const std::string& context,
+                                              const ShortcutList& shortcuts)
 {
     m_additionalShortcutsMap[context] = shortcuts;
 

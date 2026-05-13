@@ -69,7 +69,8 @@ struct Data {
 };
 
 template<class T>
-static bool isEqual(const std::vector<T>& v1, const std::vector<T>& v2, DrawDataComp::Tolerance tolerance);
+static bool isEqual(const std::vector<T>& v1, const std::vector<T>& v2,
+                    DrawDataComp::Tolerance tolerance);
 
 static bool isEqual(const double& v1, const double& v2, double tolerance)
 {
@@ -220,7 +221,8 @@ static bool isEqual(const Transform& t1, const Transform& t2, double tolerance)
     return true;
 }
 
-static bool isEqual(const DrawData::State& s1, const DrawData::State& s2, DrawDataComp::Tolerance tolerance)
+static bool isEqual(const DrawData::State& s1, const DrawData::State& s2,
+                    DrawDataComp::Tolerance tolerance)
 {
     if (s1.isAntialiasing != s2.isAntialiasing) {
         return false;
@@ -372,7 +374,8 @@ static bool isEqual(const DrawPixmap& v1, const DrawPixmap& v2, DrawDataComp::To
 }
 
 #if 0 // currently unused, disabled due to an MSVC compiler warning C4505
-static bool isEqual(const DrawData::Data& d1, const DrawData::Data& d2, DrawDataComp::Tolerance tolerance)
+static bool isEqual(const DrawData::Data& d1, const DrawData::Data& d2,
+                    DrawDataComp::Tolerance tolerance)
 {
     if (!isEqual(d1.state, d2.state, tolerance)) {
         return false;
@@ -400,7 +403,8 @@ static bool isEqual(const DrawData::Data& d1, const DrawData::Data& d2, DrawData
 #endif
 
 template<class T>
-static bool isEqual(const std::vector<T>& v1, const std::vector<T>& v2, DrawDataComp::Tolerance tolerance)
+static bool isEqual(const std::vector<T>& v1, const std::vector<T>& v2,
+                    DrawDataComp::Tolerance tolerance)
 {
     if (v1.size() != v2.size()) {
         return false;
@@ -432,7 +436,8 @@ static bool isEqual(const std::vector<T>& v1, const std::vector<T>& v2, DrawData
 }
 
 #if 0 // currently unused, disabled due to an MSVC compiler warning C4505
-static bool isEqual(const DrawData::Object& o1, const DrawData::Object& o2, DrawDataComp::Tolerance tolerance)
+static bool isEqual(const DrawData::Object& o1, const DrawData::Object& o2,
+                    DrawDataComp::Tolerance tolerance)
 {
     if (o1.name != o2.name) {
         return false;
@@ -490,7 +495,8 @@ static bool isEqual(const Text& p1, const Text& p2, DrawDataComp::Tolerance tole
     return isEqual(*p1.text, *p2.text, tolerance);
 }
 
-static bool isEqual(const comp::Pixmap& p1, const comp::Pixmap& p2, DrawDataComp::Tolerance tolerance)
+static bool isEqual(const comp::Pixmap& p1, const comp::Pixmap& p2,
+                    DrawDataComp::Tolerance tolerance)
 {
     if (p1.obj->name != p2.obj->name) {
         return false;
@@ -516,7 +522,8 @@ static bool contains(const std::vector<T>& v1, const T& val, DrawDataComp::Toler
 }
 
 template<class T>
-static void difference(std::vector<T>& diff, const std::vector<T>& v1, const std::vector<T>& v2, DrawDataComp::Tolerance tolerance)
+static void difference(std::vector<T>& diff, const std::vector<T>& v1, const std::vector<T>& v2,
+                       DrawDataComp::Tolerance tolerance)
 {
     for (size_t i = 0; i < v1.size(); ++i) {
         const T& t = v1.at(i);
@@ -538,7 +545,8 @@ static bool contains(const std::list<T>& v1, const T& val, DrawDataComp::Toleran
 }
 
 template<class T>
-static void difference(std::list<T>& diff, const std::list<T>& v1, const std::list<T>& v2, DrawDataComp::Tolerance tolerance)
+static void difference(std::list<T>& diff, const std::list<T>& v1, const std::list<T>& v2,
+                       DrawDataComp::Tolerance tolerance)
 {
     for (const T& t : v1) {
         if (!contains(v2, t, tolerance)) {
@@ -547,7 +555,8 @@ static void difference(std::list<T>& diff, const std::list<T>& v1, const std::li
     }
 }
 
-static void difference(Data& diff, const Data& d1, const Data& d2, DrawDataComp::Tolerance tolerance)
+static void difference(Data& diff, const Data& d1, const Data& d2,
+                       DrawDataComp::Tolerance tolerance)
 {
     difference(diff.paths, d1.paths, d2.paths, tolerance);
     difference(diff.polygons, d1.polygons, d2.polygons, tolerance);

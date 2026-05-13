@@ -101,7 +101,8 @@ void ActionsDispatcher::dump() const
     LOGDA() << "\n" << s.str();
 }
 
-void ActionsDispatcher::doDispatch(const Clients& clients, const ActionCode& actionCode, const ActionData& data)
+void ActionsDispatcher::doDispatch(const Clients& clients, const ActionCode& actionCode,
+                                   const ActionData& data)
 {
     int canReceiveCount = 0;
     for (auto cit = clients.cbegin(); cit != clients.cend(); ++cit) {
@@ -156,7 +157,8 @@ void ActionsDispatcher::unReg(Actionable* client)
     client->setDispatcher(nullptr);
 }
 
-void ActionsDispatcher::reg(Actionable* client, const ActionCode& actionCode, const ActionCallBackWithNameAndData& call)
+void ActionsDispatcher::reg(Actionable* client, const ActionCode& actionCode,
+                            const ActionCallBackWithNameAndData& call)
 {
     client->setDispatcher(this);
 
@@ -165,7 +167,8 @@ void ActionsDispatcher::reg(Actionable* client, const ActionCode& actionCode, co
     callbacks.insert({ actionCode, call });
 }
 
-void ActionsDispatcher::reg(Actionable* client, const ActionQuery& actionQuery, const ActionCallBackWithQuery& call)
+void ActionsDispatcher::reg(Actionable* client, const ActionQuery& actionQuery,
+                            const ActionCallBackWithQuery& call)
 {
     reg(client, actionQuery.toString(), [call](const ActionCode&, const ActionData& data) {
         call(ActionQuery(data.arg<std::string>(0)));

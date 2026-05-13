@@ -99,7 +99,8 @@ void VSTModule::onDeinit()
     m_pluginModulesRepo->deInit();
 }
 
-muse::modularity::IContextSetup* VSTModule::newContext(const muse::modularity::ContextPtr& ctx) const
+muse::modularity::IContextSetup* VSTModule::newContext(const muse::modularity::ContextPtr& ctx)
+const
 {
     return new VSTContext(ctx);
 }

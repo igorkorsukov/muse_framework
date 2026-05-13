@@ -39,12 +39,14 @@ inline float samplesRootMeanSquare(const float squaredSum, const samples_t sampl
     return std::sqrt(squaredSum / sampleCount);
 }
 
-inline float sampleAttackTimeCoefficient(const unsigned int sampleRate, const float attackTimeInSecs)
+inline float sampleAttackTimeCoefficient(const unsigned int sampleRate,
+                                         const float attackTimeInSecs)
 {
     return std::exp(-std::log(9) / (sampleRate * attackTimeInSecs));
 }
 
-inline float sampleReleaseTimeCoefficient(const unsigned int sampleRate, const float releaseTimeInSecs)
+inline float sampleReleaseTimeCoefficient(const unsigned int sampleRate,
+                                          const float releaseTimeInSecs)
 {
     return std::exp(-std::log(9) / (sampleRate * releaseTimeInSecs));
 }

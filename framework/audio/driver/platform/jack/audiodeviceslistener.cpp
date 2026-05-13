@@ -41,7 +41,8 @@ void AudioDevicesListener::startWithCallback(const ActualDevicesCallback& callba
 
     m_actualDevicesCallback = callback;
     m_isRunning = true;
-    m_devicesUpdateThread = std::make_shared<std::thread>(&AudioDevicesListener::th_updateDevices, this);
+    m_devicesUpdateThread = std::make_shared<std::thread>(&AudioDevicesListener::th_updateDevices,
+                                                          this);
 }
 
 void AudioDevicesListener::stop()

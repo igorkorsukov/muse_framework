@@ -75,11 +75,13 @@ static std::pair<String, int> parseVersionSuffix(const String& suffix, bool& ok)
     StringList suffixComponents = suffix.split('.');
 
     ok = true;
-    return std::make_pair(suffixComponents.front(), (suffixComponents.size() > 1 ? suffixComponents[1].toInt() : 0));
+    return std::make_pair(suffixComponents.front(),
+                          (suffixComponents.size() > 1 ? suffixComponents[1].toInt() : 0));
 }
 
 Version::Version(int major, int minor, int patch, const String& suffix, int suffixVersion)
-    : m_major(major), m_minor(minor), m_patch(patch), m_suffix(suffix), m_suffixVersion(suffixVersion)
+    : m_major(major), m_minor(minor), m_patch(patch), m_suffix(suffix), m_suffixVersion(
+        suffixVersion)
 {
 }
 
@@ -199,16 +201,21 @@ bool Version::operator <(const Version& other) const
                     u"rc"
                 };
 
-                auto currentIt = std::find_if(suffixes.cbegin(), suffixes.cend(), [suffix=m_suffix](const String& s) {
+                auto currentIt
+                    = std::find_if(suffixes.cbegin(),
+                                   suffixes.cend(), [suffix=m_suffix](const String& s) {
                     return s.startsWith(suffix);
                 });
 
-                auto updateIt = std::find_if(suffixes.cbegin(), suffixes.cend(), [suffix=other.suffix()](const String& s) {
+                auto updateIt
+                    = std::find_if(suffixes.cbegin(), suffixes.cend(),
+                                   [suffix=other.suffix()](const String& s) {
                     return s.startsWith(suffix);
                 });
 
                 if (currentIt == suffixes.cend() || updateIt == suffixes.cend()) {
-                    LOGE() << "Invalid version suffix; current " << m_suffix << ", update " << other.suffix();
+                    LOGE() << "Invalid version suffix; current " << m_suffix << ", update " <<
+                    other.suffix();
                     return true;
                 }
 

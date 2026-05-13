@@ -48,7 +48,8 @@ static inline RectF fromFBBox(const FBBox& bb, double scale)
                  from_f26d6(bb.width()) * scale, from_f26d6(bb.height()) * scale);
 }
 
-static const IFontFace* findSubtitutionFont(char32_t ch, const std::vector<IFontFace*>& subtitutionFaces)
+static const IFontFace* findSubtitutionFont(char32_t ch,
+                                            const std::vector<IFontFace*>& subtitutionFaces)
 {
     const IFontFace* founded = nullptr;
     for (const IFontFace* subFace : subtitutionFaces) {
@@ -69,7 +70,8 @@ double FontsEngine::RequireFace::pixelScale() const
     if (!face) {
         return 0.0;
     }
-    double scale = static_cast<double>(requireKey.pixelSize) / static_cast<double>(face->key().pixelSize);
+    double scale = static_cast<double>(requireKey.pixelSize)
+                   / static_cast<double>(face->key().pixelSize);
     return scale;
 }
 
@@ -96,7 +98,8 @@ double FontsEngine::lineSpacing(const Font& f) const
         return 0.0;
     }
 
-    return from_f26d6(rf->face->leading() + rf->face->ascent() + rf->face->descent()) * rf->pixelScale();
+    return from_f26d6(rf->face->leading() + rf->face->ascent() + rf->face->descent())
+           * rf->pixelScale();
 }
 
 double FontsEngine::xHeight(const Font& f) const
@@ -389,7 +392,9 @@ static void generateSdf(GlyphImage& out, glyph_idx_t glyphIdx, const IFontFace* 
     out.sdf.bitmap = mu::ByteArray(sdf.takeMemoryAway(), SDF_WIDTH * SDF_HEIGHT);
     out.sdf.width = SDF_WIDTH;
     out.sdf.height = SDF_HEIGHT;
-    out.sdf.hash = std::hash<std::string_view> {}({ reinterpret_cast<const char*>(out.sdf.bitmap.data()), out.sdf.bitmap.size() });
+    out.sdf.hash
+        = std::hash<std::string_view> {}({ reinterpret_cast<const char*>(out.sdf.bitmap.data()),
+                                           out.sdf.bitmap.size() });
 
     out.rect.setTop(top);
     out.rect.setLeft(left);
@@ -607,7 +612,8 @@ std::vector<FontsEngine::TextBlock> FontsEngine::splitTextByLines(const std::u32
     return lines;
 }
 
-std::vector<FontsEngine::TextBlock> FontsEngine::splitTextByFontFaces(const RequireFace* rf, const TextBlock& text) const
+std::vector<FontsEngine::TextBlock> FontsEngine::splitTextByFontFaces(const RequireFace* rf,
+                                                                      const TextBlock& text) const
 {
     std::vector<TextBlock> textBlocks;
 

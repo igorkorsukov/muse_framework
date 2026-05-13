@@ -69,7 +69,8 @@ void ProfilerViewModel::reload()
     m_allList.clear();
 
     QString group = "Main thread";
-    QString str = QString::fromStdString(Profiler::instance()->threadsDataString(Profiler::Data::OnlyMain));
+    QString str
+        = QString::fromStdString(Profiler::instance()->threadsDataString(Profiler::Data::OnlyMain));
     QStringList list = str.split("\n", Qt::SkipEmptyParts);
     foreach (const QString& data, list) {
         Item item;
@@ -80,7 +81,8 @@ void ProfilerViewModel::reload()
     }
 
     group = "Other thread";
-    str = QString::fromStdString(Profiler::instance()->threadsDataString(Profiler::Data::OnlyOther));
+    str
+        = QString::fromStdString(Profiler::instance()->threadsDataString(Profiler::Data::OnlyOther));
     list = str.split("\n", Qt::SkipEmptyParts);
     foreach (const QString& data, list) {
         Item item;

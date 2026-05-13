@@ -62,7 +62,8 @@ void FxChain::setFxChainSpec(const AudioFxChain& fxChainSpec)
         return;
     }
 
-    auto findFxNode = [this](const std::pair<AudioFxChainOrder, AudioFxParams>& params) -> FxNodePtr {
+    auto findFxNode
+        = [this](const std::pair<AudioFxChainOrder, AudioFxParams>& params) -> FxNodePtr {
         for (auto& node : m_nodes) {
             FxNodePtr fx = std::dynamic_pointer_cast<FxNode>(node);
             IF_ASSERT_FAILED(fx) {

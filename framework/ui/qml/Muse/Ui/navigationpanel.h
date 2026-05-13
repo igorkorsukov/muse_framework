@@ -37,8 +37,11 @@ class NavigationSection;
 class NavigationPanel : public AbstractNavigation, public INavigationPanel
 {
     Q_OBJECT
-    Q_PROPERTY(muse::ui::NavigationSection * section READ section_property WRITE setSection_property NOTIFY sectionChanged)
-    Q_PROPERTY(QmlDirection direction READ direction_property WRITE setDirection NOTIFY directionChanged)
+    Q_PROPERTY(
+        muse::ui::NavigationSection
+        * section READ section_property WRITE setSection_property NOTIFY sectionChanged)
+    Q_PROPERTY(
+        QmlDirection direction READ direction_property WRITE setDirection NOTIFY directionChanged)
     Q_PROPERTY(QString directionInfo READ directionInfo NOTIFY directionChanged)
     QML_ELEMENT
 
@@ -87,7 +90,8 @@ public:
     void removeControl(NavigationControl* control);
 
     //! NOTE Can be called from QML without args
-    Q_INVOKABLE void requestActive(INavigationControl* control = nullptr, bool enableHighlight = false,
+    Q_INVOKABLE void requestActive(INavigationControl* control = nullptr,
+                                   bool enableHighlight = false,
                                    ActivationType activationType = ActivationType::None) override;
 
     void componentComplete() override;

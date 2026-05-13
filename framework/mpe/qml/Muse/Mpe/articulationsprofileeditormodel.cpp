@@ -42,8 +42,10 @@ void ArticulationsProfileEditorModel::init()
 void ArticulationsProfileEditorModel::requestToOpenProfile()
 {
     //! Make these strings translatable when we expose this tool to users
-    std::vector<std::string> filter = { /*qtrc*/ std::string("MPE articulations profile") + " " + PROFILE_EXTENSION };
-    io::path_t path = interactive()->selectOpeningFileSync(/*trc*/ "Open MPE articulations profile", "", filter);
+    std::vector<std::string> filter
+        = { /*qtrc*/ std::string("MPE articulations profile") + " " + PROFILE_EXTENSION };
+    io::path_t path = interactive()->selectOpeningFileSync(/*trc*/ "Open MPE articulations profile",
+                                                           "", filter);
 
     if (path.empty()) {
         return;
@@ -56,8 +58,10 @@ void ArticulationsProfileEditorModel::requestToOpenProfile()
 
 bool ArticulationsProfileEditorModel::requestToCreateProfile()
 {
-    std::vector<std::string> filter = { /*qtrc*/ std::string("MPE articulations profile") + " " + PROFILE_EXTENSION };
-    io::path_t path = interactive()->selectSavingFileSync(/*trc*/ "Save MPE articulations profile", "", filter);
+    std::vector<std::string> filter
+        = { /*qtrc*/ std::string("MPE articulations profile") + " " + PROFILE_EXTENSION };
+    io::path_t path = interactive()->selectSavingFileSync(/*trc*/ "Save MPE articulations profile",
+                                                          "", filter);
 
     if (path.empty()) {
         return false;
@@ -136,7 +140,8 @@ void ArticulationsProfileEditorModel::loadItems()
     }
 }
 
-ArticulationPatternItem* ArticulationsProfileEditorModel::buildItem(const ArticulationType type, const bool isSingleNoteType)
+ArticulationPatternItem* ArticulationsProfileEditorModel::buildItem(const ArticulationType type,
+                                                                    const bool isSingleNoteType)
 {
     ArticulationPatternItem* item = new ArticulationPatternItem(this, type, isSingleNoteType);
 

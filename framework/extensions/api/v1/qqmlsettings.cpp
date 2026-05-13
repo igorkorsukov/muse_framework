@@ -272,11 +272,13 @@ QSettings* QQmlSettingsPrivate::instance() const
 {
     if (!settings) {
         QQmlSettings* q = const_cast<QQmlSettings*>(q_func());
-        settings = fileName.isEmpty() ? new QSettings(q) : new QSettings(fileName, QSettings::IniFormat, q);
+        settings = fileName.isEmpty() ? new QSettings(q) : new QSettings(fileName,
+                                                                         QSettings::IniFormat, q);
         if (settings->status() != QSettings::NoError) {
             // TODO: can't print out the enum due to the following error:
             // error: C2666: 'QQmlInfo::operator <<': 15 overloads have similar conversions
-            qmlWarning(q) << "Failed to initialize QSettings instance. Status code is: " << int(settings->status());
+            qmlWarning(q) << "Failed to initialize QSettings instance. Status code is: " <<
+            int(settings->status());
 
             if (settings->status() == QSettings::AccessError) {
                 QVector<QString> missingIdentifiers;
@@ -291,7 +293,8 @@ QSettings* QQmlSettingsPrivate::instance() const
                 }
 
                 if (!missingIdentifiers.isEmpty()) {
-                    qmlWarning(q) << "The following application identifiers have not been set: " << missingIdentifiers;
+                    qmlWarning(q) << "The following application identifiers have not been set: " <<
+                    missingIdentifiers;
                 }
             }
             return settings;
@@ -346,7 +349,8 @@ void QQmlSettingsPrivate::load()
                                        || (currentValue.canConvert(previousValue.metaType())
                                            && previousValue != currentValue))) {
             property.write(q, currentValue);
-            qCDebug(lcSettings) << "QQmlSettings: load" << property.name() << "setting:" << currentValue << "default:" << previousValue;
+            qCDebug(lcSettings) << "QQmlSettings: load" << property.name() << "setting:" <<
+            currentValue << "default:" << previousValue;
         }
 
         // ensure that a non-existent setting gets written

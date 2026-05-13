@@ -89,7 +89,8 @@ void AccessibilityController::setAccessibilityEnabled(bool enabled)
 static QAccessibleInterface* muAccessibleFactory(const QString& classname, QObject* object)
 {
     if (!s_accessibleInterfaceRegister) {
-        s_accessibleInterfaceRegister = globalIoc()->resolve<IQAccessibleInterfaceRegister>("accessibility");
+        s_accessibleInterfaceRegister = globalIoc()->resolve<IQAccessibleInterfaceRegister>(
+            "accessibility");
     }
 
     auto interfaceGetter = s_accessibleInterfaceRegister->interfaceGetter(classname);
@@ -130,7 +131,8 @@ void AccessibilityController::init()
             return; // No focus item (prevents announcements), or the action set its own announcement.
         }
 
-        if (m_lastFocused != m_preDispatchFocus || m_lastFocused->accessibleName() != m_preDispatchName) {
+        if (m_lastFocused != m_preDispatchFocus
+            || m_lastFocused->accessibleName() != m_preDispatchName) {
             return; // The screen reader will say something anyway.
         }
 
@@ -193,7 +195,9 @@ void AccessibilityController::reg(IAccessible* item)
         m_children.append(item);
     }
 
-    item->accessiblePropertyChanged().onReceive(this, [this, item](const IAccessible::Property& p, const Val value) {
+    item->accessiblePropertyChanged().onReceive(this,
+                                                [this, item](const IAccessible::Property& p,
+                                                             const Val value) {
         propertyChanged(item, p, value);
     });
 
@@ -339,7 +343,8 @@ void AccessibilityController::setIgnoreQtAccessibilityEvents(bool ignore)
     }
 }
 
-void AccessibilityController::propertyChanged(IAccessible* item, IAccessible::Property property, const Val& value)
+void AccessibilityController::propertyChanged(IAccessible* item, IAccessible::Property property,
+                                              const Val& value)
 {
     // NOTE: Handling of properties must match accessibleiteminterface.cpp.
     // See AccessibleItemInterface::text(type) among others.
@@ -398,14 +403,16 @@ void AccessibilityController::propertyChanged(IAccessible* item, IAccessible::Pr
     case IAccessible::Property::TextInsert: {
         IAccessible::TextRange range(value.toQVariant().toMap());
         QAccessibleTextInsertEvent ev(it.object, range.startPosition,
-                                      it.item->accessibleText(range.startPosition, range.endPosition));
+                                      it.item->accessibleText(range.startPosition,
+                                                              range.endPosition));
         sendEvent(&ev);
         return;
     }
     case IAccessible::Property::TextRemove: {
         IAccessible::TextRange range(value.toQVariant().toMap());
         QAccessibleTextRemoveEvent ev(it.object, range.startPosition,
-                                      it.item->accessibleText(range.startPosition, range.endPosition));
+                                      it.item->accessibleText(range.startPosition,
+                                                              range.endPosition));
         sendEvent(&ev);
         return;
     }
@@ -506,13 +513,15 @@ void AccessibilityController::cancelPreviousReading()
 
 #ifdef Q_OS_LINUX
     //! HACK: it needs for canceling reading the name of previous control on accessibility
-    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_Cancel, Qt::KeyboardModifier::NoModifier, 0, 1, 0);
+    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_Cancel,
+                                        Qt::KeyboardModifier::NoModifier, 0, 1, 0);
     QCoreApplicationPrivate::setEventSpontaneous(keyEvent, true);
     application()->notify(mainWindow()->qWindow(), keyEvent);
 #endif
 }
 
-void AccessibilityController::savePanelAccessibleName(const IAccessible* oldItem, const IAccessible* newItem)
+void AccessibilityController::savePanelAccessibleName(const IAccessible* oldItem,
+                                                      const IAccessible* newItem)
 {
     if (m_ignorePanelChangingVoice) {
         m_needToVoicePanelInfo = false;
@@ -528,7 +537,8 @@ void AccessibilityController::savePanelAccessibleName(const IAccessible* oldItem
     m_needToVoicePanelInfo = oldItemPanelName != newItemPanelName;
 }
 
-bool AccessibilityController::needsRevoicing(const QAccessibleInterface& iface, QAccessible::Event eventType) const
+bool AccessibilityController::needsRevoicing(const QAccessibleInterface& iface,
+                                             QAccessible::Event eventType) const
 {
     QAccessible::Text textType;
 
@@ -669,7 +679,9 @@ const IAccessible* AccessibilityController::panel(const IAccessible* item) const
     return nullptr;
 }
 
-const AccessibilityController::Item& AccessibilityController::findSiblingItem(const Item& parent, const Item& current) const
+const AccessibilityController::Item& AccessibilityController::findSiblingItem(const Item& parent,
+                                                                              const Item& current)
+const
 {
     TRACEFUNC;
     static constexpr Item null;
@@ -712,7 +724,8 @@ async::Channel<QAccessibleEvent*> AccessibilityController::eventSent() const
     return m_eventSent;
 }
 
-const AccessibilityController::Item& AccessibilityController::findItem(const IAccessible* aitem) const
+const AccessibilityController::Item& AccessibilityController::findItem(const IAccessible* aitem)
+const
 {
     static constexpr Item null;
 
@@ -788,7 +801,8 @@ QAccessibleInterface* AccessibilityController::child(const IAccessible* item, in
     return chldIt.iface;
 }
 
-int AccessibilityController::indexOfChild(const IAccessible* item, const QAccessibleInterface* iface) const
+int AccessibilityController::indexOfChild(const IAccessible* item,
+                                          const QAccessibleInterface* iface) const
 {
     TRACEFUNC;
     size_t count = item->accessibleChildCount();
@@ -961,7 +975,8 @@ int AccessibilityController::accessibleRowIndex() const
     return 0;
 }
 
-async::Channel<IAccessible::Property, Val> AccessibilityController::accessiblePropertyChanged() const
+async::Channel<IAccessible::Property,
+               Val> AccessibilityController::accessiblePropertyChanged() const
 {
     static async::Channel<IAccessible::Property, Val> ch;
     return ch;

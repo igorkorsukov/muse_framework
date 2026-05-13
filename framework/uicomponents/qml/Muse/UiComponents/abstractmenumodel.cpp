@@ -184,7 +184,8 @@ MenuItem& AbstractMenuModel::findItem(const ActionCode& actionCode)
     }
 
     if (list.size() > 1) {
-        LOGD() << "There is more than one item for " << actionCode << ", will return the first one found";
+        LOGD() << "There is more than one item for " << actionCode <<
+        ", will return the first one found";
     }
 
     return *list.front();
@@ -220,7 +221,8 @@ MenuItem* AbstractMenuModel::makeMenu(const TranslatableString& title, const Men
     return item;
 }
 
-MenuItem* AbstractMenuModel::makeMenuItem(const ActionCode& actionCode, const TranslatableString& title)
+MenuItem* AbstractMenuModel::makeMenuItem(const ActionCode& actionCode,
+                                          const TranslatableString& title)
 {
     const UiAction& action = uiActionsRegister()->action(actionCode);
     if (!action.isValid()) {
@@ -401,7 +403,8 @@ void AbstractMenuModel::updateShortcutsAll()
 
 void AbstractMenuModel::updateShortcuts(MenuItem* item)
 {
-    std::vector<std::string> shortcuts = shortcutsRegister()->shortcut(item->action().code).sequences;
+    std::vector<std::string> shortcuts
+        = shortcutsRegister()->shortcut(item->action().code).sequences;
     item->setShortcuts(shortcuts);
 
     for (MenuItem* subItem : item->subitems()) {

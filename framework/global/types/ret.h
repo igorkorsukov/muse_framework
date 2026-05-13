@@ -158,7 +158,11 @@ public:
     }
 
     inline Ret& operator=(int c) { m_code = c; return *this; }
-    inline Ret& operator=(bool arg) { m_code = arg ? int(Code::Ok) : int(Code::UnknownError); return *this; }
+    inline Ret& operator=(bool arg)
+    {
+        m_code = arg ? int(Code::Ok) : int(Code::UnknownError);
+        return *this;
+    }
     inline operator bool() const {
         return success();
     }

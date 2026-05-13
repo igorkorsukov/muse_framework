@@ -34,7 +34,8 @@ using namespace muse::extensions::apiv1;
 
 void ExtApiV1::registerQmlTypes()
 {
-    qmlRegisterUncreatableMetaObject(StandardButton::staticMetaObject, "MuseScore", 3, 0, "StandardButton",
+    qmlRegisterUncreatableMetaObject(StandardButton::staticMetaObject, "MuseScore", 3, 0,
+                                     "StandardButton",
                                      "Not creatable as it is an enum type");
     qmlRegisterType<MessageDialog>("MuseScore", 3, 0, "MessageDialog");
     qmlRegisterType<QQmlSettings>("MuseScore", 3, 0, "Settings");

@@ -62,7 +62,9 @@ void Equaliser::process(float* buffer, samples_t sampleCount, samples_t)
 
         m_y[2] = m_y[1];
         m_y[1] = m_y[0];
-        m_y[0] = (m_b[2] * m_x[2] + m_b[1] * m_x[1] + m_b[0] * m_x[0] - m_a[1] * m_y[1] - m_a[2] * m_y[2]) / m_a[0];
+        m_y[0]
+            = (m_b[2] * m_x[2] + m_b[1] * m_x[1] + m_b[0] * m_x[0] - m_a[1] * m_y[1] - m_a[2]
+               * m_y[2]) / m_a[0];
 
         buffer[i] = m_y[0];
     }

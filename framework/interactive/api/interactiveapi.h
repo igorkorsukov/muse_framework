@@ -77,7 +77,8 @@ public:
     Q_INVOKABLE void warning(const QString& contentTitle, const QString& text);
     Q_INVOKABLE void error(const QString& contentTitle, const QString& text);
 
-    Q_INVOKABLE QString question(const QString& contentTitle, const QString& text, const QJSValueList& buttons);
+    Q_INVOKABLE QString question(const QString& contentTitle, const QString& text,
+                                 const QJSValueList& buttons);
 
     Q_INVOKABLE void openUrl(const QString& url);
 

@@ -37,12 +37,16 @@ public:
 
     virtual RetVal<Progress> get(const QUrl& url, IncomingDevicePtr incomingData = nullptr,
                                  const RequestHeaders& headers = RequestHeaders()) = 0;
-    virtual RetVal<Progress> head(const QUrl& url, const RequestHeaders& headers = RequestHeaders()) = 0;
-    virtual RetVal<Progress> post(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData = nullptr,
+    virtual RetVal<Progress> head(const QUrl& url,
                                   const RequestHeaders& headers = RequestHeaders()) = 0;
-    virtual RetVal<Progress> put(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData = nullptr,
+    virtual RetVal<Progress> post(const QUrl& url, OutgoingDeviceVar outgoingData,
+                                  IncomingDevicePtr incomingData = nullptr,
+                                  const RequestHeaders& headers = RequestHeaders()) = 0;
+    virtual RetVal<Progress> put(const QUrl& url, OutgoingDeviceVar outgoingData,
+                                 IncomingDevicePtr incomingData = nullptr,
                                  const RequestHeaders& headers = RequestHeaders()) = 0;
-    virtual RetVal<Progress> patch(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData = nullptr,
+    virtual RetVal<Progress> patch(const QUrl& url, OutgoingDeviceVar outgoingData,
+                                   IncomingDevicePtr incomingData = nullptr,
                                    const RequestHeaders& headers = RequestHeaders()) = 0;
     virtual RetVal<Progress> del(const QUrl& url, IncomingDevicePtr incomingData = nullptr,
                                  const RequestHeaders& headers = RequestHeaders()) = 0;

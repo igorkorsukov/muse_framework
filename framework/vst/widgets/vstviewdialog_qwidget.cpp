@@ -142,7 +142,8 @@ void VstViewDialog::attachView(IVstPluginInstancePtr instance)
     m_view->setFrame(this);
 
     Steinberg::tresult attached;
-    attached = m_view->attached(reinterpret_cast<void*>(windowHandle()->winId()), currentPlatformUiType());
+    attached = m_view->attached(
+        reinterpret_cast<void*>(windowHandle()->winId()), currentPlatformUiType());
     if (attached != kResultOk) {
         LOGE() << "Unable to attach vst plugin view to window"
                << ", m_instanceId: " << m_instanceId;

@@ -62,7 +62,9 @@ void MultiWindowsModule::resolveImports()
 {
     auto ir = globalIoc()->resolve<muse::interactive::IInteractiveUriRegister>(mname);
     if (ir) {
-        ir->registerQmlUri(Uri("muse://devtools/multiwindows/info"), "Muse.MultiWindows", "MultiInstancesDevDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://devtools/multiwindows/info"), "Muse.MultiWindows",
+                           "MultiInstancesDevDialog");
     }
 }
 

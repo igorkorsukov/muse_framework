@@ -27,7 +27,8 @@
 
 using namespace muse::ui;
 
-bool WidgetNavigationFix::fixNavigationForTableWidget(const WidgetNavigationFix::NavigationChain& chain, int key)
+bool WidgetNavigationFix::fixNavigationForTableWidget(
+    const WidgetNavigationFix::NavigationChain& chain, int key)
 {
     QTableWidget* tableWidget = qobject_cast<QTableWidget*>(chain.widget);
 

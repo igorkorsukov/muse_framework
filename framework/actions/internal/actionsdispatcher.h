@@ -43,8 +43,10 @@ public:
     async::Channel<ActionCode> postDispatch() const override;
 
     void unReg(Actionable* client) override;
-    void reg(Actionable* client, const ActionCode& actionCode, const ActionCallBackWithNameAndData& call) override;
-    void reg(Actionable* client, const ActionQuery& actionQuery, const ActionCallBackWithQuery& call) override;
+    void reg(Actionable* client, const ActionCode& actionCode,
+             const ActionCallBackWithNameAndData& call) override;
+    void reg(Actionable* client, const ActionQuery& actionQuery,
+             const ActionCallBackWithQuery& call) override;
     bool isReg(Actionable* client) const override;
     ActionCodeList actionList() const override;
 

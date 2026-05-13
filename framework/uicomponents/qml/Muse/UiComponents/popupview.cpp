@@ -97,7 +97,8 @@ void PopupView::initCloseController()
 
     m_closeController->setParentItem(parentItem());
     m_closeController->setWindow(window());
-    m_closeController->setIsCloseOnPressOutsideParent(m_closePolicies & ClosePolicy::CloseOnPressOutsideParent);
+    m_closeController->setIsCloseOnPressOutsideParent(
+        m_closePolicies & ClosePolicy::CloseOnPressOutsideParent);
     m_closeController->setCanClose(!m_closePolicies.testFlag(ClosePolicy::NoAutoClose));
 
     m_closeController->closeNotification().onNotify(this, [this]() {
@@ -161,7 +162,8 @@ void PopupView::setClosePolicies(ClosePolicies closePolicies)
     m_closePolicies = closePolicies;
 
     if (m_closeController) {
-        m_closeController->setIsCloseOnPressOutsideParent(closePolicies & ClosePolicy::CloseOnPressOutsideParent);
+        m_closeController->setIsCloseOnPressOutsideParent(
+            closePolicies & ClosePolicy::CloseOnPressOutsideParent);
     }
 
     emit closePoliciesChanged(closePolicies);
@@ -410,7 +412,8 @@ void PopupView::updateGeometry()
         moveLeft();
     } else {
         // move to the right of the parent and move to top to an area that doesn't fit
-        movePos(parentTopLeft.x() + parent->width(), m_globalPos.y() - (viewRect.bottom() - anchorRect.bottom()) + padding());
+        movePos(parentTopLeft.x() + parent->width(),
+                m_globalPos.y() - (viewRect.bottom() - anchorRect.bottom()) + padding());
         setPopupPosition(PopupPosition::Right);
     }
 
@@ -427,7 +430,8 @@ void PopupView::updateGeometry()
     if (!showArrow()) {
         if (popupPosition() == PopupPosition::Bottom || popupPosition() == PopupPosition::Top) {
             movePos(m_globalPos.x() - padding(), m_globalPos.y());
-        } else if (popupPosition() == PopupPosition::Left || popupPosition() == PopupPosition::Right) {
+        } else if (popupPosition() == PopupPosition::Left
+                   || popupPosition() == PopupPosition::Right) {
             movePos(m_globalPos.x(), m_globalPos.y() - padding());
         }
     }

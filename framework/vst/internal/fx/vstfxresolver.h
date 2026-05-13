@@ -40,11 +40,15 @@ public:
     void clearAllFx() override;
 
 private:
-    audio::IFxProcessorPtr createMasterFx(const audio::AudioFxParams& fxParams, const audio::OutputSpec& outputSpec) const override;
-    audio::IFxProcessorPtr createTrackFx(const audio::TrackId trackId, const audio::AudioFxParams& fxParams,
+    audio::IFxProcessorPtr createMasterFx(const audio::AudioFxParams& fxParams,
+                                          const audio::OutputSpec& outputSpec) const override;
+    audio::IFxProcessorPtr createTrackFx(const audio::TrackId trackId,
+                                         const audio::AudioFxParams& fxParams,
                                          const audio::OutputSpec& outputSpec) const override;
 
-    void removeMasterFx(const audio::AudioResourceId& resoureId, audio::AudioFxChainOrder order) override;
-    void removeTrackFx(const audio::TrackId trackId, const audio::AudioResourceId& resoureId, audio::AudioFxChainOrder order) override;
+    void removeMasterFx(const audio::AudioResourceId& resoureId,
+                        audio::AudioFxChainOrder order) override;
+    void removeTrackFx(const audio::TrackId trackId, const audio::AudioResourceId& resoureId,
+                       audio::AudioFxChainOrder order) override;
 };
 }

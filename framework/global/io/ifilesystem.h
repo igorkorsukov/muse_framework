@@ -51,8 +51,10 @@ public:
 
     virtual RetVal<uint64_t> fileSize(const io::path_t& path) const = 0;
 
-    virtual RetVal<io::paths_t> scanFiles(const io::path_t& rootDir, const std::vector<std::string>& filters,
-                                          ScanMode mode = ScanMode::FilesInCurrentDirAndSubdirs) const = 0;
+    virtual RetVal<io::paths_t> scanFiles(const io::path_t& rootDir,
+                                          const std::vector<std::string>& filters,
+                                          ScanMode mode = ScanMode::FilesInCurrentDirAndSubdirs)
+    const = 0;
 
     enum class Attribute {
         Hidden
@@ -67,7 +69,8 @@ public:
 
     //! Streaming write
     virtual RetVal<StreamId> openStream(const io::path_t& filePath, OpenMode mode) = 0;
-    virtual Ret writeToStream(StreamId fileId, const ByteArray& data, uint64_t offset = STREAM_POS_CURRENT) = 0;
+    virtual Ret writeToStream(StreamId fileId, const ByteArray& data,
+                              uint64_t offset = STREAM_POS_CURRENT) = 0;
     virtual Ret closeStream(StreamId fileId) = 0;
 
     //! NOTE File info

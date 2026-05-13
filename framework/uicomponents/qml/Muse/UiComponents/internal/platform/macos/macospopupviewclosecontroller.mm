@@ -29,7 +29,8 @@ using namespace muse::uicomponents;
 
 id<NSObject> minimizeObserverToken = nil;
 
-MacOSPopupViewCloseController::MacOSPopupViewCloseController(const modularity::ContextPtr& iocCtx, QObject* parent)
+MacOSPopupViewCloseController::MacOSPopupViewCloseController(const modularity::ContextPtr& iocCtx,
+                                                             QObject* parent)
     : PopupViewCloseController(iocCtx, parent)
 {
 }
@@ -52,7 +53,8 @@ void MacOSPopupViewCloseController::doUpdateEventFilters()
     PopupViewCloseController::doUpdateEventFilters();
 }
 
-bool MacOSPopupViewCloseController::nativeEventFilter(const QByteArray& eventType, void* message, qintptr*)
+bool MacOSPopupViewCloseController::nativeEventFilter(const QByteArray& eventType, void* message,
+                                                      qintptr*)
 {
     if (eventType != "mac_generic_NSEvent") {
         return false;

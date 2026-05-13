@@ -52,7 +52,8 @@ public:
 
     bool shouldProcessDuringSilence() const override;
 
-    void process(float* buffer, samples_t sampleCount, samples_t playbackPositionSamples = 0) override;
+    void process(float* buffer, samples_t sampleCount,
+                 samples_t playbackPositionSamples = 0) override;
 
 private:
     enum Params
@@ -120,7 +121,8 @@ private:
         std::vector<Parameter> _param;
 
         void allocateParameters(int num);
-        void setupParameter(int index, const std::string& name, std::pair<float, float> valueRange, float initialValue);
+        void setupParameter(int index, const std::string& name, std::pair<float, float> valueRange,
+                            float initialValue);
         bool setFormat(audioch_t audioChannelsCount, double sampleRate, int32_t maximumBlockSize);
 
         audioch_t _audioChannelsCount = 0;

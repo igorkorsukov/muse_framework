@@ -99,7 +99,8 @@ void LogRemover::removeFiles(const io::paths_t& files)
 
 void LogRemover::scanDir(const io::path_t& logsDir, io::paths_t& files)
 {
-    RetVal<io::paths_t> rv = io::Dir::scanFiles(logsDir, { "*.log" }, io::ScanMode::FilesInCurrentDir);
+    RetVal<io::paths_t> rv = io::Dir::scanFiles(logsDir, { "*.log" },
+                                                io::ScanMode::FilesInCurrentDir);
     if (!rv.ret) {
         LOGE() << "failed scan dir: " << logsDir;
     }

@@ -41,7 +41,8 @@ using namespace muse;
 using namespace muse::audio;
 using namespace muse::audio::soundtrack;
 
-static encode::AbstractAudioEncoderPtr createEncoder(const SoundTrackFormat& format, io::IODevice& dstDevice)
+static encode::AbstractAudioEncoderPtr createEncoder(const SoundTrackFormat& format,
+                                                     io::IODevice& dstDevice)
 {
     switch (format.type) {
     case SoundTrackType::MP3: return std::make_unique<encode::Mp3Encoder>(format, dstDevice);
@@ -71,7 +72,8 @@ SoundTrackWriter::SoundTrackWriter(io::IODevice& dstDevice, const SoundTrackForm
 
     auto durationToSamples = [&](const secs_t& duration) {
         const double sec = std::max(0.0, duration.raw());
-        return static_cast<samples_t>(std::llround(sec * static_cast<double>(outputSpec.sampleRate)));
+        return static_cast<samples_t>(std::llround(sec
+                                                   * static_cast<double>(outputSpec.sampleRate)));
     };
 
     m_dataSamples = durationToSamples(totalDuration);
@@ -79,7 +81,8 @@ SoundTrackWriter::SoundTrackWriter(io::IODevice& dstDevice, const SoundTrackForm
     const samples_t trailingSilenceSamples = durationToSamples(format.trailingSilenceDuration);
     m_totalSamples = m_leadingSilenceSamples + m_dataSamples + trailingSilenceSamples;
 
-    const samples_t intermediateSamplesNumber = outputSpec.samplesPerChannel * outputSpec.audioChannelCount;
+    const samples_t intermediateSamplesNumber = outputSpec.samplesPerChannel
+                                                * outputSpec.audioChannelCount;
     m_intermBuffer.resize(intermediateSamplesNumber);
     m_renderStep = outputSpec.samplesPerChannel;
 

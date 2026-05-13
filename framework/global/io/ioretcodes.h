@@ -53,14 +53,27 @@ inline Ret make_ret(Err e)
     case Err::UnknownError: return Ret(retCode);
     case Err::FSNotExist: return Ret(retCode, muse::trc("system", "The file does not exist"));
     case Err::FSAlreadyExists: return Ret(retCode, muse::trc("system", "The file already exists"));
-    case Err::FSRemoveError: return Ret(retCode, muse::trc("system", "The file could not be removed"));
-    case Err::FSDirNotEmptyError: return Ret(retCode, muse::trc("system", "The directory is not empty"));
-    case Err::FSClearError: return Ret(retCode, muse::trc("system", "The directory could not be cleared"));
-    case Err::FSReadError: return Ret(retCode, muse::trc("system", "An error occurred when reading from the file"));
-    case Err::FSWriteError: return Ret(retCode, muse::trc("system", "An error occurred when writing to the file"));
-    case Err::FSMakingError: return Ret(retCode, muse::trc("system", "An error occurred when making a path"));
-    case Err::FSCopyError: return Ret(retCode, muse::trc("system", "An error occurred when copying the file"));
-    case Err::FSMoveErrors: return Ret(retCode, muse::trc("system", "An error occurred when moving the file"));
+    case Err::FSRemoveError: return Ret(retCode, muse::trc("system",
+                                                           "The file could not be removed"));
+    case Err::FSDirNotEmptyError: return Ret(retCode,
+                                             muse::trc("system", "The directory is not empty"));
+    case Err::FSClearError: return Ret(retCode,
+                                       muse::trc("system", "The directory could not be cleared"));
+    case Err::FSReadError: return Ret(retCode,
+                                      muse::trc("system",
+                                                "An error occurred when reading from the file"));
+    case Err::FSWriteError: return Ret(retCode,
+                                       muse::trc("system",
+                                                 "An error occurred when writing to the file"));
+    case Err::FSMakingError: return Ret(retCode,
+                                        muse::trc("system",
+                                                  "An error occurred when making a path"));
+    case Err::FSCopyError: return Ret(retCode,
+                                      muse::trc("system",
+                                                "An error occurred when copying the file"));
+    case Err::FSMoveErrors: return Ret(retCode,
+                                       muse::trc("system",
+                                                 "An error occurred when moving the file"));
     }
 
     return Ret(static_cast<int>(e));

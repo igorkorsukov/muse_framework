@@ -113,7 +113,8 @@ private:
     Type valueType() const;
 
     //! NOTE Should be sync with valueType method
-    using Value = std::variant<std::monostate, bool, int, int64_t, double, std::string, ValList, ValMap>;
+    using Value = std::variant<std::monostate, bool, int, int64_t, double, std::string, ValList,
+                               ValMap>;
     Value m_val;
     Type m_type = Type::Undefined;
 };

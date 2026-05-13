@@ -166,7 +166,9 @@ static int deflate(Bytef* dest, ulong* destLen, const Bytef* source, ulong sourc
     stream.zfree = (free_func)0;
     stream.opaque = (voidpf)0;
 
-    err = deflateInit2(&stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, -MAX_WBITS, 8, Z_DEFAULT_STRATEGY);
+    err
+        = deflateInit2(&stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, -MAX_WBITS, 8,
+                       Z_DEFAULT_STRATEGY);
     if (err != Z_OK) {
         return err;
     }
@@ -444,7 +446,8 @@ void ZipContainer::Impl::scanFiles()
     // have the eod
     start_of_directory_local = readUInt(eod.dir_start_offset);
     num_dir_entries = readUShort(eod.num_dir_entries);
-    ZDEBUG("start_of_directory at %d, num_dir_entries=%d", start_of_directory_local, num_dir_entries);
+    ZDEBUG("start_of_directory at %d, num_dir_entries=%d", start_of_directory_local,
+           num_dir_entries);
     int comment_length = readUShort(eod.comment_length);
     if (comment_length != i) {
         LOGW("Zip: failed to parse zip file.");
@@ -473,7 +476,8 @@ void ZipContainer::Impl::scanFiles()
         l = readUShort(header.h.extra_field_length);
         header.extra_field = device->read(l);
         if (header.extra_field.size() != l) {
-            LOGW("Zip: Failed to read extra field in zip file, skipping file, index may be incomplete");
+            LOGW(
+                "Zip: Failed to read extra field in zip file, skipping file, index may be incomplete");
             break;
         }
         l = readUShort(header.h.file_comment_length);
@@ -541,7 +545,8 @@ ZipContainer::FileInfo ZipContainer::Impl::fillFileInfo(size_t index) const
     return fileInfo;
 }
 
-void ZipContainer::Impl::addEntry(EntryType type, const std::string& fileName, const ByteArray& contents)
+void ZipContainer::Impl::addEntry(EntryType type, const std::string& fileName,
+                                  const ByteArray& contents)
 {
     if (!(device->isOpen() || device->open(IODevice::WriteOnly))) {
         status = ZipContainer::FileOpenError;
@@ -584,7 +589,8 @@ void ZipContainer::Impl::addEntry(EntryType type, const std::string& fileName, c
         int res;
         do {
             data.resize(len);
-            res = deflate((uint8_t*)data.data(), &len, (const uint8_t*)contents.constData(), (ulong)contents.size());
+            res = deflate((uint8_t*)data.data(), &len,
+                          (const uint8_t*)contents.constData(), (ulong)contents.size());
 
             switch (res) {
             case Z_OK:
@@ -765,7 +771,8 @@ ByteArray ZipContainer::fileData(const std::string& fileName) const
 
     ushort version_needed = readUShort(header.h.version_needed);
     if (version_needed > ZIP_VERSION) {
-        LOGW("Zip: .ZIP specification version %d implementation is needed to extract the data.", version_needed);
+        LOGW("Zip: .ZIP specification version %d implementation is needed to extract the data.",
+             version_needed);
         return ByteArray();
     }
 
@@ -824,7 +831,8 @@ ByteArray ZipContainer::fileData(const std::string& fileName) const
         return baunzip;
     }
 
-    LOGW("Zip: Unsupported compression method %d is needed to extract the data.", compression_method);
+    LOGW("Zip: Unsupported compression method %d is needed to extract the data.",
+         compression_method);
     return ByteArray();
 }
 

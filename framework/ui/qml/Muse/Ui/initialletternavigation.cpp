@@ -188,7 +188,8 @@ void InitialLetterNavigation::navigateToIndex(const INavigation::Index& index)
     const std::string panelName = m_panel->name().toStdString();
     const bool ok = navigationController()->requestActivateByIndex(sectionName, panelName, index);
     IF_ASSERT_FAILED(ok) {
-        LOGE() << "Index not found in this panel/section - make sure nav control indices match m_stringList indices";
+        LOGE() <<
+        "Index not found in this panel/section - make sure nav control indices match m_stringList indices";
         return;
     }
 

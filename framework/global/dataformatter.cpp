@@ -65,7 +65,8 @@ String DataFormatter::formatTimeSince(const Date& date)
 
     constexpr int monthsInYear = 12;
 
-    int months = (currentDate.year() - date.year()) * monthsInYear + (currentDate.month() - date.month());
+    int months = (currentDate.year() - date.year()) * monthsInYear
+                 + (currentDate.month() - date.month());
 
     if (months == 1) {
         return mtrc("global", "Last month");

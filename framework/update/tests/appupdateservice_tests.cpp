@@ -60,7 +60,8 @@ public:
         m_configuration = std::make_shared<NiceMock<UpdateConfigurationMock> >();
         m_service->configuration.set(m_configuration);
 
-        m_networkManagerCreator = std::make_shared<NiceMock<muse::network::NetworkManagerCreatorMock> >();
+        m_networkManagerCreator
+            = std::make_shared<NiceMock<muse::network::NetworkManagerCreatorMock> >();
         m_service->networkManagerCreator.set(m_networkManagerCreator);
 
         m_networkManager = std::make_shared<muse::network::NetworkManagerMock>();
@@ -98,9 +99,11 @@ public:
                                 "]"
                                 "}";
 
-        EXPECT_CALL(*m_networkManager, get(QUrl(QString::fromStdString(checkForAppUpdateUrl)), _, _))
+        EXPECT_CALL(*m_networkManager,
+                    get(QUrl(QString::fromStdString(checkForAppUpdateUrl)), _, _))
         .WillOnce(testing::Invoke(
-                      [this, releasesNotes](const QUrl&, IncomingDevicePtr buf, const RequestHeaders&) {
+                      [this, releasesNotes](const QUrl&, IncomingDevicePtr buf,
+                                            const RequestHeaders&) {
             buf->open(muse::network::IncomingDevice::WriteOnly);
             buf->write(releasesNotes.toUtf8());
             buf->close();
@@ -125,9 +128,11 @@ public:
                                         "]"
                                         "}").arg(application()->fullVersion().toString());
 
-        EXPECT_CALL(*m_networkManager, get(QUrl(QString::fromStdString(previousAppReleasesNotesUrl)), _, _))
+        EXPECT_CALL(*m_networkManager,
+                    get(QUrl(QString::fromStdString(previousAppReleasesNotesUrl)), _, _))
         .WillOnce(testing::Invoke(
-                      [this, releasesNotes](const QUrl&, IncomingDevicePtr buf, const RequestHeaders&) {
+                      [this, releasesNotes](const QUrl&, IncomingDevicePtr buf,
+                                            const RequestHeaders&) {
             buf->open(muse::network::IncomingDevice::WriteOnly);
             buf->write(releasesNotes.toUtf8());
             buf->close();

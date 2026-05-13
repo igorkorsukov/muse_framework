@@ -59,8 +59,12 @@ void TestflowModule::resolveImports()
 {
     auto ir = globalIoc()->resolve<muse::interactive::IInteractiveUriRegister>(mname);
     if (ir) {
-        ir->registerQmlUri(Uri("muse://diagnostics/testflow/scripts"), "Muse.Testflow", "ScriptsDialog");
-        ir->registerQmlUri(Uri("muse://testflow/selectfile"), "Muse.Testflow", "TestflowSelectFileDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://diagnostics/testflow/scripts"), "Muse.Testflow",
+                           "ScriptsDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://testflow/selectfile"), "Muse.Testflow",
+                           "TestflowSelectFileDialog");
     }
 
     auto api = globalIoc()->resolve<IApiRegister>(mname);
@@ -101,7 +105,8 @@ void TestflowContext::registerExports()
     m_actionsController = std::make_shared<TestflowActionsController>(iocContext());
 
     ioc()->registerExport<ITestflow>(mname, m_testflow);
-    ioc()->registerExport<ITestflowScriptsRepository>(mname, new TestflowScriptsRepository(iocContext()));
+    ioc()->registerExport<ITestflowScriptsRepository>(mname,
+                                                      new TestflowScriptsRepository(iocContext()));
 }
 
 void TestflowContext::resolveImports()

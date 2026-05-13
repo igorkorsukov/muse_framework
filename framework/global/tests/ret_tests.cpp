@@ -63,7 +63,8 @@ TEST(Global_RetTests, Data_KeyNotFound_ReturnsDefault)
 
 // === Type Mismatch ===
 
-TEST(Global_RetTests, Data_KeyExistsButTypeMismatch_ReturnsDefaultInReleaseANDTriggersAssertionInDebug)
+TEST(Global_RetTests,
+     Data_KeyExistsButTypeMismatch_ReturnsDefaultInReleaseANDTriggersAssertionInDebug)
 {
     Ret ret;
     ret.setData("answer", 42); // int stored, but requesting as string
@@ -105,13 +106,15 @@ TEST(Global_RetTests, Data_EnumClass_ReturnsStoredValue)
 {
     Ret ret;
     ret.setData("status", Global_RetTests::StatusCode::OK);
-    const auto result = ret.data<Global_RetTests::StatusCode>("status", Global_RetTests::StatusCode::Unknown);
+    const auto result = ret.data<Global_RetTests::StatusCode>("status",
+                                                              Global_RetTests::StatusCode::Unknown);
     EXPECT_EQ(result, Global_RetTests::StatusCode::OK);
 }
 
 TEST(Global_RetTests, Data_EnumClassKeyNotFound_ReturnsDefault)
 {
     const Ret ret;
-    const auto result = ret.data<Global_RetTests::StatusCode>("missing", Global_RetTests::StatusCode::Unknown);
+    const auto result = ret.data<Global_RetTests::StatusCode>("missing",
+                                                              Global_RetTests::StatusCode::Unknown);
     EXPECT_EQ(result, Global_RetTests::StatusCode::Unknown);
 }

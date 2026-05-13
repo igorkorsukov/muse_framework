@@ -78,7 +78,8 @@ bool FontProviderDispatcher::inFont(const muse::draw::Font& f, char32_t ucs4) co
 }
 
 // Text
-double FontProviderDispatcher::horizontalAdvance(const muse::draw::Font& f, const muse::String& string) const
+double FontProviderDispatcher::horizontalAdvance(const muse::draw::Font& f,
+                                                 const muse::String& string) const
 {
     return m_qtFProvider->horizontalAdvance(f, string);
 }
@@ -88,7 +89,8 @@ double FontProviderDispatcher::horizontalAdvance(const muse::draw::Font& f, char
     return m_qtFProvider->horizontalAdvance(f, ucs4);
 }
 
-RectF FontProviderDispatcher::boundingRect(const muse::draw::Font& f, const muse::String& string) const
+RectF FontProviderDispatcher::boundingRect(const muse::draw::Font& f,
+                                           const muse::String& string) const
 {
     return m_qtFProvider->boundingRect(f, string);
 }
@@ -98,7 +100,8 @@ RectF FontProviderDispatcher::boundingRect(const muse::draw::Font& f, char32_t u
     return m_qtFProvider->boundingRect(f, ucs4);
 }
 
-RectF FontProviderDispatcher::tightBoundingRect(const muse::draw::Font& f, const muse::String& string) const
+RectF FontProviderDispatcher::tightBoundingRect(const muse::draw::Font& f,
+                                                const muse::String& string) const
 {
     return m_qtFProvider->tightBoundingRect(f, string);
 }

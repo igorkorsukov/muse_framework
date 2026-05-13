@@ -769,9 +769,13 @@ bool String::contains(const String& str, CaseSensitivity cs) const
         return constStr().find(str.constStr()) != std::u16string::npos;
     } else {
         std::u16string self = constStr();
-        std::transform(self.begin(), self.end(), self.begin(), [](char16_t c){ return Char::toLower(c); });
+        std::transform(self.begin(), self.end(), self.begin(), [](char16_t c){
+            return Char::toLower(c);
+        });
         std::u16string other = str.constStr();
-        std::transform(other.begin(), other.end(), other.begin(), [](char16_t c){ return Char::toLower(c); });
+        std::transform(other.begin(), other.end(), other.begin(), [](char16_t c){
+            return Char::toLower(c);
+        });
         return self.find(other) != std::u16string::npos;
     }
 }
@@ -1000,7 +1004,8 @@ StringList String::split(const std::regex& re, SplitBehavior behavior) const
     return out;
 }
 
-StringList String::search(const std::regex& re, std::initializer_list<int> matches, SplitBehavior behavior) const
+StringList String::search(const std::regex& re, std::initializer_list<int> matches,
+                          SplitBehavior behavior) const
 {
     std::string originU8;
     UtfCodec::utf16to8(std::u16string_view(constStr()), originU8);
@@ -1022,7 +1027,8 @@ StringList String::search(const std::regex& re, std::initializer_list<int> match
     return out;
 }
 
-StringList String::search(const std::wregex& re, std::initializer_list<int> matches, SplitBehavior behavior) const
+StringList String::search(const std::wregex& re, std::initializer_list<int> matches,
+                          SplitBehavior behavior) const
 {
     std::wstring ws = toStdWString();
 
@@ -1208,7 +1214,8 @@ String String::arg(const String& val) const
 String String::arg(const String& val1, const String& val2) const
 {
     String s;
-    doArgs(s.mutStr(), { std::u16string_view(val1.constStr()), std::u16string_view(val2.constStr()) });
+    doArgs(s.mutStr(), { std::u16string_view(val1.constStr()), std::u16string_view(
+                             val2.constStr()) });
     return s;
 }
 
@@ -1221,7 +1228,8 @@ String String::arg(const String& val1, const String& val2, const String& val3) c
     return s;
 }
 
-String String::arg(const String& val1, const String& val2, const String& val3, const String& val4) const
+String String::arg(const String& val1, const String& val2, const String& val3,
+                   const String& val4) const
 {
     String s;
     doArgs(s.mutStr(), { std::u16string_view(val1.constStr()),
@@ -1231,7 +1239,8 @@ String String::arg(const String& val1, const String& val2, const String& val3, c
     return s;
 }
 
-String String::arg(const String& val1, const String& val2, const String& val3, const String& val4, const String& val5) const
+String String::arg(const String& val1, const String& val2, const String& val3, const String& val4,
+                   const String& val5) const
 {
     String s;
     doArgs(s.mutStr(), { std::u16string_view(val1.constStr()),

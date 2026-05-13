@@ -35,8 +35,10 @@ class IProcess : MODULE_GLOBAL_INTERFACE
 public:
     virtual ~IProcess() = default;
 
-    virtual int execute(const std::string& program, const std::vector<std::string>& arguments = {}) = 0;
-    virtual bool startDetached(const std::string& program, const std::vector<std::string>& arguments = {}) = 0;
+    virtual int execute(const std::string& program,
+                        const std::vector<std::string>& arguments = {}) = 0;
+    virtual bool startDetached(const std::string& program,
+                               const std::vector<std::string>& arguments = {}) = 0;
 };
 }
 

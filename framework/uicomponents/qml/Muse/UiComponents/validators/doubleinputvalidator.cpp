@@ -136,7 +136,8 @@ QValidator::State DoubleInputValidator::validate(QString& inputStr, int& cursorP
                                   .arg(maxIntDigits).arg(m_decimal));
 
     if (inputStr.contains(validRegex)) {
-        QRegularExpression invalidZeroRegex(QString("^\\-?0{2,%1}").arg(std::max(maxIntDigits, 2)) + decimalSep); // e.g. '-000,' or '-000.'
+        QRegularExpression invalidZeroRegex(QString("^\\-?0{2,%1}").arg(std::max(maxIntDigits,
+                                                                                 2)) + decimalSep);               // e.g. '-000,' or '-000.'
         QRegularExpression invalidTrailingZeroRegex("^\\-?\\d+" + decimalSep + "0{1,}$"); // for '1,00' or '1.00'
         QRegularExpression invalidTrailingDotRegex("^\\-?\\d+" + decimalSep + "$"); // for '1,' or '1.'
 
@@ -150,9 +151,11 @@ QValidator::State DoubleInputValidator::validate(QString& inputStr, int& cursorP
         } else {
             state = Acceptable;
         }
-    } else if (inputStr.contains(QRegularExpression(QString("^\\-?\\d{0,%1}" + decimalSep + "?$").arg(maxIntDigits)))
+    } else if (inputStr.contains(QRegularExpression(QString("^\\-?\\d{0,%1}" + decimalSep
+                                                            + "?$").arg(maxIntDigits)))
                || inputStr.contains(QRegularExpression(QString("^\\-?\\d{0,%1}" + decimalSep
-                                                               + "\\d{0,%2}$").arg(maxIntDigits).arg(m_decimal)))) {
+                                                               + "\\d{0,%2}$").arg(maxIntDigits).arg(
+                                                           m_decimal)))) {
         state = Intermediate;
     } else {
         cursorPos = 0;

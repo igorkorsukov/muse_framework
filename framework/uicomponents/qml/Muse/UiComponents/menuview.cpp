@@ -120,7 +120,8 @@ void MenuView::updateGeometry()
         m_globalPos = parentTopLeft;
     }
 
-    const QRectF paddedAnchorRect = anchorGeometry().adjusted(0, TOP_BOTTOM_EDGE_PADDING, 0, -TOP_BOTTOM_EDGE_PADDING);
+    const QRectF paddedAnchorRect = anchorGeometry().adjusted(0, TOP_BOTTOM_EDGE_PADDING, 0,
+                                                              -TOP_BOTTOM_EDGE_PADDING);
     QRectF viewRect = viewGeometry();
 
     //! NOTE: should be after resolving anchor geometry
@@ -151,7 +152,8 @@ void MenuView::updateGeometry()
 
     if (isCascade) {
         // Position submenus to the right of the parent, at the same height...
-        movePos(parentTopLeft.x() + parent->width(), m_globalPos.y() - parent->height() - viewMargins());
+        movePos(parentTopLeft.x() + parent->width(),
+                m_globalPos.y() - parent->height() - viewMargins());
     }
 
     if (viewRect.left() < paddedAnchorRect.left()) { // The left of this menu overlaps the left of the anchor (doesn't fit)...
@@ -217,7 +219,8 @@ void MenuView::updateGeometry()
     }
 
     const Qt::AlignmentFlag parentCascadeAlign = this->parentCascadeAlign(parentMenuContentItem);
-    if (viewRect.right() > paddedAnchorRect.right() || parentCascadeAlign != Qt::AlignmentFlag::AlignRight) {
+    if (viewRect.right() > paddedAnchorRect.right()
+        || parentCascadeAlign != Qt::AlignmentFlag::AlignRight) {
         if (isCascade) {
             // move to the right of the parent
             movePos(parentTopLeft.x() - viewRect.width() + padding() * 2, m_globalPos.y());
@@ -225,7 +228,9 @@ void MenuView::updateGeometry()
             newPopupPos = PopupPosition::Right;
         } else {
             // move to the left to an area that doesn't fit
-            movePos(m_globalPos.x() - (viewRect.right() - paddedAnchorRect.right()) + padding() * 2, m_globalPos.y());
+            movePos(
+                m_globalPos.x() - (viewRect.right() - paddedAnchorRect.right()) + padding() * 2,
+                m_globalPos.y());
             newPopupPos = PopupPosition::Left;
         }
     }
@@ -247,7 +252,8 @@ void MenuView::updateContentPosition()
 
 QRect MenuView::viewGeometry() const
 {
-    return QRect(m_globalPos.toPoint(), QSize(contentWidth() + padding() * 2, contentHeight() + padding() * 2));
+    return QRect(m_globalPos.toPoint(),
+                 QSize(contentWidth() + padding() * 2, contentHeight() + padding() * 2));
 }
 
 Qt::AlignmentFlag MenuView::parentCascadeAlign(const QQuickItem* parent) const

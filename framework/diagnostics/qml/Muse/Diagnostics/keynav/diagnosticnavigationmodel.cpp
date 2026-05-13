@@ -140,7 +140,8 @@ QVariantList DiagnosticNavigationModel::sections() const
     return m_sections;
 }
 
-void DiagnosticNavigationModel::copyToClipboard(const QVariant& section, const QVariant& panel, const QVariant& control)
+void DiagnosticNavigationModel::copyToClipboard(const QVariant& section, const QVariant& panel,
+                                                const QVariant& control)
 {
     KeyNavDevSection* sec = section.value<KeyNavDevSection*>();
     IF_ASSERT_FAILED(sec) {

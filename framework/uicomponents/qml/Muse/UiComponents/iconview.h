@@ -36,7 +36,8 @@ class IconView : public QuickPaintedView
     QML_ELEMENT;
 
     Q_PROPERTY(QVariant icon READ icon WRITE setIcon NOTIFY iconChanged)
-    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(
+        QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
 
 public:
     IconView(QQuickItem* parent = nullptr);

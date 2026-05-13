@@ -63,7 +63,8 @@ void DropdownView::updateGeometry()
 
     if (popupRect.bottom() > anchorRect.bottom()) {
         // move to the right of the parent and move to top to an area that doesn't fit
-        movePos(m_globalPos.x(), m_globalPos.y() - (popupRect.bottom() - anchorRect.bottom()) + padding());
+        movePos(m_globalPos.x(),
+                m_globalPos.y() - (popupRect.bottom() - anchorRect.bottom()) + padding());
     }
 
     if (popupRect.left() < anchorRect.left()) {

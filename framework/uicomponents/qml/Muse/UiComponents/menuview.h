@@ -38,12 +38,15 @@ class MenuView : public PopupView
     Q_PROPERTY(int viewMargins READ viewMargins CONSTANT)
 
     Q_PROPERTY(int contentWidth READ contentWidth WRITE setContentWidth NOTIFY contentWidthChanged)
-    Q_PROPERTY(int contentHeight READ contentHeight WRITE setContentHeight NOTIFY contentHeightChanged)
+    Q_PROPERTY(
+        int contentHeight READ contentHeight WRITE setContentHeight NOTIFY contentHeightChanged)
 
-    Q_PROPERTY(int desiredHeight READ desiredHeight WRITE setDesiredHeight NOTIFY desiredHeightChanged)
+    Q_PROPERTY(
+        int desiredHeight READ desiredHeight WRITE setDesiredHeight NOTIFY desiredHeightChanged)
     Q_PROPERTY(int desiredWidth READ desiredWidth WRITE setDesiredWidth NOTIFY desiredWidthChanged)
 
-    Q_PROPERTY(Qt::AlignmentFlag cascadeAlign READ cascadeAlign WRITE setCascadeAlign NOTIFY cascadeAlignChanged)
+    Q_PROPERTY(
+        Qt::AlignmentFlag cascadeAlign READ cascadeAlign WRITE setCascadeAlign NOTIFY cascadeAlignChanged)
 
 public:
     explicit MenuView(QQuickItem* parent = nullptr);

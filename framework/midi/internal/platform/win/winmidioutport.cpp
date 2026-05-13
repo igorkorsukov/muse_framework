@@ -195,7 +195,8 @@ Ret WinMidiOutPort::sendEvent(const Event& e)
         uint32_t msg = event.toMidi10Package();
         MMRESULT ret = midiOutShortMsg(m_win->midiOut, (DWORD)msg);
         if (ret != MMSYSERR_NOERROR) {
-            return make_ret(Err::MidiFailedConnect, "failed send event, error: " + errorString(ret));
+            return make_ret(Err::MidiFailedConnect,
+                            "failed send event, error: " + errorString(ret));
         }
     }
 

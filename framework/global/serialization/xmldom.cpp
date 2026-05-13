@@ -221,7 +221,8 @@ XmlDomElement XmlDomNode::toElement() const
 // XmlDomAttribute
 // ================================================
 
-XmlDomAttribute::XmlDomAttribute(const std::shared_ptr<XmlDomImplData>& data, xml_attr_handle attribute)
+XmlDomAttribute::XmlDomAttribute(const std::shared_ptr<XmlDomImplData>& data,
+                                 xml_attr_handle attribute)
     : m_xml(data), m_attribute(attribute)
 {
 }

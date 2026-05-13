@@ -35,7 +35,8 @@ IpcChannel::IpcChannel()
 {
     m_selfSocket = new IpcSocket();
     m_selfSocket->disconnected().onNotify(this, [this]() { onDisconnected(); });
-    m_selfSocket->msgReceived().onReceive(this, [this](const Msg& msg) { onSocketMsgReceived(msg); });
+    m_selfSocket->msgReceived().onReceive(this,
+                                          [this](const Msg& msg) { onSocketMsgReceived(msg); });
 }
 
 IpcChannel::~IpcChannel()
@@ -85,7 +86,8 @@ void IpcChannel::broadcast(const QString& method, const QStringList& args)
     send(res);
 }
 
-Code IpcChannel::syncRequestToAll(const QString& method, const QStringList& args, const OnReceived& onReceived)
+Code IpcChannel::syncRequestToAll(const QString& method, const QStringList& args,
+                                  const OnReceived& onReceived)
 {
     IF_ASSERT_FAILED(onReceived) {
         return Code::Undefined;

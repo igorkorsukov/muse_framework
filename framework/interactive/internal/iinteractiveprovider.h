@@ -56,7 +56,8 @@ public:
 
     virtual QString objectId(const QVariant& val) const = 0;
 
-    virtual void onOpen(const QVariant& type, const QVariant& objectId, QObject* window = nullptr) = 0;
+    virtual void onOpen(const QVariant& type, const QVariant& objectId,
+                        QObject* window = nullptr) = 0;
     virtual void onClose(const QString& objectId, const QVariant& rv) = 0;
 
     virtual async::Channel<QmlLaunchData*> openRequested() const = 0;

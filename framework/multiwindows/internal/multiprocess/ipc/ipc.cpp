@@ -86,7 +86,8 @@ QString muse::ipc::socketErrorToString(int err)
 bool muse::ipc::writeToSocket(QLocalSocket* socket, const QByteArray& data)
 {
     IF_ASSERT_FAILED(data.size() <= MAX_PACKAGE_SIZE) {
-        LOGE() << "message size " << data.size() << " exceeds limit of " << MAX_PACKAGE_SIZE << " bytes, message won't be sent";
+        LOGE() << "message size " << data.size() << " exceeds limit of " << MAX_PACKAGE_SIZE <<
+        " bytes, message won't be sent";
         return false;
     }
 
@@ -99,7 +100,8 @@ bool muse::ipc::writeToSocket(QLocalSocket* socket, const QByteArray& data)
     return ok;
 }
 
-bool muse::ipc::readFromSocket(QLocalSocket* socket, std::function<void(const QByteArray& data)> onPackageRead)
+bool muse::ipc::readFromSocket(QLocalSocket* socket,
+                               std::function<void(const QByteArray& data)> onPackageRead)
 {
     qint64 bytesAvailable = socket->bytesAvailable();
     if (bytesAvailable < (qint64)sizeof(quint32)) {
@@ -114,7 +116,8 @@ bool muse::ipc::readFromSocket(QLocalSocket* socket, std::function<void(const QB
         uint32_t remaining;
         stream >> remaining;
         IF_ASSERT_FAILED(remaining <= MAX_PACKAGE_SIZE) {
-            LOGE() << "found package size " << remaining << " that exceeds limit of " << MAX_PACKAGE_SIZE <<
+            LOGE() << "found package size " << remaining << " that exceeds limit of " <<
+            MAX_PACKAGE_SIZE <<
                 " bytes, package will be ignored";
             return false;
         }
@@ -123,7 +126,8 @@ bool muse::ipc::readFromSocket(QLocalSocket* socket, std::function<void(const QB
         int64_t available = socket->bytesAvailable();
         if (available < remaining) {
             if (!socket->waitForReadyRead(ipc::TIMEOUT_MSEC)) {
-                LOGE() << "failed read, remaining: " << remaining << ", available: " << available << ", err: " << socket->errorString();
+                LOGE() << "failed read, remaining: " << remaining << ", available: " << available <<
+                ", err: " << socket->errorString();
                 return false;
             }
         }

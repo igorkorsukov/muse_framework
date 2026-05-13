@@ -193,7 +193,9 @@ RetVal2<TrackId, TrackParams> AudioContext::addTrack(const std::string& trackNam
     };
 
     // Make source
-    RetVal<AudioSourceNodePtr> source = audioFactory()->makeEventSource(trackId, playbackData, params.source, onOffStreamReceived);
+    RetVal<AudioSourceNodePtr> source = audioFactory()->makeEventSource(trackId, playbackData,
+                                                                        params.source,
+                                                                        onOffStreamReceived);
     if (!source.ret) {
         return RetType::make_ret(source.ret);
     }
@@ -276,7 +278,8 @@ void AudioContext::doAddTrack(const Track& track)
     if (auto source = std::dynamic_pointer_cast<AudioSourceNode>(track.chain->source())) {
         source->seek(m_player->currentPosition());
         source->inputParamsChanged().onReceive(this, [this, trackId](const AudioInputParams& params) {
-            m_sourceParamsChanged.send(trackId, params);
+            m_sourceParamsChanged.send(trackId,
+                                       params);
         });
     }
 
@@ -338,7 +341,8 @@ void AudioContext::onFxChainParamsChanged(Track& track, const AudioFxChain& para
     ONLY_AUDIO_ENGINE_THREAD;
 
     const TrackId trackId = track.id;
-    std::shared_ptr<IPlayheadPosition> playheadPosition = std::static_pointer_cast<IPlayheadPosition>(m_player);
+    std::shared_ptr<IPlayheadPosition> playheadPosition
+        = std::static_pointer_cast<IPlayheadPosition>(m_player);
 
     // Make fx chain
     FxChainPtr fxChain = audioFactory()->makeTrackFxChain(trackId, params);
@@ -351,7 +355,8 @@ void AudioContext::onFxChainParamsChanged(Track& track, const AudioFxChain& para
     });
 
     fxChain->shouldProcessDuringSilenceChanged().onReceive(this, [this, trackId](bool shouldProcess) {
-        onShouldProcessDuringSilenceChanged(trackId, shouldProcess);
+        onShouldProcessDuringSilenceChanged(trackId,
+                                            shouldProcess);
     });
 
     track.chain->setFxChain(fxChain);
@@ -735,7 +740,8 @@ async::Channel<secs_t> AudioContext::playbackPositionChanged() const
 }
 
 // Export
-async::Promise<Ret> AudioContext::saveSoundTrack(io::IODevice& dstDevice, const SoundTrackFormat& format)
+async::Promise<Ret> AudioContext::saveSoundTrack(io::IODevice& dstDevice,
+                                                 const SoundTrackFormat& format)
 {
     return async::make_promise<Ret>([this, &dstDevice, format](auto resolve, auto) {
         ONLY_AUDIO_ENGINE_THREAD;
@@ -747,7 +753,8 @@ async::Promise<Ret> AudioContext::saveSoundTrack(io::IODevice& dstDevice, const 
         const bool lazyProcessingWasEnabled = configuration()->isLazyProcessingOfOnlineSoundsEnabled();
         configuration()->setIsLazyProcessingOfOnlineSoundsEnabled(false);
 
-        listenInputProcessing([this, &dstDevice, format, lazyProcessingWasEnabled, resolve](Ret ret) {
+        listenInputProcessing([this, &dstDevice, format, lazyProcessingWasEnabled,
+                               resolve](Ret ret) {
             if (ret) {
                 ret = doSaveSoundTrack(dstDevice, format);
             }
@@ -808,7 +815,8 @@ void AudioContext::listenInputProcessing(std::function<void(const Ret&)> complet
         (*soundsInProgress)++;
 
         if (inputProgress.isStarted) {
-            m_saveSoundTracksProgress.progress.send(0, 100, SaveSoundTrackStage::ProcessingOnlineSounds);
+            m_saveSoundTracksProgress.progress.send(0, 100,
+                                                    SaveSoundTrackStage::ProcessingOnlineSounds);
         }
 
         using StatusInfo = InputProcessingProgress::StatusInfo;
@@ -829,10 +837,12 @@ void AudioContext::listenInputProcessing(std::function<void(const Ret&)> complet
                 m_saveSoundTracksProgress.aborted.disconnect(this);
                 completed(make_ok());
             } else if (tracksBeingProcessedCount == 1) {
-                m_saveSoundTracksProgress.progress.send(info.current, info.total, SaveSoundTrackStage::ProcessingOnlineSounds);
+                m_saveSoundTracksProgress.progress.send(info.current, info.total,
+                                                        SaveSoundTrackStage::ProcessingOnlineSounds);
             } else {
                 const int64_t percentage = 100 - (100 / *soundsInProgress) * tracksBeingProcessedCount;
-                m_saveSoundTracksProgress.progress.send(percentage, 100, SaveSoundTrackStage::ProcessingOnlineSounds);
+                m_saveSoundTracksProgress.progress.send(percentage, 100,
+                                                        SaveSoundTrackStage::ProcessingOnlineSounds);
             }
         });
     }
@@ -866,8 +876,11 @@ Ret AudioContext::doSaveSoundTrack(io::IODevice& dstDevice, const SoundTrackForm
     const secs_t totalDuration = m_player->duration();
     auto writer = std::make_shared<SoundTrackWriter>(dstDevice, format, totalDuration, m_mixer);
 
-    writer->progress().progressChanged().onReceive(this, [this](int64_t current, int64_t total, std::string /*title*/) {
-        m_saveSoundTracksProgress.progress.send(current, total, SaveSoundTrackStage::WritingSoundTrack);
+    writer->progress().progressChanged().onReceive(this,
+                                                   [this](int64_t current, int64_t total,
+                                                          std::string /*title*/) {
+        m_saveSoundTracksProgress.progress.send(current, total,
+                                                SaveSoundTrackStage::WritingSoundTrack);
     });
 
     std::weak_ptr<SoundTrackWriter> weakPtr = writer;

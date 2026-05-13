@@ -31,8 +31,10 @@ using namespace muse::actions;
 void WorkspaceActionController::init()
 {
     dispatcher()->reg(this, "select-workspace", this, &WorkspaceActionController::selectWorkspace);
-    dispatcher()->reg(this, "configure-workspaces", this, &WorkspaceActionController::openConfigureWorkspacesDialog);
-    dispatcher()->reg(this, "create-workspace", this, &WorkspaceActionController::createNewWorkspace);
+    dispatcher()->reg(this, "configure-workspaces", this,
+                      &WorkspaceActionController::openConfigureWorkspacesDialog);
+    dispatcher()->reg(this, "create-workspace", this,
+                      &WorkspaceActionController::createNewWorkspace);
 }
 
 void WorkspaceActionController::selectWorkspace(const ActionData& args)

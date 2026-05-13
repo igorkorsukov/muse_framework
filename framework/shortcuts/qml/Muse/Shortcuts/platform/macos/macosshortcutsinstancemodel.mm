@@ -89,14 +89,17 @@ static const std::map<UInt32, QString> specialKeysMap = {
 static UCKeyboardLayout* keyboardLayout()
 {
     static TISInputSourceRef (* TISCopyCurrentKeyboardLayoutInputSource)(void);
-    static void*(* TISGetInputSourceProperty)(TISInputSourceRef inputSource, CFStringRef propertyKey);
+    static void*(* TISGetInputSourceProperty)(TISInputSourceRef inputSource,
+                                              CFStringRef propertyKey);
 
     CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.Carbon"));
 
     if (bundle) {
-        *(void**)& TISGetInputSourceProperty = CFBundleGetFunctionPointerForName(bundle, CFSTR("TISGetInputSourceProperty"));
+        *(void**)& TISGetInputSourceProperty
+            = CFBundleGetFunctionPointerForName(bundle, CFSTR("TISGetInputSourceProperty"));
         *(void**)& TISCopyCurrentKeyboardLayoutInputSource
-            = CFBundleGetFunctionPointerForName(bundle, CFSTR("TISCopyCurrentKeyboardLayoutInputSource"));
+            = CFBundleGetFunctionPointerForName(bundle,
+                                                CFSTR("TISCopyCurrentKeyboardLayoutInputSource"));
     }
 
     if (!TISCopyCurrentKeyboardLayoutInputSource || !TISGetInputSourceProperty) {
@@ -105,7 +108,9 @@ static UCKeyboardLayout* keyboardLayout()
     }
 
     TISInputSourceRef currentKeyboard = TISCopyCurrentKeyboardLayoutInputSource();
-    CFDataRef uchr = (CFDataRef)TISGetInputSourceProperty(currentKeyboard, CFSTR("TISPropertyUnicodeKeyLayoutData"));
+    CFDataRef uchr
+        = (CFDataRef)TISGetInputSourceProperty(currentKeyboard,
+                                               CFSTR("TISPropertyUnicodeKeyLayoutData"));
 
     return (UCKeyboardLayout*)CFDataGetBytePtr(uchr);
 }
@@ -212,29 +217,37 @@ static UInt32 nativeKeycode(UCKeyboardLayout* keyboard, Qt::Key keyCode, bool& f
     for (UInt32 i = 0; i < keyboard->keyboardTypeCount; i++) {
         UCKeyStateRecordsIndex* stateRec = 0;
         if (table[i].keyStateRecordsIndexOffset != 0) {
-            stateRec = reinterpret_cast<UCKeyStateRecordsIndex*>(data + table[i].keyStateRecordsIndexOffset);
+            stateRec
+                = reinterpret_cast<UCKeyStateRecordsIndex*>(data
+                                                            + table[i].keyStateRecordsIndexOffset);
             if (stateRec->keyStateRecordsIndexFormat != kUCKeyStateRecordsIndexFormat) {
                 stateRec = 0;
             }
         }
 
-        UCKeyToCharTableIndex* charTable = reinterpret_cast<UCKeyToCharTableIndex*>(data + table[i].keyToCharTableIndexOffset);
+        UCKeyToCharTableIndex* charTable
+            = reinterpret_cast<UCKeyToCharTableIndex*>(data + table[i].keyToCharTableIndexOffset);
         if (charTable->keyToCharTableIndexFormat != kUCKeyToCharTableIndexFormat) {
             continue;
         }
 
         for (UInt32 j = 0; j < charTable->keyToCharTableCount; j++) {
-            UCKeyOutput* keyToChar = reinterpret_cast<UCKeyOutput*>(data + charTable->keyToCharTableOffsets[j]);
+            UCKeyOutput* keyToChar
+                = reinterpret_cast<UCKeyOutput*>(data + charTable->keyToCharTableOffsets[j]);
             for (UInt32 k = 0; k < charTable->keyToCharTableSize; k++) {
                 if (keyToChar[k] & kUCKeyOutputTestForIndexMask) {
                     long idx = keyToChar[k] & kUCKeyOutputGetIndexMask;
                     if (stateRec && idx < stateRec->keyStateRecordCount) {
-                        UCKeyStateRecord* rec = reinterpret_cast<UCKeyStateRecord*>(data + stateRec->keyStateRecordOffsets[idx]);
+                        UCKeyStateRecord* rec
+                            = reinterpret_cast<UCKeyStateRecord*>(data
+                                                                  + stateRec->keyStateRecordOffsets[
+                                                                      idx]);
                         if (rec->stateZeroCharData == keyCodeChar) {
                             return k;
                         }
                     }
-                } else if (!(keyToChar[k] & kUCKeyOutputSequenceIndexMask) && keyToChar[k] < 0xFFFE) {
+                } else if (!(keyToChar[k] & kUCKeyOutputSequenceIndexMask)
+                           && keyToChar[k] < 0xFFFE) {
                     if (keyToChar[k] == keyCodeChar) {
                         return k;
                     }
@@ -278,7 +291,8 @@ static QString keyCodeToString(UCKeyboardLayout* keyboard, UInt32 keyNativeCode)
                                     &actualLength,
                                     actualString);
     if (error == 0) {
-        NSString* nsString = [NSString stringWithCharacters:actualString length:(NSUInteger)actualLength];
+        NSString* nsString
+            = [NSString stringWithCharacters:actualString length:(NSUInteger)actualLength];
         return QString::fromNSString(nsString).toUpper();
     }
 
@@ -362,7 +376,9 @@ void MacOSShortcutsInstanceModel::doLoadShortcuts()
     //   triggered.
     // - Otherwise, we look up the received sequence in the reverse map, to see by which combination of
     //   physical keys it would be produced, and trigger the action that is bound to that combination.
-    auto recordMapping = [this](const QString& translatedSequence, const QString& rawSequence, bool overrideExisting) {
+    auto recordMapping
+        = [this](const QString& translatedSequence, const QString& rawSequence,
+                 bool overrideExisting) {
         auto search = m_macSequenceMap.find(translatedSequence);
         if (search == m_macSequenceMap.end()) {
             m_macSequenceMap.insert(translatedSequence, rawSequence);
@@ -378,13 +394,16 @@ void MacOSShortcutsInstanceModel::doLoadShortcuts()
             QString untranslatedSequenceStr = QString::fromStdString(seq);
 
             // Ensure standard order of modifiers by converting to/from QKeySequence
-            QKeySequence untranslatedSequence = QKeySequence::fromString(untranslatedSequenceStr, QKeySequence::PortableText);
+            QKeySequence untranslatedSequence = QKeySequence::fromString(untranslatedSequenceStr,
+                                                                         QKeySequence::PortableText);
 
             // Attempt to translate from combination of keys to character, e.g., `Shift+.` becomes `>`, in the case of a QWERTY layout
             QKeySequence translatedSequence
                 = translateToCurrentKeyboardLayout(untranslatedSequence);
-            if (translatedSequence.isEmpty() || !(untranslatedSequence[0].key() & 0xff) || untranslatedSequence[0].key() == Qt::Key_A) {
-                QString untranslatedSequenceStrNormalised = untranslatedSequence.toString(QKeySequence::PortableText);
+            if (translatedSequence.isEmpty() || !(untranslatedSequence[0].key() & 0xff)
+                || untranslatedSequence[0].key() == Qt::Key_A) {
+                QString untranslatedSequenceStrNormalised = untranslatedSequence.toString(
+                    QKeySequence::PortableText);
 
                 // Record the untranslated sequence
                 // Map to non-normalised, because that's what ShortcutsInstanceModel::doActivate expects
@@ -395,7 +414,8 @@ void MacOSShortcutsInstanceModel::doLoadShortcuts()
             if (translatedSequence.isEmpty()) {
                 LOGW() << "Failed to translate sequence " << untranslatedSequenceStr;
             } else {
-                QString translatedSequenceStrNormalised = translatedSequence.toString(QKeySequence::PortableText);
+                QString translatedSequenceStrNormalised = translatedSequence.toString(
+                    QKeySequence::PortableText);
 
                 // If it was successful, record the translated sequence too, and map it to the untranslated sequence
                 // Again, map to non-normalised

@@ -32,7 +32,8 @@
 #include "imusesamplerconfiguration.h"
 
 namespace muse::musesampler {
-class MuseSamplerActionController : public Contextable, public actions::Actionable, public async::Asyncable
+class MuseSamplerActionController : public Contextable, public actions::Actionable,
+    public async::Asyncable
 {
     GlobalInject<IMuseSamplerConfiguration> configuration;
     ContextInject<actions::IActionsDispatcher> dispatcher = { this };

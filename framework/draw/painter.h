@@ -120,7 +120,8 @@ public:
     void drawPolyline(const PointF* points, size_t pointCount);
     inline void drawPolyline(const PolygonF& polyline);
 
-    void drawPolygon(const PointF* points, size_t pointCount, FillRule fillRule = FillRule::OddEvenFill);
+    void drawPolygon(const PointF* points, size_t pointCount,
+                     FillRule fillRule = FillRule::OddEvenFill);
     inline void drawPolygon(const PolygonF& polygon, FillRule fillRule = FillRule::OddEvenFill);
 
     void drawConvexPolygon(const PointF* points, size_t pointCount);

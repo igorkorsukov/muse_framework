@@ -87,7 +87,8 @@ static PrevReleasesNotesList parsePreviousReleasesNotes(const QByteArray& json)
         QJsonObject releaseObj = release.toObject();
         std::string version = releaseObj.value("version").toString().toStdString();
 
-        result.push_back({ std::move(version), releaseObj.value("notes").toString().toStdString() });
+        result.push_back({ std::move(version),
+                           releaseObj.value("notes").toString().toStdString() });
     }
 
     return result;
@@ -143,7 +144,9 @@ Promise<RetVal<ReleaseInfo> > AppUpdateService::checkForUpdate()
             return resolve(m_lastCheckResult);
         }
 
-        progress.val.finished().onReceive(this, [this, historyPath, historyRv, buff, resolve](const ProgressResult& res) {
+        progress.val.finished().onReceive(this,
+                                          [this, historyPath, historyRv, buff,
+                                           resolve](const ProgressResult& res) {
             if (!res.ret) {
                 m_lastCheckResult.ret = res.ret;
                 (void)resolve(m_lastCheckResult);
@@ -187,7 +190,8 @@ Promise<RetVal<ReleaseInfo> > AppUpdateService::checkForUpdate()
 
             m_lastCheckResult = releaseInfo;
 
-            downloadPreviousReleasesNotes(update, [this, resolve](const PrevReleasesNotesList& notes) {
+            downloadPreviousReleasesNotes(update,
+                                          [this, resolve](const PrevReleasesNotesList& notes) {
                 m_lastCheckResult.val.previousReleasesNotes = notes;
                 (void)resolve(m_lastCheckResult);
             });
@@ -225,7 +229,9 @@ RetVal<Progress> AppUpdateService::downloadRelease()
         m_updateProgress.canceled().disconnect(this);
     });
 
-    downloadProgress.val.progressChanged().onReceive(this, [this](int64_t current, int64_t total, const std::string& msg) {
+    downloadProgress.val.progressChanged().onReceive(this,
+                                                     [this](int64_t current, int64_t total,
+                                                            const std::string& msg) {
         m_updateProgress.progress(current, total, msg);
     });
 
@@ -238,7 +244,8 @@ RetVal<Progress> AppUpdateService::downloadRelease()
         const path_t installerPath = configuration()->updateDataPath() + "/" + info.fileName;
         fileSystem()->makePath(muse::io::absoluteDirpath(installerPath));
 
-        const Ret ret = fileSystem()->writeFile(installerPath, ByteArray::fromQByteArrayNoCopy(buff->data()));
+        const Ret ret
+            = fileSystem()->writeFile(installerPath, ByteArray::fromQByteArrayNoCopy(buff->data()));
         if (!ret) {
             m_updateProgress.finish(ProgressResult::make_ret(ret));
             return;
@@ -267,7 +274,8 @@ RequestHeaders AppUpdateService::prepareHeaders(const UpdateRequestHistory& hist
     return headers;
 }
 
-RetVal<AppUpdateService::UpdateRequestHistory> AppUpdateService::readUpdateRequestHistory(const io::path_t& path) const
+RetVal<AppUpdateService::UpdateRequestHistory> AppUpdateService::readUpdateRequestHistory(
+    const io::path_t& path) const
 {
     RetVal<ByteArray> rv = fileSystem()->readFile(path);
     if (!rv.ret) {
@@ -280,7 +288,8 @@ RetVal<AppUpdateService::UpdateRequestHistory> AppUpdateService::readUpdateReque
     UpdateRequestHistory updateRequestHistory;
 
     QString installedWeekBeginning = historyObject.value(INSTALLED_WEEK_BEGINNING_KEY).toString();
-    updateRequestHistory.installedWeekBeginning = QDate::fromString(installedWeekBeginning, Qt::ISODate);
+    updateRequestHistory.installedWeekBeginning = QDate::fromString(installedWeekBeginning,
+                                                                    Qt::ISODate);
 
     QString previousRequestDay = historyObject.value(PREVIOUS_REQUEST_DAY_KEY).toString();
     updateRequestHistory.previousRequestDay = QDate::fromString(previousRequestDay, Qt::ISODate);
@@ -288,7 +297,8 @@ RetVal<AppUpdateService::UpdateRequestHistory> AppUpdateService::readUpdateReque
     return RetVal<UpdateRequestHistory>::make_ok(updateRequestHistory);
 }
 
-Ret AppUpdateService::writeUpdateRequestHistory(const io::path_t& path, const UpdateRequestHistory& updateRequestHistory)
+Ret AppUpdateService::writeUpdateRequestHistory(const io::path_t& path,
+                                                const UpdateRequestHistory& updateRequestHistory)
 {
     if (!updateRequestHistory.isValid()) {
         return make_ret(Ret::Code::UnknownError);
@@ -380,7 +390,8 @@ QJsonObject AppUpdateService::resolveReleaseAsset(const QJsonObject& release) co
     return QJsonObject();
 }
 
-void AppUpdateService::downloadPreviousReleasesNotes(const Version& updateVersion, const PrevReleaseNotesCallback& finished)
+void AppUpdateService::downloadPreviousReleasesNotes(const Version& updateVersion,
+                                                     const PrevReleaseNotesCallback& finished)
 {
     QUrl url = QString::fromStdString(configuration()->previousAppReleasesNotesUrl());
     auto buff = std::make_shared<QBuffer>();
@@ -392,7 +403,9 @@ void AppUpdateService::downloadPreviousReleasesNotes(const Version& updateVersio
         return;
     }
 
-    progress.val.finished().onReceive(this, [this, updateVersion, buff, finished](const ProgressResult& res) {
+    progress.val.finished().onReceive(this,
+                                      [this, updateVersion, buff,
+                                       finished](const ProgressResult& res) {
         PrevReleasesNotesList result;
 
         DEFER {

@@ -113,7 +113,8 @@ MidiDeviceList AlsaMidiInPort::availableDevices() const
             uint32_t types = snd_seq_port_info_get_type(pinfo);
             uint32_t caps = snd_seq_port_info_get_capability(pinfo);
 
-            bool canConnect = ((caps & cap) == cap) && (((types & type_hw) == type_hw) || ((types & type_sw) == type_sw));
+            bool canConnect = ((caps & cap) == cap)
+                              && (((types & type_hw) == type_hw) || ((types & type_sw) == type_sw));
 
             if (canConnect) {
                 MidiDevice dev;
@@ -162,12 +163,14 @@ Ret AlsaMidiInPort::connect(const MidiDeviceID& deviceID)
 
         int err = snd_seq_open(&m_alsa->midiIn, "default", SND_SEQ_OPEN_INPUT, SND_SEQ_NONBLOCK);
         if (err < 0) {
-            return make_ret(Err::MidiFailedConnect, "failed open seq, err: " + std::string(snd_strerror(err)));
+            return make_ret(Err::MidiFailedConnect,
+                            "failed open seq, err: " + std::string(snd_strerror(err)));
         }
 
         snd_seq_set_client_name(m_alsa->midiIn, "MuseScore");
         int port
-            = snd_seq_create_simple_port(m_alsa->midiIn, "MuseScore Input Port", SND_SEQ_PORT_CAP_WRITE, SND_SEQ_PORT_TYPE_MIDI_GENERIC);
+            = snd_seq_create_simple_port(m_alsa->midiIn, "MuseScore Input Port",
+                                         SND_SEQ_PORT_CAP_WRITE, SND_SEQ_PORT_TYPE_MIDI_GENERIC);
         if (port < 0) {
             return make_ret(Err::MidiFailedConnect, "failed create port");
         }
@@ -176,7 +179,8 @@ Ret AlsaMidiInPort::connect(const MidiDeviceID& deviceID)
         m_alsa->port = deviceParams.at(2);
         err = snd_seq_connect_from(m_alsa->midiIn, 0, m_alsa->client, m_alsa->port);
         if (err < 0) {
-            return make_ret(Err::MidiFailedConnect,  "failed connect, err: " + std::string(snd_strerror(err)));
+            return make_ret(Err::MidiFailedConnect,
+                            "failed connect, err: " + std::string(snd_strerror(err)));
         }
 
         m_deviceID = deviceID;

@@ -40,7 +40,8 @@ class DropController : public KDDockWidgets::DropIndicatorOverlayInterface, publ
     ContextInject<IDockWindowProvider> dockWindowProvider = { this };
 
 public:
-    explicit DropController(KDDockWidgets::DropArea* dropArea, const modularity::ContextPtr& iocCtx);
+    explicit DropController(KDDockWidgets::DropArea* dropArea,
+                            const modularity::ContextPtr& iocCtx);
 
     DropLocation hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
@@ -51,14 +52,18 @@ private:
     void endHover();
 
     bool isMouseOverDock(const QPoint& mouseLocalPos, const DockBase* dock) const;
-    void updateToolBarOrientation(DockToolBarView* draggedToolBar, const DropDestination& dropDestination = DropDestination());
-    void setCurrentDropDestination(const DockBase* draggedDock, const DropDestination& dropDestination);
+    void updateToolBarOrientation(DockToolBarView* draggedToolBar,
+                                  const DropDestination& dropDestination = DropDestination());
+    void setCurrentDropDestination(const DockBase* draggedDock,
+                                   const DropDestination& dropDestination);
 
-    DropDestination resolveDropDestination(const DockBase* draggedDock, const QPoint& localPos) const;
+    DropDestination resolveDropDestination(const DockBase* draggedDock,
+                                           const QPoint& localPos) const;
     DockingHolderView* resolveDockingHolder(DockType draggedDockType, const QPoint& localPos) const;
     DockPanelView* resolvePanelForDrop(const DockPanelView* panel, const QPoint& localPos) const;
     Location resolveDropLocation(const DockBase* hoveredDock, const QPoint& localPos) const;
-    QRect resolveHighlightingRect(const DockBase* draggedDock, const DropDestination& destination) const;
+    QRect resolveHighlightingRect(const DockBase* draggedDock,
+                                  const DropDestination& destination) const;
 
     IDockWindow* dockWindow() const;
     DockPageView* currentPage() const;

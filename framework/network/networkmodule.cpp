@@ -55,7 +55,8 @@ void NetworkModule::registerApi()
     if (api) {
 #ifdef MUSE_MODULE_NETWORK_WEBSOCKET
         api->regApiCreator(moduleName(), "MuseApi.Websocket", new ApiCreator<api::WebSocketApi>());
-        api->regApiCreator(moduleName(), "MuseApi.WebsocketServer", new ApiCreator<api::WebSocketServerApi>());
+        api->regApiCreator(moduleName(), "MuseApi.WebsocketServer",
+                           new ApiCreator<api::WebSocketServerApi>());
 #endif
     }
 }

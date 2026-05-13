@@ -41,7 +41,8 @@ static XmlStreamReader::TokenType advanceTo(XmlStreamReader& r, XmlStreamReader:
 {
     for (;;) {
         XmlStreamReader::TokenType t = r.readNext();
-        if (t == want || t == XmlStreamReader::TokenType::EndDocument || t == XmlStreamReader::TokenType::Invalid) {
+        if (t == want || t == XmlStreamReader::TokenType::EndDocument
+            || t == XmlStreamReader::TokenType::Invalid) {
             return t;
         }
     }
@@ -66,7 +67,9 @@ TEST_F(Serialization_XmlStreamReaderTests, WalkAndReadBasics)
     EXPECT_EQ(xr.readNext(), XmlStreamReader::TokenType::StartDocument);
 
     // Next: StartElement(root)
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);
     EXPECT_TRUE(xr.isStartElement());
     EXPECT_EQ(xr.name(), AsciiStringView("root"));
     EXPECT_TRUE(xr.hasAttribute("a"));
@@ -74,27 +77,38 @@ TEST_F(Serialization_XmlStreamReaderTests, WalkAndReadBasics)
     EXPECT_EQ(xr.attribute("b"), u"two");
 
     // Next Characters: "hi"
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
     EXPECT_EQ(xr.asciiText(), AsciiStringView("hi"));
 
     // Skip comment
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Comment), XmlStreamReader::TokenType::Comment);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Comment), XmlStreamReader::TokenType::Comment);
     EXPECT_EQ(xr.asciiText(), AsciiStringView("c"));
 
     // child start/end
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);
     EXPECT_EQ(xr.name(), AsciiStringView("child"));
     // Empty element: we should see its EndElement next (or after any internal step)
     XmlStreamReader::TokenType t = advanceTo(xr, XmlStreamReader::TokenType::EndElement);
     EXPECT_EQ(t, XmlStreamReader::TokenType::EndElement);
 
     // Final Characters: "there"
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
     EXPECT_EQ(xr.text(), u"there");
 
     // Close root and then end document
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::EndElement), XmlStreamReader::TokenType::EndElement);
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::EndDocument), XmlStreamReader::TokenType::EndDocument);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::EndElement),
+              XmlStreamReader::TokenType::EndElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::EndDocument),
+              XmlStreamReader::TokenType::EndDocument);
 }
 
 // ---------- Expand more than one ENTITY value in DOCTYPE ----------
@@ -110,10 +124,14 @@ TEST_F(Serialization_XmlStreamReaderTests, EntityExpansion_MultipleEntitiesInDoc
 
     EXPECT_EQ(xr.readNext(), XmlStreamReader::TokenType::StartDocument);
     EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::DTD), XmlStreamReader::TokenType::DTD);
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);
     EXPECT_EQ(xr.name(), AsciiStringView("r"));
 
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
     // EXPECTED (after fix): both entities expanded
     EXPECT_EQ(xr.text().toStdString(), "Hello, World!");
 }
@@ -131,10 +149,14 @@ TEST_F(Serialization_XmlStreamReaderTests, EntityExpansion_SingleQuotedValue)
 
     EXPECT_EQ(xr.readNext(), XmlStreamReader::TokenType::StartDocument);
     EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::DTD), XmlStreamReader::TokenType::DTD);
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);
     EXPECT_EQ(xr.name(), AsciiStringView("r"));
 
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
     // EXPECTED (after fix): single-quoted value recognized
     EXPECT_EQ(xr.text().toStdString(), "Hello world");
 }
@@ -153,10 +175,14 @@ TEST_F(Serialization_XmlStreamReaderTests, EntityExpansion_NameWithPercentAndKey
 
     EXPECT_EQ(xr.readNext(), XmlStreamReader::TokenType::StartDocument);
     EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::DTD), XmlStreamReader::TokenType::DTD);
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);
     EXPECT_EQ(xr.name(), AsciiStringView("r"));
 
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
     // EXPECTED: name parsed as "NAME", value "X", and WHO expands too → "XWorld"
     EXPECT_EQ(xr.text().toStdString(), "XWorld");
 }
@@ -175,10 +201,14 @@ TEST_F(Serialization_XmlStreamReaderTests, EntityExpansion_NameSanitizerOverStri
     // Need declaration and DTD visible (pugi: parse_declaration | parse_doctype flags)
     EXPECT_EQ(xr.readNext(), XmlStreamReader::TokenType::StartDocument);
     EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::DTD), XmlStreamReader::TokenType::DTD);
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);
     EXPECT_EQ(xr.name(), AsciiStringView("r"));
 
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
 
     // Correct behavior: both expand → "XWorld".
     EXPECT_EQ(xr.text().toStdString(), "XWorld");
@@ -211,8 +241,12 @@ TEST_F(Serialization_XmlStreamReaderTests, OffsetProxyNonZeroOnNode)
     xr.setData(BA(xml));
 
     // Step to StartElement <b>
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement); // <a>
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement); // <b>
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);                                                          // <a>
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);                                                          // <b>
 
     // With the pugi backend using offset as proxy, this should be > 0
     int64_t off = xr.byteOffset();
@@ -235,11 +269,15 @@ TEST_F(Serialization_XmlStreamReaderTests, ProcessingInstructionsIgnored)
     EXPECT_EQ(xr.readNext(), XmlStreamReader::TokenType::StartDocument);
 
     // Root element
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::StartElement), XmlStreamReader::TokenType::StartElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::StartElement),
+              XmlStreamReader::TokenType::StartElement);
     EXPECT_EQ(xr.name(), AsciiStringView("root"));
 
     // "hi"
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
     EXPECT_EQ(xr.asciiText(), AsciiStringView("hi"));
 
     // Next token should jump directly to <child/> start — PI must be ignored
@@ -248,13 +286,21 @@ TEST_F(Serialization_XmlStreamReaderTests, ProcessingInstructionsIgnored)
     EXPECT_EQ(xr.name(), AsciiStringView("child"));
 
     // Empty element closes
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::EndElement), XmlStreamReader::TokenType::EndElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::EndElement),
+              XmlStreamReader::TokenType::EndElement);
 
     // Then trailing "there"
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::Characters), XmlStreamReader::TokenType::Characters);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::Characters),
+              XmlStreamReader::TokenType::Characters);
     EXPECT_EQ(xr.text(), u"there");
 
     // Close out
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::EndElement), XmlStreamReader::TokenType::EndElement);
-    EXPECT_EQ(advanceTo(xr, XmlStreamReader::TokenType::EndDocument), XmlStreamReader::TokenType::EndDocument);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::EndElement),
+              XmlStreamReader::TokenType::EndElement);
+    EXPECT_EQ(advanceTo(xr,
+                        XmlStreamReader::TokenType::EndDocument),
+              XmlStreamReader::TokenType::EndDocument);
 }

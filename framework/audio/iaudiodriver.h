@@ -44,7 +44,10 @@ public:
         AudioDeviceID deviceId;
         OutputSpec output;
         Callback callback;
-        inline bool isValid() const { return output.isValid() && !deviceId.empty() && callback != nullptr; }
+        inline bool isValid() const
+        {
+            return output.isValid() && !deviceId.empty() && callback != nullptr;
+        }
     };
 
     virtual void init() = 0;

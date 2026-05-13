@@ -33,7 +33,8 @@
 
 namespace muse::extensions {
 class ExtensionsUiActions;
-class ExtensionsActionController : public Contextable, public actions::Actionable, public async::Asyncable
+class ExtensionsActionController : public Contextable, public actions::Actionable,
+    public async::Asyncable
 {
     ContextInject<extensions::IExtensionsProvider> provider = { this };
     ContextInject<IInteractive> interactive = { this };

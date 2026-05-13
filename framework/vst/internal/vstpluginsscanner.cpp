@@ -58,7 +58,8 @@ io::paths_t VstPluginsScanner::scanPlugins(Progress*) const
 
     io::paths_t result = pluginPathsFromDefaultLocation();
     io::paths_t plugins = pluginPathsFromCustomLocations(configuration()->userVstDirectories());
-    result.insert(result.end(), std::make_move_iterator(plugins.begin()), std::make_move_iterator(plugins.end()));
+    result.insert(result.end(), std::make_move_iterator(plugins.begin()),
+                  std::make_move_iterator(plugins.end()));
 
     return result;
 }
@@ -74,7 +75,8 @@ io::paths_t VstPluginsScanner::pluginPathsFromCustomLocations(const io::paths_t&
             continue;
         }
 
-        result.insert(result.end(), std::make_move_iterator(paths.val.begin()), std::make_move_iterator(paths.val.end()));
+        result.insert(result.end(), std::make_move_iterator(
+                          paths.val.begin()), std::make_move_iterator(paths.val.end()));
     }
 
     return result;

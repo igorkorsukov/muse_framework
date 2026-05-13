@@ -59,7 +59,8 @@ void Environment::setup()
 {
     IApplication::RunMode runMode = IApplication::RunMode::GuiApp;
 
-    muse::modularity::globalIoc()->registerExport<IApplication>("testing", new muse::ApplicationStub());
+    muse::modularity::globalIoc()->registerExport<IApplication>("testing",
+                                                                new muse::ApplicationStub());
 
     m_globalModule = new GlobalModule();
     m_globalModule->registerResources();

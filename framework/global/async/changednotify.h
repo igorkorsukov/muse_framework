@@ -67,7 +67,8 @@ public:
     }
 
     template<typename Call>
-    void onItemReplaced(Asyncable* receiver, Call f, Asyncable::Mode mode = Asyncable::Mode::SetOnce)
+    void onItemReplaced(Asyncable* receiver, Call f,
+                        Asyncable::Mode mode = Asyncable::Mode::SetOnce)
     {
         m_data->itemReplaced.onReceive(receiver, f, mode);
     }

@@ -35,15 +35,18 @@
 class QAccessibleInterface;
 class QAccessibleEvent;
 namespace muse::diagnostics {
-class DiagnosticAccessibleModel : public QAbstractItemModel, public muse::Contextable, public muse::async::Asyncable
+class DiagnosticAccessibleModel : public QAbstractItemModel, public muse::Contextable,
+    public muse::async::Asyncable
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool isAutoRefresh READ isAutoRefresh WRITE setIsAutoRefresh NOTIFY isAutoRefreshChanged)
+    Q_PROPERTY(
+        bool isAutoRefresh READ isAutoRefresh WRITE setIsAutoRefresh NOTIFY isAutoRefreshChanged)
 
     QML_ELEMENT
 
-    muse::ContextInject<muse::accessibility::IAccessibilityController> accessibilityController = { this };
+    muse::ContextInject<muse::accessibility::IAccessibilityController> accessibilityController
+        = { this };
 
 public:
     explicit DiagnosticAccessibleModel(QObject* parent = nullptr);

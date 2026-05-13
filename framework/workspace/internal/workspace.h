@@ -43,7 +43,8 @@ class Workspace : public IWorkspace, public Contextable, public async::Asyncable
 
 public:
     Workspace(const io::path_t& filePath, const modularity::ContextPtr& iocCtx);
-    Workspace(const io::path_t& filePath, const Workspace* other, const modularity::ContextPtr& iocCtx);
+    Workspace(const io::path_t& filePath, const Workspace* other,
+              const modularity::ContextPtr& iocCtx);
 
     std::string name() const override;
 

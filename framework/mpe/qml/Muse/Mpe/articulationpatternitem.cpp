@@ -34,7 +34,8 @@ static const QString MULTI_NOTE_MENU_ID = "1";
 static const QString SINGLE_NOTE_MENU_TITLE = "Single note";
 static const QString MULTI_NOTE_MENU_TITLE = "Multi note";
 
-ArticulationPatternItem::ArticulationPatternItem(QObject* parent, const ArticulationType type, const bool isSingleNoteType)
+ArticulationPatternItem::ArticulationPatternItem(QObject* parent, const ArticulationType type,
+                                                 const bool isSingleNoteType)
     : QAbstractListModel(parent), m_isSingleNoteType(isSingleNoteType)
 {
     updateType(type);
@@ -76,9 +77,11 @@ void ArticulationPatternItem::updateType(const ArticulationType type)
 
 ArticulationPatternSegment ArticulationPatternItem::buildBlankPatternSegment() const
 {
-    return ArticulationPatternSegment(ArrangementPattern(HUNDRED_PERCENT /*durationFactor*/, 0 /*timestampOffset*/),
+    return ArticulationPatternSegment(ArrangementPattern(HUNDRED_PERCENT /*durationFactor*/,
+                                                         0 /*timestampOffset*/),
                                       PitchPattern(ArticulationMap::EXPECTED_SIZE, TEN_PERCENT, 0),
-                                      ExpressionPattern(ArticulationMap::EXPECTED_SIZE, TEN_PERCENT, 0));
+                                      ExpressionPattern(ArticulationMap::EXPECTED_SIZE, TEN_PERCENT,
+                                                        0));
 }
 
 ArticulationPatternSegmentItem* ArticulationPatternItem::currentPatternSegment() const
@@ -86,7 +89,8 @@ ArticulationPatternSegmentItem* ArticulationPatternItem::currentPatternSegment()
     return m_currentPattern;
 }
 
-void ArticulationPatternItem::setCurrentPatternSegment(ArticulationPatternSegmentItem* newCurrentPattern)
+void ArticulationPatternItem::setCurrentPatternSegment(
+    ArticulationPatternSegmentItem* newCurrentPattern)
 {
     if (m_currentPattern == newCurrentPattern) {
         return;
@@ -112,11 +116,14 @@ void ArticulationPatternItem::load(const ArticulationPattern& pattern)
             scopePositionTo = next->first;
         }
 
-        m_items << new ArticulationPatternSegmentItem(this, it->second, scopePositionFrom, scopePositionTo);
+        m_items << new ArticulationPatternSegmentItem(this, it->second, scopePositionFrom,
+                                                      scopePositionTo);
     }
 
     if (pattern.empty()) {
-        m_items << new ArticulationPatternSegmentItem(this, buildBlankPatternSegment(), 0, HUNDRED_PERCENT);
+        m_items << new ArticulationPatternSegmentItem(this,
+                                                      buildBlankPatternSegment(), 0,
+                                                      HUNDRED_PERCENT);
     }
 
     endResetModel();
@@ -137,7 +144,8 @@ void ArticulationPatternItem::appendNewSegment()
     ArticulationPatternSegmentItem* newSegment = new ArticulationPatternSegmentItem(this,
                                                                                     buildBlankPatternSegment(),
                                                                                     m_currentPattern->positionTo(),
-                                                                                    m_currentPattern->positionTo() + halvedDuration);
+                                                                                    m_currentPattern->positionTo()
+                                                                                    + halvedDuration);
 
     int currentSegmentIndex = m_items.indexOf(m_currentPattern);
 

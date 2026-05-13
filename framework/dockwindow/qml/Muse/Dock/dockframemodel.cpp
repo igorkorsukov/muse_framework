@@ -72,7 +72,8 @@ bool DockFrameModel::eventFilter(QObject* watched, QEvent* event)
 
 void DockFrameModel::onContextMenuChanged(QObject* obj)
 {
-    const KDDockWidgets::DockWidgetBase* dwb = dynamic_cast<const KDDockWidgets::DockWidgetBase*>(obj);
+    const KDDockWidgets::DockWidgetBase* dwb
+        = dynamic_cast<const KDDockWidgets::DockWidgetBase*>(obj);
     if (!dwb) {
         return;
     }
@@ -86,7 +87,8 @@ void DockFrameModel::onContextMenuChanged(QObject* obj)
 
 void DockFrameModel::onToolBarComponentChanged(QObject* obj)
 {
-    const KDDockWidgets::DockWidgetBase* dwb = dynamic_cast<const KDDockWidgets::DockWidgetBase*>(obj);
+    const KDDockWidgets::DockWidgetBase* dwb
+        = dynamic_cast<const KDDockWidgets::DockWidgetBase*>(obj);
     if (!dwb) {
         return;
     }
@@ -151,12 +153,14 @@ void DockFrameModel::listenChangesInFrame()
 
         DockProperties properties = readPropertiesFromObject(allDocks.first());
         bool isHorizontalPanel = (properties.type == DockType::Panel)
-                                 && (properties.location == Location::Top || properties.location == Location::Bottom);
+                                 && (properties.location == Location::Top
+                                     || properties.location == Location::Bottom);
         setIsHorizontalPanel(isHorizontalPanel);
 
         updateTitleBar();
 
-        bool titleBarAllowed = (properties.type == DockType::Panel) && (properties.floatable || properties.closable);
+        bool titleBarAllowed = (properties.type == DockType::Panel)
+                               && (properties.floatable || properties.closable);
         setTitleBarAllowed(titleBarAllowed);
 
         updateNavigationSection();

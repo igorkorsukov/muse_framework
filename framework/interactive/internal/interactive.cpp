@@ -116,25 +116,37 @@ IInteractive::ButtonData Interactive::buttonData(Button b) const
 
     switch (b) {
     case IInteractive::Button::NoButton:    return ButtonData(int(b), "");
-    case IInteractive::Button::Ok:          return ButtonData(int(b), muse::trc("global", "OK"), accent);
-    case IInteractive::Button::Save:        return ButtonData(int(b), muse::trc("global", "Save"), accent);
-    case IInteractive::Button::SaveAll:     return ButtonData(int(b), muse::trc("global", "Save all"));
-    case IInteractive::Button::DontSave:    return ButtonData(int(b), muse::trc("global", "Don’t save"));
+    case IInteractive::Button::Ok:          return ButtonData(int(b), muse::trc("global",
+                                                                                "OK"), accent);
+    case IInteractive::Button::Save:        return ButtonData(int(b), muse::trc("global",
+                                                                                "Save"), accent);
+    case IInteractive::Button::SaveAll:     return ButtonData(int(b), muse::trc("global",
+                                                                                "Save all"));
+    case IInteractive::Button::DontSave:    return ButtonData(int(b),
+                                                              muse::trc("global", "Don’t save"));
     case IInteractive::Button::Open:        return ButtonData(int(b), muse::trc("global", "Open"));
-    case IInteractive::Button::Yes:         return ButtonData(int(b), muse::trc("global", "Yes"), accent);
-    case IInteractive::Button::YesToAll:    return ButtonData(int(b), muse::trc("global", "Yes to all"), accent);
+    case IInteractive::Button::Yes:         return ButtonData(int(b), muse::trc("global",
+                                                                                "Yes"), accent);
+    case IInteractive::Button::YesToAll:    return ButtonData(int(b),
+                                                              muse::trc("global",
+                                                                        "Yes to all"), accent);
     case IInteractive::Button::No:          return ButtonData(int(b), muse::trc("global", "No"));
-    case IInteractive::Button::NoToAll:     return ButtonData(int(b), muse::trc("global", "No to all"));
+    case IInteractive::Button::NoToAll:     return ButtonData(int(b),
+                                                              muse::trc("global", "No to all"));
     case IInteractive::Button::Abort:       return ButtonData(int(b), muse::trc("global", "Abort"));
     case IInteractive::Button::Retry:       return ButtonData(int(b), muse::trc("global", "Retry"));
-    case IInteractive::Button::Ignore:      return ButtonData(int(b), muse::trc("global", "Ignore"));
+    case IInteractive::Button::Ignore:      return ButtonData(int(b),
+                                                              muse::trc("global", "Ignore"));
     case IInteractive::Button::Close:       return ButtonData(int(b), muse::trc("global", "Close"));
-    case IInteractive::Button::Cancel:      return ButtonData(int(b), muse::trc("global", "Cancel"));
-    case IInteractive::Button::Discard:     return ButtonData(int(b), muse::trc("global", "Discard"));
+    case IInteractive::Button::Cancel:      return ButtonData(int(b),
+                                                              muse::trc("global", "Cancel"));
+    case IInteractive::Button::Discard:     return ButtonData(int(b),
+                                                              muse::trc("global", "Discard"));
     case IInteractive::Button::Help:        return ButtonData(int(b), muse::trc("global", "Help"));
     case IInteractive::Button::Apply:       return ButtonData(int(b), muse::trc("global", "Apply"));
     case IInteractive::Button::Reset:       return ButtonData(int(b), muse::trc("global", "Reset"));
-    case IInteractive::Button::Continue:    return ButtonData(int(b), muse::trc("global", "Continue"));
+    case IInteractive::Button::Continue:    return ButtonData(int(b), muse::trc("global",
+                                                                                "Continue"));
     case IInteractive::Button::Next:
     case IInteractive::Button::Back:
     case IInteractive::Button::Select:
@@ -169,7 +181,8 @@ UriQuery Interactive::makeQuery(const std::string& type, const std::string& cont
     .set("detailedText", text.detailedText)
     .set("defaultButtonId", defBtn)
     .set("withIcon", options.testFlag(IInteractive::Option::WithIcon))
-    .set("withDontShowAgainCheckBox", options.testFlag(IInteractive::Option::WithDontShowAgainCheckBox))
+    .set("withDontShowAgainCheckBox",
+         options.testFlag(IInteractive::Option::WithDontShowAgainCheckBox))
     .set("dialogTitle", dialogTitle);
 
     ValList buttonsList;
@@ -202,10 +215,13 @@ IInteractive::Result Interactive::makeResult(const Val& val) const
     return IInteractive::Result(btn, showAgain);
 }
 
-async::Promise<IInteractive::Result> Interactive::openStandardAsync(const std::string& type, const std::string& contentTitle,
+async::Promise<IInteractive::Result> Interactive::openStandardAsync(const std::string& type,
+                                                                    const std::string& contentTitle,
                                                                     const Text& text,
-                                                                    const ButtonDatas& buttons, int defBtn,
-                                                                    const Options& options, const std::string& dialogTitle)
+                                                                    const ButtonDatas& buttons,
+                                                                    int defBtn,
+                                                                    const Options& options,
+                                                                    const std::string& dialogTitle)
 {
     UriQuery q = makeQuery(type, contentTitle, text, buttons, defBtn, options, dialogTitle);
 
@@ -221,10 +237,12 @@ async::Promise<IInteractive::Result> Interactive::openStandardAsync(const std::s
     });
 }
 
-IInteractive::Result Interactive::openStandardSync(const std::string& type, const std::string& contentTitle,
+IInteractive::Result Interactive::openStandardSync(const std::string& type,
+                                                   const std::string& contentTitle,
                                                    const Text& text,
                                                    const ButtonDatas& buttons, int defBtn,
-                                                   const Options& options, const std::string& dialogTitle)
+                                                   const Options& options,
+                                                   const std::string& dialogTitle)
 {
     UriQuery q = makeQuery(type, contentTitle, text, buttons, defBtn, options, dialogTitle);
     RetVal<Val> rv = openSync(q);
@@ -238,14 +256,17 @@ IInteractive::Result Interactive::openStandardSync(const std::string& type, cons
 
 IInteractive::Result Interactive::questionSync(const std::string& contentTitle, const Text& text,
                                                const ButtonDatas& buttons, int defBtn,
-                                               const Options& options, const std::string& dialogTitle)
+                                               const Options& options,
+                                               const std::string& dialogTitle)
 {
     return openStandardSync("QUESTION", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> Interactive::question(const std::string& contentTitle, const Text& text,
+async::Promise<IInteractive::Result> Interactive::question(const std::string& contentTitle,
+                                                           const Text& text,
                                                            const ButtonDatas& buttons, int defBtn,
-                                                           const Options& options, const std::string& dialogTitle)
+                                                           const Options& options,
+                                                           const std::string& dialogTitle)
 {
     return openStandardAsync("QUESTION", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
@@ -257,23 +278,28 @@ IInteractive::Result Interactive::infoSync(const std::string& contentTitle, cons
     return openStandardSync("INFO", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> Interactive::info(const std::string& contentTitle, const Text& text,
+async::Promise<IInteractive::Result> Interactive::info(const std::string& contentTitle,
+                                                       const Text& text,
                                                        const ButtonDatas& buttons, int defBtn,
-                                                       const Options& options, const std::string& dialogTitle)
+                                                       const Options& options,
+                                                       const std::string& dialogTitle)
 {
     return openStandardAsync("INFO", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
 IInteractive::Result Interactive::warningSync(const std::string& contentTitle, const Text& text,
                                               const ButtonDatas& buttons, int defBtn,
-                                              const Options& options, const std::string& dialogTitle)
+                                              const Options& options,
+                                              const std::string& dialogTitle)
 {
     return openStandardSync("WARNING", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> Interactive::warning(const std::string& contentTitle, const Text& text,
+async::Promise<IInteractive::Result> Interactive::warning(const std::string& contentTitle,
+                                                          const Text& text,
                                                           const ButtonDatas& buttons, int defBtn,
-                                                          const Options& options, const std::string& dialogTitle)
+                                                          const Options& options,
+                                                          const std::string& dialogTitle)
 {
     return openStandardAsync("WARNING", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
@@ -285,9 +311,11 @@ IInteractive::Result Interactive::errorSync(const std::string& contentTitle, con
     return openStandardSync("ERROR", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
 
-async::Promise<IInteractive::Result> Interactive::error(const std::string& contentTitle, const Text& text,
+async::Promise<IInteractive::Result> Interactive::error(const std::string& contentTitle,
+                                                        const Text& text,
                                                         const ButtonDatas& buttons, int defBtn,
-                                                        const Options& options, const std::string& dialogTitle)
+                                                        const Options& options,
+                                                        const std::string& dialogTitle)
 {
     return openStandardAsync("ERROR", contentTitle, text, buttons, defBtn, options, dialogTitle);
 }
@@ -310,7 +338,8 @@ enum class FileDialogMode {
     SaveFile = 2
 };
 
-static UriQuery makeSelectFileQuery(FileDialogMode mode, const std::string& title, const io::path_t& current,
+static UriQuery makeSelectFileQuery(FileDialogMode mode, const std::string& title,
+                                    const io::path_t& current,
                                     const std::vector<std::string>& filter, const int options = 0)
 {
     UriQuery q("muse://interactive/selectfile");
@@ -349,12 +378,15 @@ static QString filterToString(const std::vector<std::string>& filter)
 
 #endif
 
-async::Promise<io::path_t> Interactive::selectOpeningFile(const std::string& title, const io::path_t& dir,
+async::Promise<io::path_t> Interactive::selectOpeningFile(const std::string& title,
+                                                          const io::path_t& dir,
                                                           const std::vector<std::string>& filter)
 {
 #ifndef Q_OS_LINUX
     return async::make_promise<io::path_t>([title, dir, filter](auto resolve, auto reject) {
-        QFileDialog* dlg = new QFileDialog(nullptr, QString::fromStdString(title), dir.toQString(), filterToString(filter));
+        QFileDialog* dlg
+            = new QFileDialog(nullptr, QString::fromStdString(title), dir.toQString(),
+                              filterToString(filter));
 
         dlg->setFileMode(QFileDialog::ExistingFile);
 
@@ -396,12 +428,14 @@ async::Promise<io::path_t> Interactive::selectOpeningFile(const std::string& tit
 #endif
 }
 
-io::path_t Interactive::selectOpeningFileSync(const std::string& title, const io::path_t& dir, const std::vector<std::string>& filter,
+io::path_t Interactive::selectOpeningFileSync(const std::string& title, const io::path_t& dir,
+                                              const std::vector<std::string>& filter,
                                               const int options)
 {
 #ifndef Q_OS_LINUX
     const QFileDialog::Options qoptions = QFileDialog::Options::fromInt(options);
-    QString result = QFileDialog::getOpenFileName(nullptr, QString::fromStdString(title), dir.toQString(), filterToString(
+    QString result = QFileDialog::getOpenFileName(nullptr, QString::fromStdString(
+                                                      title), dir.toQString(), filterToString(
                                                       filter), nullptr, qoptions);
     return result;
 #else
@@ -416,12 +450,15 @@ io::path_t Interactive::selectOpeningFileSync(const std::string& title, const io
 #endif
 }
 
-io::paths_t Interactive::selectOpeningFilesSync(const std::string& title, const io::path_t& dir, const std::vector<std::string>& filter,
+io::paths_t Interactive::selectOpeningFilesSync(const std::string& title, const io::path_t& dir,
+                                                const std::vector<std::string>& filter,
                                                 const int options)
 {
 #ifndef Q_OS_LINUX
     const QFileDialog::Options qoptions = QFileDialog::Options::fromInt(options);
-    const QStringList result = QFileDialog::getOpenFileNames(nullptr, QString::fromStdString(title), dir.toQString(), filterToString(
+    const QStringList result = QFileDialog::getOpenFileNames(nullptr, QString::fromStdString(
+                                                                 title),
+                                                             dir.toQString(), filterToString(
                                                                  filter), nullptr, qoptions);
 
     io::paths_t paths;
@@ -437,19 +474,22 @@ io::paths_t Interactive::selectOpeningFilesSync(const std::string& title, const 
 #endif
 }
 
-io::path_t Interactive::selectSavingFileSync(const std::string& title, const io::path_t& dir, const std::vector<std::string>& filter,
+io::path_t Interactive::selectSavingFileSync(const std::string& title, const io::path_t& dir,
+                                             const std::vector<std::string>& filter,
                                              bool confirmOverwrite)
 {
 #ifndef Q_OS_LINUX
     QFileDialog::Options options;
     options.setFlag(QFileDialog::DontConfirmOverwrite, !confirmOverwrite);
-    QString result = QFileDialog::getSaveFileName(nullptr, QString::fromStdString(title), dir.toQString(), filterToString(
+    QString result = QFileDialog::getSaveFileName(nullptr, QString::fromStdString(
+                                                      title), dir.toQString(), filterToString(
                                                       filter), nullptr, options);
     return result;
 #else
 
     UriQuery q
-        = makeSelectFileQuery(FileDialogMode::SaveFile, title, dir, filter, !confirmOverwrite ? QFileDialog::DontConfirmOverwrite : 0);
+        = makeSelectFileQuery(FileDialogMode::SaveFile, title, dir, filter,
+                              !confirmOverwrite ? QFileDialog::DontConfirmOverwrite : 0);
 
     RetVal<Val> rv = openSync(q);
     if (!rv.ret) {
@@ -463,7 +503,8 @@ io::path_t Interactive::selectSavingFileSync(const std::string& title, const io:
 io::path_t Interactive::selectDirectory(const std::string& title, const io::path_t& dir)
 {
 #ifndef Q_OS_LINUX
-    QString result = QFileDialog::getExistingDirectory(nullptr, QString::fromStdString(title), dir.toQString());
+    QString result = QFileDialog::getExistingDirectory(nullptr, QString::fromStdString(
+                                                           title), dir.toQString());
     return result;
 #else
 
@@ -480,7 +521,8 @@ io::path_t Interactive::selectDirectory(const std::string& title, const io::path
 #endif
 }
 
-io::paths_t Interactive::selectMultipleDirectories(const std::string& title, const io::path_t& dir, const io::paths_t& selectedDirectories)
+io::paths_t Interactive::selectMultipleDirectories(const std::string& title, const io::path_t& dir,
+                                                   const io::paths_t& selectedDirectories)
 {
     UriQuery q("muse://interactive/selectmultipledirectories");
     q.set("title", title)
@@ -509,13 +551,15 @@ static std::vector<QColor> getCustomColors()
 
 static void setCustomColors(const std::vector<QColor>& customColors)
 {
-    const int customColorCount = std::min(QColorDialog::customCount(), static_cast<int>(customColors.size()));
+    const int customColorCount
+        = std::min(QColorDialog::customCount(), static_cast<int>(customColors.size()));
     for (int i = 0; i < customColorCount; ++i) {
         QColorDialog::setCustomColor(i, customColors[i]);
     }
 }
 
-async::Promise<Color> Interactive::selectColor(const Color& color, const std::string& title, bool allowAlpha)
+async::Promise<Color> Interactive::selectColor(const Color& color, const std::string& title,
+                                               bool allowAlpha)
 {
     if (m_isSelectColorOpened) {
         LOGW() << "already opened";
@@ -816,7 +860,10 @@ Promise<Ret> Interactive::closeObjects(const std::vector<ObjectInfo>& objs)
 
         for (const ObjectInfo& obj : objs) {
             const QString objectId = obj.objectId.toString();
-            bool ok = m_onClosedFuncs.try_emplace(objectId, [this, objectId, count, ret, resolve](const Ret& funcRet) {
+            bool ok
+                = m_onClosedFuncs.try_emplace(objectId,
+                                              [this, objectId, count, ret,
+                                               resolve](const Ret& funcRet) {
                 if (!funcRet) {
                     *ret = funcRet;
                 }
@@ -882,7 +929,8 @@ Ret Interactive::closeObjectsSync(const std::vector<ObjectInfo>& objs)
     return ret;
 }
 
-void Interactive::fillExtData(QmlLaunchData* data, const UriQuery& q, const QVariantMap& params_) const
+void Interactive::fillExtData(QmlLaunchData* data, const UriQuery& q,
+                              const QVariantMap& params_) const
 {
     static Uri VIEWER_URI = Uri("muse://extensions/viewer");
 
@@ -1074,7 +1122,8 @@ RetVal<Val> Interactive::toRetVal(const QVariant& jsrv) const
     return rv;
 }
 
-RetVal<Interactive::OpenData> Interactive::openExtensionDialog(const UriQuery& q, const QVariantMap& params)
+RetVal<Interactive::OpenData> Interactive::openExtensionDialog(const UriQuery& q,
+                                                               const QVariantMap& params)
 {
     QmlLaunchData data;
     fillExtData(&data, q, params);
@@ -1088,7 +1137,8 @@ RetVal<Interactive::OpenData> Interactive::openExtensionDialog(const UriQuery& q
     return result;
 }
 
-RetVal<Interactive::OpenData> Interactive::openWidgetDialog(const Uri& uri, const QVariantMap& params)
+RetVal<Interactive::OpenData> Interactive::openWidgetDialog(const Uri& uri,
+                                                            const QVariantMap& params)
 {
     RetVal<OpenData> result;
 
@@ -1191,7 +1241,9 @@ void Interactive::onOpen(const QVariant& type, const QVariant& objectId, QObject
     m_openingObject.objectId = objectId;
     m_openingObject.window = window;
     if (!m_openingObject.window) {
-        m_openingObject.window = (containerMeta == ContainerMeta::PrimaryPage) ? mainWindow()->qWindow() : qApp->focusWindow();
+        m_openingObject.window
+            = (containerMeta
+               == ContainerMeta::PrimaryPage) ? mainWindow()->qWindow() : qApp->focusWindow();
     }
 
     if (m_openingObject.query.param("floating").toBool()) {
@@ -1290,7 +1342,8 @@ std::vector<Interactive::ObjectInfo> Interactive::allOpenObjects() const
     return result;
 }
 
-std::vector<Interactive::ObjectInfo> Interactive::collectOpenObjects(std::function<bool(const ObjectInfo&)> accepted) const
+std::vector<Interactive::ObjectInfo> Interactive::collectOpenObjects(
+    std::function<bool(const ObjectInfo&)> accepted) const
 {
     std::vector<ObjectInfo> result;
     for (const ObjectInfo& obj : allOpenObjects()) {

@@ -77,7 +77,8 @@ QString GlobalConfiguration::resolveAppDataPath() const
     return "/files/share";
 #else
     // Try relative path (needed for portable AppImage and non-standard installations)
-    QDir dir(QCoreApplication::applicationDirPath() + QString("/../" MUSE_APP_INSTALL_RESOURCES_LOCATION));
+    QDir dir(QCoreApplication::applicationDirPath()
+             + QString("/../" MUSE_APP_INSTALL_RESOURCES_LOCATION));
     if (dir.exists()) {
         return dir.absolutePath() + "/";
     }
@@ -102,7 +103,8 @@ io::path_t GlobalConfiguration::userAppDataPath() const
 QString GlobalConfiguration::resolveUserAppDataPath() const
 {
 #ifdef WIN_PORTABLE
-    return QDir::cleanPath(QString("%1/../../../Data/settings").arg(QCoreApplication::applicationDirPath()));
+    return QDir::cleanPath(QString("%1/../../../Data/settings").arg(QCoreApplication::
+                                                                    applicationDirPath()));
 #elif defined(Q_OS_WASM)
     return QString("/files/data");
 #else
@@ -117,7 +119,8 @@ io::path_t GlobalConfiguration::userBackupPath() const
 
 io::path_t GlobalConfiguration::userDataPath() const
 {
-    static io::path_t p = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + QCoreApplication::applicationName();
+    static io::path_t p = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                          + "/" + QCoreApplication::applicationName();
     return p;
 }
 

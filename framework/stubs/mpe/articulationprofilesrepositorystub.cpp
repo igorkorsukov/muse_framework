@@ -29,7 +29,8 @@ ArticulationsProfilePtr ArticulationProfilesRepositoryStub::createNew() const
     return std::make_shared<ArticulationsProfile>();
 }
 
-ArticulationsProfilePtr ArticulationProfilesRepositoryStub::defaultProfile(const ArticulationFamily) const
+ArticulationsProfilePtr ArticulationProfilesRepositoryStub::defaultProfile(const ArticulationFamily)
+const
 {
     return std::make_shared<ArticulationsProfile>();
 }
@@ -39,7 +40,8 @@ ArticulationsProfilePtr ArticulationProfilesRepositoryStub::loadProfile(const io
     return std::make_shared<ArticulationsProfile>();
 }
 
-void ArticulationProfilesRepositoryStub::saveProfile(const io::path_t&, const ArticulationsProfilePtr)
+void ArticulationProfilesRepositoryStub::saveProfile(const io::path_t&,
+                                                     const ArticulationsProfilePtr)
 {
 }
 

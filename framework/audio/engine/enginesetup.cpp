@@ -70,7 +70,8 @@ void EngineGlobalSetup::registerExports()
 void EngineGlobalSetup::resolveImports()
 {
     m_fxResolver->registerResolver(AudioFxType::MuseFx, std::make_shared<fx::MuseFxResolver>());
-    m_synthResolver->registerResolver(AudioSourceType::Fluid, std::make_shared<synth::FluidResolver>());
+    m_synthResolver->registerResolver(AudioSourceType::Fluid,
+                                      std::make_shared<synth::FluidResolver>());
 }
 
 void EngineGlobalSetup::onDeinit()

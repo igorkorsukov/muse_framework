@@ -25,7 +25,8 @@
 
 using namespace muse::testflow;
 
-static const muse::UriQuery SHOW_SCRIPTS_URI("muse://diagnostics/testflow/scripts?modal=false&floating=true");
+static const muse::UriQuery SHOW_SCRIPTS_URI(
+    "muse://diagnostics/testflow/scripts?modal=false&floating=true");
 
 void TestflowActionsController::init()
 {

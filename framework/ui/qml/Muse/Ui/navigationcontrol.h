@@ -36,12 +36,15 @@ class NavigationPanel;
 class NavigationControl : public AbstractNavigation, public INavigationControl
 {
     Q_OBJECT
-    Q_PROPERTY(muse::ui::NavigationPanel * panel READ panel_property WRITE setPanel NOTIFY panelChanged)
+    Q_PROPERTY(
+        muse::ui::NavigationPanel
+        * panel READ panel_property WRITE setPanel NOTIFY panelChanged)
     QML_ELEMENT
 
 public:
     explicit NavigationControl(QObject* parent = nullptr);
-    explicit NavigationControl(const muse::modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
+    explicit NavigationControl(const muse::modularity::ContextPtr& iocCtx,
+                               QObject* parent = nullptr);
     ~NavigationControl() override;
 
     NavigationPanel* panel_property() const;

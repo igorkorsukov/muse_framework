@@ -321,7 +321,8 @@ TEST_F(AudioPlugins_RegisterAudioPluginsScenarioTest, RegisterPlugin)
     metaList.push_back(pluginMeta2);
 
     ASSERT_FALSE(m_metaReaders.empty());
-    AudioPluginMetaReaderMock* mock = dynamic_cast<AudioPluginMetaReaderMock*>(m_metaReaders[0].get());
+    AudioPluginMetaReaderMock* mock
+        = dynamic_cast<AudioPluginMetaReaderMock*>(m_metaReaders[0].get());
     ASSERT_TRUE(mock);
 
     ON_CALL(*mock, readMeta(pluginPath))

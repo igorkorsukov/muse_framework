@@ -24,8 +24,10 @@
 
 using namespace muse::mpe;
 
-ArticulationPatternSegmentItem::ArticulationPatternSegmentItem(QObject* parent, const ArticulationPatternSegment& segment,
-                                                               const int scopePositionFrom, const int scopePositionTo)
+ArticulationPatternSegmentItem::ArticulationPatternSegmentItem(QObject* parent,
+                                                               const ArticulationPatternSegment& segment,
+                                                               const int scopePositionFrom,
+                                                               const int scopePositionTo)
     : QObject(parent)
 {
     load(segment, scopePositionFrom, scopePositionTo);
@@ -49,7 +51,8 @@ void ArticulationPatternSegmentItem::load(const ArticulationPatternSegment& segm
                                           const int scopePositionFrom,
                                           const int scopePositionTo)
 {
-    auto pointsFromMap = [](const SharedMap<duration_percentage_t, percentage_t>& map) -> QList<QPoint> {
+    auto pointsFromMap = [](const SharedMap<duration_percentage_t,
+                                            percentage_t>& map) -> QList<QPoint> {
         QList<QPoint> result;
         for (const auto& pair : map) {
             result << QPoint(pair.first, pair.second);
@@ -140,7 +143,8 @@ int ArticulationPatternSegmentItem::selectedDynamicOffsetIndex() const
     return m_selectedDynamicOffsetIndex;
 }
 
-void ArticulationPatternSegmentItem::setSelectedDynamicOffsetIndex(int newSelectedDynamicOffsetIndex)
+void ArticulationPatternSegmentItem::setSelectedDynamicOffsetIndex(
+    int newSelectedDynamicOffsetIndex)
 {
     if (m_selectedDynamicOffsetIndex == newSelectedDynamicOffsetIndex) {
         return;

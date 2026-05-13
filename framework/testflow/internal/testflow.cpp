@@ -108,7 +108,8 @@ void Testflow::restoreAffectOnServices()
     muse::draw::Font::g_disableFontMerging = m_affectedServiceState.fontDisabledMerging;
 }
 
-void Testflow::loadContext(ITestCaseContextPtr ctx, const io::path_t& context, const std::string& contextVal, ScriptEngine* e)
+void Testflow::loadContext(ITestCaseContextPtr ctx, const io::path_t& context,
+                           const std::string& contextVal, ScriptEngine* e)
 {
     auto loadFromJson = [ctx, e](const ByteArray& json) {
         std::string err;
@@ -212,7 +213,8 @@ void Testflow::execScript(const io::path_t& path, const Options& opt)
 
     setStatus(Status::Running);
     QString func = opt.func.empty() ? QString("main") : QString::fromStdString(opt.func);
-    QJSValueList args = opt.funcArgs.empty() ? QJSValueList() : parseFuncArgs(opt.funcArgs, m_engine);
+    QJSValueList args
+        = opt.funcArgs.empty() ? QJSValueList() : parseFuncArgs(opt.funcArgs, m_engine);
     Ret ret = m_engine->call(func, args);
 
     //! NOTE Also maybe abort or error

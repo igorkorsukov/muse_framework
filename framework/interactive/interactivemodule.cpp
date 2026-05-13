@@ -71,13 +71,17 @@ void InteractiveModule::resolveImports()
 {
     auto ir = globalIoc()->resolve<IInteractiveUriRegister>(mname);
     if (ir) {
-        ir->registerQmlUri(Uri("muse://interactive/standard"), "Muse.Interactive", "StandardDialog");
+        ir->registerQmlUri(Uri("muse://interactive/standard"), "Muse.Interactive",
+                           "StandardDialog");
         ir->registerQmlUri(Uri("muse://interactive/error"), "Muse.Interactive", "ErrorDetailsView");
-        ir->registerQmlUri(Uri("muse://interactive/progress"), "Muse.Interactive", "ProgressDialog");
+        ir->registerQmlUri(Uri("muse://interactive/progress"), "Muse.Interactive",
+                           "ProgressDialog");
         ir->registerQmlUri(Uri("muse://interactive/selectfile"), "Muse.Interactive", "FileDialog");
         ir->registerQmlUri(Uri("muse://interactive/selectdir"), "Muse.Interactive", "FolderDialog");
 
-        ir->registerQmlUri(Uri("muse://devtools/interactive/sample"), "Muse.Interactive", "SampleDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://devtools/interactive/sample"), "Muse.Interactive",
+                           "SampleDialog");
         ir->registerWidgetUri<TestDialog>(Uri("muse://devtools/interactive/testdialog"));
     }
 }

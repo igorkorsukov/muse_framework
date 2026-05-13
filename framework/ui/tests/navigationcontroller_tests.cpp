@@ -166,7 +166,8 @@ public:
         return p;
     }
 
-    Section* make_directed_section(int sectOrder, size_t controlsCount, NavigationPanel::QmlDirection dir)
+    Section* make_directed_section(int sectOrder, size_t controlsCount,
+                                   NavigationPanel::QmlDirection dir)
     {
         Section* s = new Section();
 
@@ -285,8 +286,10 @@ public:
                    << ", active: " << p->panel->active() << ", enabled: " << p->panel->enabled();
 
             for (const Control* c : p->controls) {
-                LOGI() << "control: " << c->control->name() << ", idx: " << c->control->index().to_string()
-                       << ", active: " << c->control->active() << ", enabled: " << c->control->enabled();
+                LOGI() << "control: " << c->control->name() << ", idx: " <<
+                c->control->index().to_string()
+                       << ", active: " << c->control->active() << ", enabled: " <<
+                c->control->enabled();
             }
         }
     }

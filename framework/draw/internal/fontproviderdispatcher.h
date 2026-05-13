@@ -31,7 +31,8 @@ class QFontProvider;
 class FontProviderDispatcher : public IFontProvider
 {
 public:
-    FontProviderDispatcher(std::shared_ptr<FontProvider> mainFProvider, std::shared_ptr<QFontProvider> qtFProvider);
+    FontProviderDispatcher(std::shared_ptr<FontProvider> mainFProvider,
+                           std::shared_ptr<QFontProvider> qtFProvider);
 
     int addSymbolFont(const String& family, const io::path_t& path) override;
 

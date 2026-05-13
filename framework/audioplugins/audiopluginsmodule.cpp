@@ -45,9 +45,15 @@ void AudioPluginsModule::registerExports()
     m_configuration = std::make_shared<AudioPluginsConfiguration>(globalCtx());
 
     globalIoc()->registerExport<IAudioPluginsConfiguration>(moduleName(), m_configuration);
-    globalIoc()->registerExport<IKnownAudioPluginsRegister>(moduleName(), std::make_shared<KnownAudioPluginsRegister>());
-    globalIoc()->registerExport<IAudioPluginsScannerRegister>(moduleName(), std::make_shared<AudioPluginsScannerRegister>());
-    globalIoc()->registerExport<IAudioPluginMetaReaderRegister>(moduleName(), std::make_shared<AudioPluginMetaReaderRegister>());
+    globalIoc()->registerExport<IKnownAudioPluginsRegister>(
+        moduleName(),
+        std::make_shared<KnownAudioPluginsRegister>());
+    globalIoc()->registerExport<IAudioPluginsScannerRegister>(
+        moduleName(),
+        std::make_shared<AudioPluginsScannerRegister>());
+    globalIoc()->registerExport<IAudioPluginMetaReaderRegister>(
+        moduleName(),
+        std::make_shared<AudioPluginMetaReaderRegister>());
 }
 
 void AudioPluginsModule::resolveImports()
@@ -59,7 +65,8 @@ void AudioPluginsModule::resolveImports()
     }
 }
 
-modularity::IContextSetup* AudioPluginsModule::newContext(const muse::modularity::ContextPtr& ctx) const
+modularity::IContextSetup* AudioPluginsModule::newContext(const muse::modularity::ContextPtr& ctx)
+const
 {
     return new AudioPluginsContext(ctx);
 }

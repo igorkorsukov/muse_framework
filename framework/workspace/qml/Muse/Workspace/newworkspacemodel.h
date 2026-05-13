@@ -31,7 +31,8 @@ class NewWorkspaceModel : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString workspaceName READ workspaceName WRITE setWorkspaceName NOTIFY workspaceNameChanged)
+    Q_PROPERTY(
+        QString workspaceName READ workspaceName WRITE setWorkspaceName NOTIFY workspaceNameChanged)
     Q_PROPERTY(bool isWorkspaceNameAllowed READ isWorkspaceNameAllowed NOTIFY workspaceNameChanged)
     Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY workspaceNameChanged)
 

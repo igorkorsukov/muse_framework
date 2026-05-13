@@ -186,7 +186,8 @@ private:
         }
 
         timestamp_t timestampOffsetValue = mult(m_arrangementCtx.nominalDuration,
-                                                percentageToFactor(articulationsApplied.averageTimestampOffset()));
+                                                percentageToFactor(articulationsApplied.
+                                                                   averageTimestampOffset()));
 
         m_arrangementCtx.actualTimestamp += timestampOffsetValue;
     }
@@ -200,7 +201,8 @@ private:
         }
 
         m_arrangementCtx.actualDuration = mult(m_arrangementCtx.actualDuration,
-                                               percentageToFactor(articulationsApplied.averageDurationFactor()));
+                                               percentageToFactor(articulationsApplied.
+                                                                  averageDurationFactor()));
     }
 
     void calculatePitchCurve(const ArticulationMap& articulationsApplied)
@@ -216,11 +218,14 @@ private:
         float patternUnitRatio = PITCH_LEVEL_STEP / static_cast<float>(ONE_PERCENT);
 
         for (auto& pair : m_pitchCtx.pitchCurve) {
-            pair.second = static_cast<pitch_level_t>(RealRound(static_cast<float>(pair.second) * ratio * patternUnitRatio, 0));
+            pair.second
+                = static_cast<pitch_level_t>(RealRound(static_cast<float>(pair.second) * ratio
+                                                       * patternUnitRatio, 0));
         }
     }
 
-    void calculateExpressionCurve(const ArticulationMap& articulationsApplied, const float requiredVelocityFraction)
+    void calculateExpressionCurve(const ArticulationMap& articulationsApplied,
+                                  const float requiredVelocityFraction)
     {
         m_expressionCtx.expressionCurve = articulationsApplied.averageDynamicOffsetMap();
 
@@ -237,10 +242,13 @@ private:
 
         constexpr dynamic_level_t naturalDynamicLevel = dynamicLevelFromType(DynamicType::Natural);
 
-        float dynamicAmplifyFactor = static_cast<float>(articulationDynamicLevel - naturalDynamicLevel) / DYNAMIC_LEVEL_STEP;
+        float dynamicAmplifyFactor
+            = static_cast<float>(articulationDynamicLevel - naturalDynamicLevel)
+              / DYNAMIC_LEVEL_STEP;
 
-        dynamic_level_t amplificationDiff = mult(std::max(articulationsApplied.averageDynamicRange(), DYNAMIC_LEVEL_STEP),
-                                                 dynamicAmplifyFactor);
+        dynamic_level_t amplificationDiff
+            = mult(std::max(articulationsApplied.averageDynamicRange(), DYNAMIC_LEVEL_STEP),
+                   dynamicAmplifyFactor);
 
         dynamic_level_t actualDynamicLevel = nominalDynamicLevel + amplificationDiff;
 
@@ -248,7 +256,8 @@ private:
             return;
         }
 
-        float ratio = static_cast<float>(actualDynamicLevel) / static_cast<float>(articulationDynamicLevel);
+        float ratio = static_cast<float>(actualDynamicLevel)
+                      / static_cast<float>(articulationDynamicLevel);
 
         for (auto& pair : m_expressionCtx.expressionCurve) {
             pair.second = static_cast<dynamic_level_t>(RealRound(pair.second * ratio, 0));
@@ -345,7 +354,8 @@ using DynamicLevelMap = SharedMap<timestamp_t, dynamic_level_t>;
 using DynamicLevelLayers = SharedMap<layer_idx_t, DynamicLevelMap>;
 
 using MainStreamChanges = async::Channel<PlaybackEventsMap, DynamicLevelLayers>;
-using OffStreamChanges = async::Channel<PlaybackEventsMap, DynamicLevelLayers, bool /*flushOffstream*/>;
+using OffStreamChanges = async::Channel<PlaybackEventsMap, DynamicLevelLayers,
+                                        bool /*flushOffstream*/>;
 
 struct PlaybackData {
     PlaybackEventsMap originEvents;

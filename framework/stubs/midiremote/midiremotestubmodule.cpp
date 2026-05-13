@@ -38,7 +38,8 @@ std::string MidiRemoteModule::moduleName() const
 
 void MidiRemoteModule::registerExports()
 {
-    globalIoc()->registerExport<IMidiRemoteConfiguration>(mname, std::make_shared<MidiRemoteConfigurationStub>());
+    globalIoc()->registerExport<IMidiRemoteConfiguration>(mname,
+                                                          std::make_shared<MidiRemoteConfigurationStub>());
 }
 
 IContextSetup* MidiRemoteModule::newContext(const ContextPtr& ctx) const

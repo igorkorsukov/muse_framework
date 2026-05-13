@@ -96,7 +96,9 @@ static const QString& themeStyleKeyToString(ThemeStyleKey key)
         }
     }
 
-    IF_ASSERT_FAILED_X(false, QString("not found string key for enum key: %1").arg(static_cast<int>(key))) {
+    IF_ASSERT_FAILED_X(false,
+                       QString("not found string key for enum key: %1").arg(static_cast<int>(key)))
+    {
     }
 
     static const QString null;

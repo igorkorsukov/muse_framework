@@ -50,7 +50,8 @@ void LinuxPlatformTheme::startListening()
 void LinuxPlatformTheme::stopListening()
 {
     QDBusConnection::sessionBus().disconnect(service, path, interface, settingSignal, this,
-                                             SLOT(processSettingChange(QString,QString,QDBusVariant)));
+                                             SLOT(processSettingChange(QString,QString,
+                                                                       QDBusVariant)));
     m_isListening = false;
 }
 
@@ -99,7 +100,8 @@ void LinuxPlatformTheme::applyPlatformStyleOnWindowForTheme(QWindow*, const Them
 {
 }
 
-void LinuxPlatformTheme::processSettingChange(const QString& group, const QString& key, const QDBusVariant& value)
+void LinuxPlatformTheme::processSettingChange(const QString& group, const QString& key,
+                                              const QDBusVariant& value)
 {
     if (group == settingGroup && key == colorSchemeSetting) {
         m_isSystemThemeDark = (value.variant().toUInt() == 1);

@@ -72,7 +72,8 @@ muse::Ret MemFileSystem::clear(const muse::io::path_t& path)
     }
 }
 
-muse::Ret MemFileSystem::copy(const muse::io::path_t& src, const muse::io::path_t& dst, bool replace)
+muse::Ret MemFileSystem::copy(const muse::io::path_t& src, const muse::io::path_t& dst,
+                              bool replace)
 {
     if (isRC(src) || isRC(dst)) {
         NOT_SUPPORTED;
@@ -89,7 +90,8 @@ muse::Ret MemFileSystem::copy(const muse::io::path_t& src, const muse::io::path_
     return muse::make_ok();
 }
 
-muse::Ret MemFileSystem::move(const muse::io::path_t& src, const muse::io::path_t& dst, bool replace)
+muse::Ret MemFileSystem::move(const muse::io::path_t& src, const muse::io::path_t& dst,
+                              bool replace)
 {
     if (isRC(src) || isRC(dst)) {
         NOT_SUPPORTED;
@@ -114,7 +116,8 @@ muse::Ret MemFileSystem::makePath(const muse::io::path_t& /*path*/) const
     return muse::make_ret(muse::Ret::Code::NotImplemented);
 }
 
-muse::Ret MemFileSystem::makeLink(const muse::io::path_t& /*targetPath*/, const muse::io::path_t& /*linkPath*/) const
+muse::Ret MemFileSystem::makeLink(const muse::io::path_t& /*targetPath*/,
+                                  const muse::io::path_t& /*linkPath*/) const
 {
     NOT_IMPLEMENTED;
     return muse::make_ret(muse::Ret::Code::NotImplemented);
@@ -142,7 +145,8 @@ muse::RetVal<uint64_t> MemFileSystem::fileSize(const muse::io::path_t& path) con
     }
 }
 
-muse::RetVal<muse::io::paths_t> MemFileSystem::scanFiles(const muse::io::path_t& /*rootDir*/, const std::vector<std::string>& /*filters*/,
+muse::RetVal<muse::io::paths_t> MemFileSystem::scanFiles(const muse::io::path_t& /*rootDir*/,
+                                                         const std::vector<std::string>& /*filters*/,
                                                          muse::io::ScanMode /*mode*/) const
 {
     NOT_IMPLEMENTED;
@@ -197,7 +201,8 @@ muse::Ret MemFileSystem::writeFile(const muse::io::path_t& path, const muse::Byt
     return muse::make_ok();
 }
 
-muse::RetVal<StreamId> MemFileSystem::openStream(const muse::io::path_t& path, muse::io::OpenMode mode)
+muse::RetVal<StreamId> MemFileSystem::openStream(const muse::io::path_t& path,
+                                                 muse::io::OpenMode mode)
 {
     muse::RetVal<StreamId> result;
 
@@ -224,7 +229,8 @@ muse::RetVal<StreamId> MemFileSystem::openStream(const muse::io::path_t& path, m
     return result;
 }
 
-muse::Ret MemFileSystem::writeToStream(StreamId fileId, const muse::ByteArray& data, uint64_t offset)
+muse::Ret MemFileSystem::writeToStream(StreamId fileId, const muse::ByteArray& data,
+                                       uint64_t offset)
 {
     auto it = m_openStates.find(fileId);
     if (it == m_openStates.end()) {

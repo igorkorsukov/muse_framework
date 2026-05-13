@@ -87,7 +87,8 @@ NetworkManager::NetworkManager(QObject* parent)
     m_manager->setTransferTimeout(); // Use Qt's default timeout (30s)
 }
 
-RetVal<Progress> NetworkManager::get(const QUrl& url, IncomingDevicePtr incomingData, const RequestHeaders& headers)
+RetVal<Progress> NetworkManager::get(const QUrl& url, IncomingDevicePtr incomingData,
+                                     const RequestHeaders& headers)
 {
     return execRequest(GET_REQUEST, url, incomingData, NoOutgoingDevice(), headers);
 }
@@ -97,25 +98,29 @@ RetVal<Progress> NetworkManager::head(const QUrl& url, const RequestHeaders& hea
     return execRequest(HEAD_REQUEST, url, nullptr, NoOutgoingDevice(), headers);
 }
 
-RetVal<Progress> NetworkManager::post(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData,
+RetVal<Progress> NetworkManager::post(const QUrl& url, OutgoingDeviceVar outgoingData,
+                                      IncomingDevicePtr incomingData,
                                       const RequestHeaders& headers)
 {
     return execRequest(POST_REQUEST, url, incomingData, outgoingData, headers);
 }
 
-RetVal<Progress> NetworkManager::put(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData,
+RetVal<Progress> NetworkManager::put(const QUrl& url, OutgoingDeviceVar outgoingData,
+                                     IncomingDevicePtr incomingData,
                                      const RequestHeaders& headers)
 {
     return execRequest(PUT_REQUEST, url, incomingData, outgoingData, headers);
 }
 
-RetVal<Progress> NetworkManager::patch(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData,
+RetVal<Progress> NetworkManager::patch(const QUrl& url, OutgoingDeviceVar outgoingData,
+                                       IncomingDevicePtr incomingData,
                                        const RequestHeaders& headers)
 {
     return execRequest(PATCH_REQUEST, url, incomingData, outgoingData, headers);
 }
 
-RetVal<Progress> NetworkManager::del(const QUrl& url, IncomingDevicePtr incomingData, const RequestHeaders& headers)
+RetVal<Progress> NetworkManager::del(const QUrl& url, IncomingDevicePtr incomingData,
+                                     const RequestHeaders& headers)
 {
     return execRequest(DELETE_REQUEST, url, incomingData, NoOutgoingDevice(), headers);
 }
@@ -158,13 +163,15 @@ RetVal<Progress> NetworkManager::execRequest(RequestType requestType, const QUrl
     });
 
     if (!std::holds_alternative<NoOutgoingDevice>(outgoingData)) {
-        connect(reply, &QNetworkReply::uploadProgress, this, [this, requestId](qint64 curr, qint64 total) {
+        connect(reply, &QNetworkReply::uploadProgress, this,
+                [this, requestId](qint64 curr, qint64 total) {
             m_requestDataMap[requestId].progress.progress(curr, total);
         });
     }
 
     if (incomingData) {
-        connect(reply, &QNetworkReply::downloadProgress, this, [this, requestId](qint64 curr, qint64 total) {
+        connect(reply, &QNetworkReply::downloadProgress, this,
+                [this, requestId](qint64 curr, qint64 total) {
             m_requestDataMap[requestId].progress.progress(curr, total);
         });
 
@@ -220,7 +227,8 @@ QNetworkRequest NetworkManager::prepareRequest(const QUrl& url, const RequestHea
     return request;
 }
 
-QNetworkReply* NetworkManager::sendRequest(RequestType type, const QNetworkRequest& request, const OutgoingDeviceVar& device)
+QNetworkReply* NetworkManager::sendRequest(RequestType type, const QNetworkRequest& request,
+                                           const OutgoingDeviceVar& device)
 {
     switch (type) {
     case GET_REQUEST: return m_manager->get(request);
@@ -236,9 +244,11 @@ QNetworkReply* NetworkManager::sendRequest(RequestType type, const QNetworkReque
     }
     case PATCH_REQUEST: {
         if (std::holds_alternative<QIODevicePtr>(device)) {
-            return m_manager->sendCustomRequest(request, "PATCH", std::get<QIODevicePtr>(device).get());
+            return m_manager->sendCustomRequest(request, "PATCH", std::get<QIODevicePtr>(
+                                                    device).get());
         } else if (std::holds_alternative<QHttpMultiPartPtr>(device)) {
-            return m_manager->sendCustomRequest(request, "PATCH", std::get<QHttpMultiPartPtr>(device).get());
+            return m_manager->sendCustomRequest(request, "PATCH", std::get<QHttpMultiPartPtr>(
+                                                    device).get());
         }
         break;
     }

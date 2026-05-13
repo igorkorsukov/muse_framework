@@ -75,7 +75,8 @@ struct TimestampAndDuration {
 
 static constexpr voice_layer_idx_t MAX_VOICES = 4;
 
-constexpr inline layer_idx_t makeLayerIdx(const staff_layer_idx_t staffIdx, const voice_layer_idx_t voiceIdx)
+constexpr inline layer_idx_t makeLayerIdx(const staff_layer_idx_t staffIdx,
+                                          const voice_layer_idx_t voiceIdx)
 {
     return staffIdx * MAX_VOICES + voiceIdx;
 }
@@ -83,7 +84,8 @@ constexpr inline layer_idx_t makeLayerIdx(const staff_layer_idx_t staffIdx, cons
 constexpr inline duration_percentage_t occupiedPercentage(const timestamp_t timestamp,
                                                           const duration_t overallDuration)
 {
-    return percentageFromFactor(static_cast<float>(timestamp) / static_cast<float>(overallDuration));
+    return percentageFromFactor(static_cast<float>(timestamp)
+                                / static_cast<float>(overallDuration));
 }
 
 template<typename T>
@@ -162,7 +164,8 @@ constexpr int ZERO_PITCH_LEVEL_MIDI_EQUIVALENT = 12; // C0 in MIDI standard
 
 constexpr inline pitch_level_t pitchLevel(const PitchClass pitchClass, const octave_t octave)
 {
-    return (PITCH_LEVEL_STEP * STEPS_PER_OCTAVE * octave) + (PITCH_LEVEL_STEP * static_cast<int>(pitchClass));
+    return (PITCH_LEVEL_STEP * STEPS_PER_OCTAVE * octave)
+           + (PITCH_LEVEL_STEP * static_cast<int>(pitchClass));
 }
 
 constexpr inline pitch_level_t pitchLevelDiff(const PitchClass fClass, const octave_t fOctave,
@@ -431,7 +434,8 @@ struct ArrangementPattern
 
     ArrangementPattern() = default;
 
-    ArrangementPattern(duration_percentage_t _durationFactor, duration_percentage_t _timestampOffset)
+    ArrangementPattern(duration_percentage_t _durationFactor,
+                       duration_percentage_t _timestampOffset)
         : durationFactor(_durationFactor), timestampOffset(_timestampOffset)
     {
     }
@@ -511,7 +515,8 @@ struct ArticulationPatternSegment
 
     ArticulationPatternSegment() = default;
 
-    ArticulationPatternSegment(ArrangementPattern&& arrangement, PitchPattern&& pitch, ExpressionPattern&& expression)
+    ArticulationPatternSegment(ArrangementPattern&& arrangement, PitchPattern&& pitch,
+                               ExpressionPattern&& expression)
         : arrangementPattern(arrangement), pitchPattern(pitch), expressionPattern(expression)
     {}
 
@@ -530,7 +535,8 @@ struct ArticulationsProfile
     std::vector<ArticulationFamily> supportedFamilies;
 
     const ArticulationPattern& pattern(const ArticulationType type,
-                                       const ArticulationType fallback = ArticulationType::Undefined) const
+                                       const ArticulationType fallback = ArticulationType::Undefined)
+    const
     {
         auto search = m_patterns.find(type);
         if (search == m_patterns.cend() && fallback != ArticulationType::Undefined) {
@@ -690,8 +696,12 @@ struct ArticulationAppliedData {
         }
 
         float occupiedFactor = percentageToFactor(occupiedTo);
-        occupiedPitchChangesRange = static_cast<pitch_level_t>(static_cast<float>(meta.overallPitchChangesRange) * occupiedFactor);
-        occupiedDynamicChangesRange = static_cast<pitch_level_t>(static_cast<float>(meta.overallDynamicChangesRange) * occupiedFactor);
+        occupiedPitchChangesRange
+            = static_cast<pitch_level_t>(static_cast<float>(meta.overallPitchChangesRange)
+                                         * occupiedFactor);
+        occupiedDynamicChangesRange
+            = static_cast<pitch_level_t>(static_cast<float>(meta.overallDynamicChangesRange)
+                                         * occupiedFactor);
 
         const auto& lower = meta.pattern.lower_bound(occupiedFrom);
 
@@ -707,7 +717,8 @@ struct ArticulationMap : public SharedHashMap<ArticulationType, ArticulationAppl
 {
     static constexpr size_t EXPECTED_SIZE = (HUNDRED_PERCENT / TEN_PERCENT) + 1;
 
-    void updateOccupiedRange(const ArticulationType type, const duration_percentage_t occupiedFrom, const duration_percentage_t occupiedTo)
+    void updateOccupiedRange(const ArticulationType type, const duration_percentage_t occupiedFrom,
+                             const duration_percentage_t occupiedTo)
     {
         if (!contains(type)) {
             return;
@@ -833,13 +844,15 @@ private:
         // Dynamic offsets
         const ExpressionPattern& expPattern = segment.expressionPattern;
         const bool hasMeaningfulDynamicOffset = !expPattern.dynamicOffsetMap.empty()
-                                                && expPattern.maxAmplitudeLevel() != dynamicLevelFromType(DynamicType::Natural);
+                                                && expPattern.maxAmplitudeLevel()
+                                                != dynamicLevelFromType(DynamicType::Natural);
 
         if (hasMeaningfulDynamicOffset) {
             auto outIt = out.dynamicOffsetMap.begin();
             auto segIt = expPattern.dynamicOffsetMap.cbegin();
 
-            while (outIt != out.dynamicOffsetMap.end() && segIt != expPattern.dynamicOffsetMap.cend()) {
+            while (outIt != out.dynamicOffsetMap.end()
+                   && segIt != expPattern.dynamicOffsetMap.cend()) {
                 outIt->second += segIt->second;
                 ++outIt;
                 ++segIt;
@@ -855,7 +868,8 @@ private:
             auto outIt = out.pitchOffsetMap.begin();
             auto segIt = pitchPattern.pitchOffsetMap.cbegin();
 
-            while (outIt != out.pitchOffsetMap.end() && segIt != pitchPattern.pitchOffsetMap.cend()) {
+            while (outIt != out.pitchOffsetMap.end()
+                   && segIt != pitchPattern.pitchOffsetMap.cend()) {
                 outIt->second += segIt->second;
                 ++outIt;
                 ++segIt;
@@ -876,8 +890,10 @@ private:
         int timestampChangesCount = 0;
 
         for (auto it = cbegin(); it != cend(); ++it) {
-            dynamic_level_t amplitudeDynamicLevel = it->second.appliedPatternSegment.expressionPattern.maxAmplitudeLevel();
-            dynamic_level_t dynamicLevelOffset = std::abs(amplitudeDynamicLevel - dynamicLevelFromType(DynamicType::Natural));
+            dynamic_level_t amplitudeDynamicLevel
+                = it->second.appliedPatternSegment.expressionPattern.maxAmplitudeLevel();
+            dynamic_level_t dynamicLevelOffset = std::abs(amplitudeDynamicLevel - dynamicLevelFromType(
+                                                              DynamicType::Natural));
 
             if (dynamicLevelOffset != 0) {
                 dynamicChangesCount++;
@@ -903,23 +919,28 @@ private:
             m_averageDynamicRange = paramsSum.dynamicRange / dynamicChangesCount;
 
             for (const auto& pair : paramsSum.dynamicOffsetMap) {
-                m_averageDynamicOffsetMap.insert_or_assign(pair.first, pair.second / dynamicChangesCount);
+                m_averageDynamicOffsetMap.insert_or_assign(pair.first,
+                                                           pair.second / dynamicChangesCount);
             }
         } else if (dynamicChangesCount == 0) {
-            m_averageMaxAmplitudeLevel = cbegin()->second.appliedPatternSegment.expressionPattern.maxAmplitudeLevel();
+            m_averageMaxAmplitudeLevel
+                = cbegin()->second.appliedPatternSegment.expressionPattern.maxAmplitudeLevel();
             m_averageDynamicRange = cbegin()->second.meta.overallDynamicChangesRange;
-            m_averageDynamicOffsetMap = cbegin()->second.appliedPatternSegment.expressionPattern.dynamicOffsetMap;
+            m_averageDynamicOffsetMap
+                = cbegin()->second.appliedPatternSegment.expressionPattern.dynamicOffsetMap;
         }
 
         if (pitchChangesCount > 0) {
             m_averagePitchRange = paramsSum.pitchRange / pitchChangesCount;
 
             for (const auto& pair : paramsSum.pitchOffsetMap) {
-                m_averagePitchOffsetMap.insert_or_assign(pair.first, pair.second / pitchChangesCount);
+                m_averagePitchOffsetMap.insert_or_assign(pair.first,
+                                                         pair.second / pitchChangesCount);
             }
         } else if (pitchChangesCount == 0) {
             m_averagePitchRange = cbegin()->second.meta.overallPitchChangesRange;
-            m_averagePitchOffsetMap = cbegin()->second.appliedPatternSegment.pitchPattern.pitchOffsetMap;
+            m_averagePitchOffsetMap
+                = cbegin()->second.appliedPatternSegment.pitchPattern.pitchOffsetMap;
         }
     }
 

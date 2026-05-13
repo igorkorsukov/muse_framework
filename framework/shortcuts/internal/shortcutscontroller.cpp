@@ -91,7 +91,8 @@ ActionCode ShortcutsController::resolveAction(const std::string& sequence) const
     }
 
     if (!shortcutContextPriority()) {
-        LOGW() << "Not found implementation of IShortcutContextPriority, will be used default priority";
+        LOGW() <<
+        "Not found implementation of IShortcutContextPriority, will be used default priority";
     }
 
     allowedShortcuts.sort([this](const Shortcut& f, const Shortcut& s) {

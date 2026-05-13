@@ -217,7 +217,8 @@ ToolBarItem* AbstractToolBarModel::findItemPtr(const QString& itemId)
     return nullptr;
 }
 
-ToolBarItem* AbstractToolBarModel::makeItem(const ActionCode& actionCode, const TranslatableString& title)
+ToolBarItem* AbstractToolBarModel::makeItem(const ActionCode& actionCode,
+                                            const TranslatableString& title)
 {
     const UiAction& action = uiActionsRegister()->action(actionCode);
     if (!action.isValid()) {
@@ -235,7 +236,8 @@ ToolBarItem* AbstractToolBarModel::makeItem(const ActionCode& actionCode, const 
     return item;
 }
 
-ToolBarItem* AbstractToolBarModel::makeMenuItem(const TranslatableString& title, const ActionCodeList& subitemsActionCodesList,
+ToolBarItem* AbstractToolBarModel::makeMenuItem(const TranslatableString& title,
+                                                const ActionCodeList& subitemsActionCodesList,
                                                 const QString& menuId, bool enabled)
 {
     ToolBarItem* item = new ToolBarItem(this);
@@ -359,7 +361,8 @@ void AbstractToolBarModel::updateShortcutsAll()
             continue;
         }
 
-        std::vector<std::string> shortcuts = shortcutsRegister()->shortcut(toolBarItem->action().code).sequences;
+        std::vector<std::string> shortcuts = shortcutsRegister()->shortcut(
+            toolBarItem->action().code).sequences;
         toolBarItem->setShortcuts(shortcuts);
 
         for (MenuItem* menuItem : std::as_const(toolBarItem->menuItems())) {
@@ -374,7 +377,8 @@ void AbstractToolBarModel::updateShortcutsAll()
 
 void AbstractToolBarModel::updateShortcuts(MenuItem* menuItem)
 {
-    std::vector<std::string> shortcuts = shortcutsRegister()->shortcut(menuItem->action().code).sequences;
+    std::vector<std::string> shortcuts
+        = shortcutsRegister()->shortcut(menuItem->action().code).sequences;
     menuItem->setShortcuts(shortcuts);
 
     for (MenuItem* subItem : menuItem->subitems()) {

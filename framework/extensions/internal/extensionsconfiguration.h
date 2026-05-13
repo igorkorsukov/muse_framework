@@ -31,7 +31,8 @@
 #include "global/async/asyncable.h"
 
 namespace muse::extensions {
-class ExtensionsConfiguration : public IExtensionsConfiguration, public Contextable, public async::Asyncable
+class ExtensionsConfiguration : public IExtensionsConfiguration, public Contextable,
+    public async::Asyncable
 {
     GlobalInject<IGlobalConfiguration> globalConfiguration;
     GlobalInject<mi::IMultiWindowsProvider> multiwindowsProvider;

@@ -42,7 +42,8 @@ public:
     void setMode(const ProcessMode mode) override;
     bool shouldProcessDuringSilence() const override;
 
-    void process(float* buffer, samples_t sampleCount, samples_t playbackPositionSamples = 0) override;
+    void process(float* buffer, samples_t sampleCount,
+                 samples_t playbackPositionSamples = 0) override;
 
 private:
     void calculate();

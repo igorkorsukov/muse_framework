@@ -47,7 +47,8 @@ public:
     DockWidgetFactory(const modularity::ContextPtr& iocCtx)
         : KDDockWidgets::DefaultWidgetFactory(iocCtx->id), m_iocContext(iocCtx) {}
 
-    KDDockWidgets::DropIndicatorOverlayInterface* createDropIndicatorOverlay(KDDockWidgets::DropArea* dropArea) const override
+    KDDockWidgets::DropIndicatorOverlayInterface* createDropIndicatorOverlay(
+        KDDockWidgets::DropArea* dropArea) const override
     {
         return new DropController(dropArea, m_iocContext);
     }
@@ -62,7 +63,8 @@ public:
         return new DockTitleBar(m_ctx, frame);
     }
 
-    KDDockWidgets::TitleBar* createTitleBar(KDDockWidgets::FloatingWindow* floatingWindow) const override
+    KDDockWidgets::TitleBar* createTitleBar(KDDockWidgets::FloatingWindow* floatingWindow) const
+    override
     {
         return new DockTitleBar(m_ctx, floatingWindow);
     }

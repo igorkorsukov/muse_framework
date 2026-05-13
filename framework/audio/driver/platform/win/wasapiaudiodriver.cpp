@@ -180,28 +180,47 @@ static std::string hrToString(HRESULT hr)
 
     switch (hr) {
     // Common WASAPI errors
-    case AUDCLNT_E_NOT_INITIALIZED:          return "AUDCLNT_E_NOT_INITIALIZED - Audio client not initialized";
-    case AUDCLNT_E_ALREADY_INITIALIZED:      return "AUDCLNT_E_ALREADY_INITIALIZED - Audio client already initialized";
-    case AUDCLNT_E_WRONG_ENDPOINT_TYPE:      return "AUDCLNT_E_WRONG_ENDPOINT_TYPE - Wrong endpoint type";
-    case AUDCLNT_E_DEVICE_INVALIDATED:       return "AUDCLNT_E_DEVICE_INVALIDATED - Device invalidated";
-    case AUDCLNT_E_NOT_STOPPED:              return "AUDCLNT_E_NOT_STOPPED - Audio client not stopped";
+    case AUDCLNT_E_NOT_INITIALIZED:          return
+            "AUDCLNT_E_NOT_INITIALIZED - Audio client not initialized";
+    case AUDCLNT_E_ALREADY_INITIALIZED:      return
+            "AUDCLNT_E_ALREADY_INITIALIZED - Audio client already initialized";
+    case AUDCLNT_E_WRONG_ENDPOINT_TYPE:      return
+            "AUDCLNT_E_WRONG_ENDPOINT_TYPE - Wrong endpoint type";
+    case AUDCLNT_E_DEVICE_INVALIDATED:       return
+            "AUDCLNT_E_DEVICE_INVALIDATED - Device invalidated";
+    case AUDCLNT_E_NOT_STOPPED:              return
+            "AUDCLNT_E_NOT_STOPPED - Audio client not stopped";
     case AUDCLNT_E_BUFFER_TOO_LARGE:         return "AUDCLNT_E_BUFFER_TOO_LARGE - Buffer too large";
-    case AUDCLNT_E_OUT_OF_ORDER:             return "AUDCLNT_E_OUT_OF_ORDER - Operation out of order";
-    case AUDCLNT_E_UNSUPPORTED_FORMAT:       return "AUDCLNT_E_UNSUPPORTED_FORMAT - Unsupported format";
+    case AUDCLNT_E_OUT_OF_ORDER:             return
+            "AUDCLNT_E_OUT_OF_ORDER - Operation out of order";
+    case AUDCLNT_E_UNSUPPORTED_FORMAT:       return
+            "AUDCLNT_E_UNSUPPORTED_FORMAT - Unsupported format";
     case AUDCLNT_E_INVALID_SIZE:             return "AUDCLNT_E_INVALID_SIZE - Invalid size";
     case AUDCLNT_E_DEVICE_IN_USE:            return "AUDCLNT_E_DEVICE_IN_USE - Device in use";
-    case AUDCLNT_E_BUFFER_OPERATION_PENDING: return "AUDCLNT_E_BUFFER_OPERATION_PENDING - Buffer operation pending";
-    case AUDCLNT_E_THREAD_NOT_REGISTERED:    return "AUDCLNT_E_THREAD_NOT_REGISTERED - Thread not registered";
-    case AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED: return "AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED - Exclusive mode not allowed";
-    case AUDCLNT_E_ENDPOINT_CREATE_FAILED:   return "AUDCLNT_E_ENDPOINT_CREATE_FAILED - Endpoint create failed";
-    case AUDCLNT_E_SERVICE_NOT_RUNNING:      return "AUDCLNT_E_SERVICE_NOT_RUNNING - Audio service not running";
-    case AUDCLNT_E_EVENTHANDLE_NOT_EXPECTED: return "AUDCLNT_E_EVENTHANDLE_NOT_EXPECTED - Event handle not expected";
-    case AUDCLNT_E_EXCLUSIVE_MODE_ONLY:      return "AUDCLNT_E_EXCLUSIVE_MODE_ONLY - Exclusive mode only";
-    case AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL: return "AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL - Buffer duration/period not equal";
-    case AUDCLNT_E_EVENTHANDLE_NOT_SET:      return "AUDCLNT_E_EVENTHANDLE_NOT_SET - Event handle not set";
-    case AUDCLNT_E_INCORRECT_BUFFER_SIZE:    return "AUDCLNT_E_INCORRECT_BUFFER_SIZE - Incorrect buffer size";
-    case AUDCLNT_E_BUFFER_SIZE_ERROR:        return "AUDCLNT_E_BUFFER_SIZE_ERROR - Buffer size error";
-    case AUDCLNT_E_CPUUSAGE_EXCEEDED:        return "AUDCLNT_E_CPUUSAGE_EXCEEDED - CPU usage exceeded";
+    case AUDCLNT_E_BUFFER_OPERATION_PENDING: return
+            "AUDCLNT_E_BUFFER_OPERATION_PENDING - Buffer operation pending";
+    case AUDCLNT_E_THREAD_NOT_REGISTERED:    return
+            "AUDCLNT_E_THREAD_NOT_REGISTERED - Thread not registered";
+    case AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED: return
+            "AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED - Exclusive mode not allowed";
+    case AUDCLNT_E_ENDPOINT_CREATE_FAILED:   return
+            "AUDCLNT_E_ENDPOINT_CREATE_FAILED - Endpoint create failed";
+    case AUDCLNT_E_SERVICE_NOT_RUNNING:      return
+            "AUDCLNT_E_SERVICE_NOT_RUNNING - Audio service not running";
+    case AUDCLNT_E_EVENTHANDLE_NOT_EXPECTED: return
+            "AUDCLNT_E_EVENTHANDLE_NOT_EXPECTED - Event handle not expected";
+    case AUDCLNT_E_EXCLUSIVE_MODE_ONLY:      return
+            "AUDCLNT_E_EXCLUSIVE_MODE_ONLY - Exclusive mode only";
+    case AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL: return
+            "AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL - Buffer duration/period not equal";
+    case AUDCLNT_E_EVENTHANDLE_NOT_SET:      return
+            "AUDCLNT_E_EVENTHANDLE_NOT_SET - Event handle not set";
+    case AUDCLNT_E_INCORRECT_BUFFER_SIZE:    return
+            "AUDCLNT_E_INCORRECT_BUFFER_SIZE - Incorrect buffer size";
+    case AUDCLNT_E_BUFFER_SIZE_ERROR:        return
+            "AUDCLNT_E_BUFFER_SIZE_ERROR - Buffer size error";
+    case AUDCLNT_E_CPUUSAGE_EXCEEDED:        return
+            "AUDCLNT_E_CPUUSAGE_EXCEEDED - CPU usage exceeded";
 
     // Common COM errors
     case E_INVALIDARG:                       return "E_INVALIDARG - Invalid arguments";
@@ -271,7 +290,8 @@ void WasapiAudioDriver::init()
     LOGI() << "success driver init";
 }
 
-static std::pair<std::vector<AudioDevice>, std::string /*defaultId*/> audioDevices(IMMDeviceEnumerator* enumerator)
+static std::pair<std::vector<AudioDevice>, std::string /*defaultId*/> audioDevices(
+    IMMDeviceEnumerator* enumerator)
 {
     IF_ASSERT_FAILED(enumerator) {
         return {};
@@ -344,7 +364,8 @@ void WasapiAudioDriver::updateAudioDeviceList()
     m_deviceListChanged.notify();
 }
 
-static IAudioClient* audioClientForDevice(IMMDeviceEnumerator* enumerator, const std::string& deviceId)
+static IAudioClient* audioClientForDevice(IMMDeviceEnumerator* enumerator,
+                                          const std::string& deviceId)
 {
     std::wstring wdeviceId = to_wstring(deviceId);
     IMMDevice* device = nullptr;
@@ -556,7 +577,8 @@ void WasapiAudioDriver::th_processAudioData()
 
             for (uint32_t i = 0; i < actualFramesToRead; ++i) {
                 uint8_t* frameStartPos = data + i * clientFrameSize;
-                std::memcpy(frameStartPos, m_surroundAudioBuffer.data() + i * muFrameSize, muFrameSize);
+                std::memcpy(frameStartPos,
+                            m_surroundAudioBuffer.data() + i * muFrameSize, muFrameSize);
                 std::memset(frameStartPos + muFrameSize, 0, clientFrameSize - muFrameSize);
             }
         } else {

@@ -157,7 +157,8 @@ void IpcSocket::onIpcMsg(const Msg& receivedMsg)
 
     // receive meta info
     if (receivedMsg.method == IPC_METAINFO) {
-        IPCLOG() << "received meta info from: " << receivedMsg.srcID << ", args: " << receivedMsg.args;
+        IPCLOG() << "received meta info from: " << receivedMsg.srcID << ", args: " <<
+            receivedMsg.args;
 
         IF_ASSERT_FAILED(!receivedMsg.args.isEmpty()) {
             return;

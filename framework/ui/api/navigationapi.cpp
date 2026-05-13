@@ -70,17 +70,21 @@ void NavigationApi::escape()
     dispatcher()->dispatch("nav-escape");
 }
 
-bool NavigationApi::goToControl(const QString& section, const QString& panel, const QJSValue& controlNameOrIndex)
+bool NavigationApi::goToControl(const QString& section, const QString& panel,
+                                const QJSValue& controlNameOrIndex)
 {
     bool ok = false;
     if (controlNameOrIndex.isString()) {
-        ok = navigation()->requestActivateByName(section.toStdString(), panel.toStdString(), controlNameOrIndex.toString().toStdString());
+        ok = navigation()->requestActivateByName(section.toStdString(),
+                                                 panel.toStdString(),
+                                                 controlNameOrIndex.toString().toStdString());
     } else if (controlNameOrIndex.isArray()) {
         if (controlNameOrIndex.property("length").toInt() == 2) {
             INavigation::Index idx;
             idx.row = controlNameOrIndex.property(0).toInt();
             idx.column = controlNameOrIndex.property(1).toInt();
-            ok = navigation()->requestActivateByIndex(section.toStdString(), panel.toStdString(), idx);
+            ok = navigation()->requestActivateByIndex(section.toStdString(),
+                                                      panel.toStdString(), idx);
         } else {
             LOGE() << "bad argument `control`: " << controlNameOrIndex.toString();
             ok = false;
@@ -98,7 +102,8 @@ void NavigationApi::trigger()
     dispatcher()->dispatch("nav-trigger-control");
 }
 
-bool NavigationApi::triggerControl(const QString& section, const QString& panel, const QJSValue& controlNameOrIndex)
+bool NavigationApi::triggerControl(const QString& section, const QString& panel,
+                                   const QJSValue& controlNameOrIndex)
 {
     bool ok = goToControl(section, panel, controlNameOrIndex);
     if (ok) {
@@ -169,7 +174,8 @@ QJSValue NavigationApi::panels(const QString& sectionName) const
 
 QJSValue NavigationApi::controls(const QString& sectionName, const QString& panelName) const
 {
-    const INavigationPanel* p = navigation()->findPanel(sectionName.toStdString(), panelName.toStdString());
+    const INavigationPanel* p = navigation()->findPanel(
+        sectionName.toStdString(), panelName.toStdString());
     QJSValue arr = engine()->newArray(p->controls().size());
     quint32 i = 0;
     for (const INavigationControl* c : p->controls()) {

@@ -50,8 +50,10 @@ public:
         m_userWorkspacesDir = std::make_unique<QTemporaryDir>();
         ASSERT_TRUE(m_userWorkspacesDir->isValid());
 
-        m_multiWindowsProvider = std::make_shared<::testing::NiceMock<mi::MultiWindowsProviderMock> >();
-        modularity::globalIoc()->registerExport<mi::IMultiWindowsProvider>("utests", m_multiWindowsProvider);
+        m_multiWindowsProvider
+            = std::make_shared<::testing::NiceMock<mi::MultiWindowsProviderMock> >();
+        modularity::globalIoc()->registerExport<mi::IMultiWindowsProvider>("utests",
+                                                                           m_multiWindowsProvider);
 
         m_workspaceConfig = std::dynamic_pointer_cast<muse::workspace::WorkspaceConfigurationMock>(
             modularity::globalIoc()->resolve<IWorkspaceConfiguration>("utests"));

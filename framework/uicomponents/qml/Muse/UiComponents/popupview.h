@@ -49,11 +49,14 @@ class PopupView : public WindowView
     Q_OBJECT
     QML_ELEMENT
 
-    Q_PROPERTY(ClosePolicies closePolicies READ closePolicies WRITE setClosePolicies NOTIFY closePoliciesChanged)
+    Q_PROPERTY(
+        ClosePolicies closePolicies READ closePolicies WRITE setClosePolicies NOTIFY closePoliciesChanged)
 
     Q_PROPERTY(QQuickItem * anchorItem READ anchorItem WRITE setAnchorItem NOTIFY anchorItemChanged)
-    Q_PROPERTY(PlacementPolicies placementPolicies READ placementPolicies WRITE setPlacementPolicies NOTIFY placementPoliciesChanged)
-    Q_PROPERTY(muse::uicomponents::PopupPosition::Type popupPosition READ popupPosition WRITE setPopupPosition NOTIFY popupPositionChanged)
+    Q_PROPERTY(
+        PlacementPolicies placementPolicies READ placementPolicies WRITE setPlacementPolicies NOTIFY placementPoliciesChanged)
+    Q_PROPERTY(
+        muse::uicomponents::PopupPosition::Type popupPosition READ popupPosition WRITE setPopupPosition NOTIFY popupPositionChanged)
 
     // Relative to parentItem
     Q_PROPERTY(qreal x READ localX WRITE setLocalX NOTIFY xChanged)
@@ -126,7 +129,8 @@ signals:
     void closePoliciesChanged(muse::uicomponents::PopupView::ClosePolicies closePolicies);
 
     void anchorItemChanged(QQuickItem* anchorItem);
-    void placementPoliciesChanged(muse::uicomponents::PopupView::PlacementPolicies placementPolicies);
+    void placementPoliciesChanged(
+        muse::uicomponents::PopupView::PlacementPolicies placementPolicies);
     void popupPositionChanged(muse::uicomponents::PopupPosition::Type position);
 
     void xChanged(qreal x);

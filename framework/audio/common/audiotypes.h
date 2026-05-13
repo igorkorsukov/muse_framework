@@ -82,7 +82,10 @@ struct OutputSpec {
     samples_t samplesPerChannel = 0;
     audioch_t audioChannelCount = 0;
 
-    inline bool isValid() const { return sampleRate > 0 && samplesPerChannel > 0 && audioChannelCount > 0; }
+    inline bool isValid() const
+    {
+        return sampleRate > 0 && samplesPerChannel > 0 && audioChannelCount > 0;
+    }
 
     inline bool operator==(const OutputSpec& other) const
     {
@@ -476,7 +479,8 @@ struct SoundPreset
 
     bool operator==(const SoundPreset& other) const
     {
-        return code == other.code && name == other.name && isDefault == other.isDefault && attributes == other.attributes;
+        return code == other.code && name == other.name && isDefault == other.isDefault
+               && attributes == other.attributes;
     }
 
     bool isValid() const
@@ -570,7 +574,8 @@ enum SaveSoundTrackStage {
     WritingSoundTrack,
 };
 
-using SaveSoundTrackProgress = async::Channel<int64_t /*current*/, int64_t /*total*/, SaveSoundTrackStage>;
+using SaveSoundTrackProgress = async::Channel<int64_t /*current*/, int64_t /*total*/,
+                                              SaveSoundTrackStage>;
 
 struct TransportEvent {
     enum class Type : unsigned char {

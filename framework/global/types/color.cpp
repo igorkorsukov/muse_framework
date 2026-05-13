@@ -179,7 +179,8 @@ void Color::setAlpha(int value)
 
 void Color::applyTint(double tint)
 {
-    setRgba(red() + (255 - red()) * tint, green() + (255 - green()) * tint, blue() + (255 - blue()) * tint, alpha());
+    setRgba(red() + (255 - red()) * tint, green() + (255 - green()) * tint,
+            blue() + (255 - blue()) * tint, alpha());
 }
 
 void Color::setRgba(int r, int g, int b, int a)

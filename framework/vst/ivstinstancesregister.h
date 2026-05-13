@@ -34,22 +34,26 @@ public:
     virtual ~IVstInstancesRegister() = default;
 
     // make
-    virtual IVstPluginInstancePtr makeAndRegisterInstrPlugin(const muse::audio::AudioResourceId& resourceId,
-                                                             const muse::audio::TrackId trackId) = 0;
+    virtual IVstPluginInstancePtr makeAndRegisterInstrPlugin(
+        const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId) = 0;
 
-    virtual IVstPluginInstancePtr makeAndRegisterFxPlugin(const muse::audio::AudioResourceId& resourceId,
-                                                          const muse::audio::TrackId trackId,
-                                                          const muse::audio::AudioFxChainOrder chainOrder) = 0;
+    virtual IVstPluginInstancePtr makeAndRegisterFxPlugin(
+        const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId,
+        const muse::audio::AudioFxChainOrder chainOrder) = 0;
 
-    virtual IVstPluginInstancePtr makeAndRegisterMasterFxPlugin(const muse::audio::AudioResourceId& resourceId,
-                                                                const muse::audio::AudioFxChainOrder chainOrder) = 0;
+    virtual IVstPluginInstancePtr makeAndRegisterMasterFxPlugin(
+        const muse::audio::AudioResourceId& resourceId,
+        const muse::audio::AudioFxChainOrder chainOrder) = 0;
     // register
-    virtual void registerInstrPlugin(const muse::audio::TrackId trackId, IVstPluginInstancePtr instance) = 0;
+    virtual void registerInstrPlugin(const muse::audio::TrackId trackId,
+                                     IVstPluginInstancePtr instance) = 0;
 
-    virtual void registerFxPlugin(const muse::audio::TrackId trackId, const muse::audio::AudioFxChainOrder chainOrder,
+    virtual void registerFxPlugin(const muse::audio::TrackId trackId,
+                                  const muse::audio::AudioFxChainOrder chainOrder,
                                   IVstPluginInstancePtr instance) = 0;
 
-    virtual void registerMasterFxPlugin(const muse::audio::AudioFxChainOrder chainOrder, IVstPluginInstancePtr instance) = 0;
+    virtual void registerMasterFxPlugin(const muse::audio::AudioFxChainOrder chainOrder,
+                                        IVstPluginInstancePtr instance) = 0;
 
     // get
     virtual IVstPluginInstancePtr instanceById(const VstPluginInstanceId id) const = 0;
@@ -57,18 +61,23 @@ public:
     virtual IVstPluginInstancePtr instrumentPlugin(const muse::audio::AudioResourceId& resourceId,
                                                    const muse::audio::TrackId trackId) const = 0;
 
-    virtual IVstPluginInstancePtr fxPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId,
-                                           const muse::audio::AudioFxChainOrder chainOrder) const = 0;
+    virtual IVstPluginInstancePtr fxPlugin(const muse::audio::AudioResourceId& resourceId,
+                                           const muse::audio::TrackId trackId,
+                                           const muse::audio::AudioFxChainOrder chainOrder) const =
+    0;
 
     virtual IVstPluginInstancePtr masterFxPlugin(const muse::audio::AudioResourceId& resourceId,
-                                                 const muse::audio::AudioFxChainOrder chainOrder) const = 0;
+                                                 const muse::audio::AudioFxChainOrder chainOrder)
+    const = 0;
 
     // unregister
     virtual void unregisterById(const VstPluginInstanceId id) = 0;
 
-    virtual void unregisterInstrPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId) = 0;
+    virtual void unregisterInstrPlugin(const muse::audio::AudioResourceId& resourceId,
+                                       const muse::audio::TrackId trackId) = 0;
 
-    virtual void unregisterFxPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId,
+    virtual void unregisterFxPlugin(const muse::audio::AudioResourceId& resourceId,
+                                    const muse::audio::TrackId trackId,
                                     const muse::audio::AudioFxChainOrder chainOrder) = 0;
 
     virtual void unregisterMasterFxPlugin(const muse::audio::AudioResourceId& resourceId,

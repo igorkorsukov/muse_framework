@@ -38,7 +38,9 @@ class AbstractTableViewModel : public QAbstractTableModel, public async::Asyncab
     Q_OBJECT
     QML_ELEMENT;
 
-    Q_PROPERTY(ItemMultiSelectionModel * selectionModel READ selectionModel NOTIFY selectionModelChanged)
+    Q_PROPERTY(
+        ItemMultiSelectionModel
+        * selectionModel READ selectionModel NOTIFY selectionModelChanged)
 
 public:
     explicit AbstractTableViewModel(QObject* parent = nullptr);
@@ -46,7 +48,8 @@ public:
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
 
     void setHorizontalHeaders(const QVector<TableViewHeader*>& headers);
@@ -81,8 +84,8 @@ protected:
     bool isColumnValid(int column) const;
 
     TableViewHeader* makeHorizontalHeader(const QString& title, TableViewCellType::Type cellType,
-                                          TableViewCellEditMode::Mode cellEditMode = TableViewCellEditMode::Mode::StartInEdit,
-                                          int preferredWidth = -1, const MenuItemList& availableFormats = MenuItemList());
+                                          TableViewCellEditMode::Mode cellEditMode = TableViewCellEditMode::Mode::StartInEdit, int preferredWidth = -1,
+                                          const MenuItemList& availableFormats = MenuItemList());
 
     TableViewCell* makeCell(const Val& value, const Val& subValue = Val());
 

@@ -62,12 +62,24 @@ void DiagnosticsModule::resolveImports()
 {
     auto ir = globalIoc()->resolve<muse::interactive::IInteractiveUriRegister>(mname);
     if (ir) {
-        ir->registerQmlUri(Uri("muse://diagnostics/system/paths"), "Muse.Diagnostics", "DiagnosticPathsDialog");
-        ir->registerQmlUri(Uri("muse://diagnostics/system/graphicsinfo"), "Muse.Diagnostics", "DiagnosticGraphicsInfoDialog");
-        ir->registerQmlUri(Uri("muse://diagnostics/system/profiler"), "Muse.Diagnostics", "DiagnosticProfilerDialog");
-        ir->registerQmlUri(Uri("muse://diagnostics/navigation/tree"), "Muse.Diagnostics", "DiagnosticNavigationDialog");
-        ir->registerQmlUri(Uri("muse://diagnostics/accessible/tree"), "Muse.Diagnostics", "DiagnosticAccessibleDialog");
-        ir->registerQmlUri(Uri("muse://diagnostics/actions/list"), "Muse.Diagnostics", "DiagnosticActionsDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://diagnostics/system/paths"), "Muse.Diagnostics",
+                           "DiagnosticPathsDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://diagnostics/system/graphicsinfo"), "Muse.Diagnostics",
+                           "DiagnosticGraphicsInfoDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://diagnostics/system/profiler"), "Muse.Diagnostics",
+                           "DiagnosticProfilerDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://diagnostics/navigation/tree"), "Muse.Diagnostics",
+                           "DiagnosticNavigationDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://diagnostics/accessible/tree"), "Muse.Diagnostics",
+                           "DiagnosticAccessibleDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://diagnostics/actions/list"), "Muse.Diagnostics",
+                           "DiagnosticActionsDialog");
     }
 }
 
@@ -123,7 +135,9 @@ void DiagnosticsContext::registerExports()
 {
     m_actionsController = std::make_shared<DiagnosticsActionsController>(iocContext());
 
-    ioc()->registerExport<ISaveDiagnosticFilesScenario>(mname, new SaveDiagnosticFilesScenario(iocContext()));
+    ioc()->registerExport<ISaveDiagnosticFilesScenario>(mname,
+                                                        new SaveDiagnosticFilesScenario(
+                                                            iocContext()));
 }
 
 void DiagnosticsContext::resolveImports()

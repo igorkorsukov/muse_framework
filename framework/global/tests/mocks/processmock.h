@@ -31,7 +31,8 @@ class ProcessMock : public IProcess
 {
 public:
     MOCK_METHOD(int, execute, (const std::string&, const std::vector<std::string>&), (override));
-    MOCK_METHOD(bool, startDetached, (const std::string&, const std::vector<std::string>&), (override));
+    MOCK_METHOD(bool, startDetached, (const std::string&, const std::vector<std::string>&),
+                (override));
 };
 }
 

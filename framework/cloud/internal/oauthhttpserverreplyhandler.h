@@ -36,9 +36,12 @@ class OAuthHttpServerReplyHandler : public QOAuthOobReplyHandler
     Q_OBJECT
 
 public:
-    explicit OAuthHttpServerReplyHandler(const modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
-    explicit OAuthHttpServerReplyHandler(quint16 port, const modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
-    explicit OAuthHttpServerReplyHandler(const QHostAddress& address, quint16 port, const modularity::ContextPtr& iocCtx,
+    explicit OAuthHttpServerReplyHandler(const modularity::ContextPtr& iocCtx,
+                                         QObject* parent = nullptr);
+    explicit OAuthHttpServerReplyHandler(quint16 port, const modularity::ContextPtr& iocCtx,
+                                         QObject* parent = nullptr);
+    explicit OAuthHttpServerReplyHandler(const QHostAddress& address, quint16 port,
+                                         const modularity::ContextPtr& iocCtx,
                                          QObject* parent = nullptr);
     ~OAuthHttpServerReplyHandler();
 

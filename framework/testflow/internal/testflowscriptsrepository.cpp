@@ -34,7 +34,8 @@ Scripts TestflowScriptsRepository::scripts() const
     io::paths_t scriptsDirs = configuration()->scriptsDirPaths();
     io::paths_t scriptsPaths;
     for (const io::path_t& dir : scriptsDirs) {
-        RetVal<io::paths_t> paths = fileSystem()->scanFiles(dir, { "*.js" }, io::ScanMode::FilesInCurrentDir);
+        RetVal<io::paths_t> paths = fileSystem()->scanFiles(dir, { "*.js" },
+                                                            io::ScanMode::FilesInCurrentDir);
         scriptsPaths.insert(scriptsPaths.end(), paths.val.begin(), paths.val.end());
     }
 

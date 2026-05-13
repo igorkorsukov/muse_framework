@@ -49,7 +49,8 @@ class DockToolBarView;
 class DockingHolderView;
 class DockPageView;
 class DockPanelView;
-class DockWindow : public QQuickItem, public IDockWindow, public muse::Contextable, public async::Asyncable
+class DockWindow : public QQuickItem, public IDockWindow, public muse::Contextable,
+    public async::Asyncable
 {
     Q_OBJECT
 
@@ -118,7 +119,8 @@ private:
     void loadTopLevelToolBars(const DockPageView* page);
     void alignTopLevelToolBars(const DockPageView* page);
 
-    void addDock(DockBase* dock, Location location = Location::Left, const DockBase* relativeTo = nullptr);
+    void addDock(DockBase* dock, Location location = Location::Left,
+                 const DockBase* relativeTo = nullptr);
     void addPanelAsTab(DockPanelView* panel, DockPanelView* destinationPanel);
     void registerDock(DockBase* dock);
 

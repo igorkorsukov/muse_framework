@@ -47,7 +47,8 @@ public:
 
 public:
     explicit NavigationSection(QObject* parent = nullptr);
-    explicit NavigationSection(const muse::modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
+    explicit NavigationSection(const muse::modularity::ContextPtr& iocCtx,
+                               QObject* parent = nullptr);
     ~NavigationSection() override;
 
     //! NOTE Please sync with INavigationSection::Type
@@ -89,7 +90,9 @@ public:
     void setOnActiveRequested(const OnActiveRequested& func) override;
 
     //! NOTE Can be called from QML without args
-    Q_INVOKABLE void requestActive(INavigationPanel* panel = nullptr, INavigationControl* control = nullptr, bool enableHighlight = false,
+    Q_INVOKABLE void requestActive(INavigationPanel* panel = nullptr,
+                                   INavigationControl* control = nullptr,
+                                   bool enableHighlight = false,
                                    ActivationType activationType = ActivationType::None) override;
 
 public slots:

@@ -33,9 +33,10 @@ class VorbisDecoder : public fluid::IVorbisDecoder
 public:
     VorbisDecoder() = default;
 
-    int decode_memory(const unsigned char* mem, unsigned int len, short** output, unsigned int* channels = nullptr,
+    int decode_memory(const unsigned char* mem, unsigned int len, short** output,
+                      unsigned int* channels = nullptr,
                       unsigned int* sample_rate = nullptr) override;
-    int decode_file(const std::string& filepath, std::vector<float>& output, unsigned int* channels = nullptr,
-                    unsigned int* sample_rate = nullptr);
+    int decode_file(const std::string& filepath, std::vector<float>& output,
+                    unsigned int* channels = nullptr, unsigned int* sample_rate = nullptr);
 };
 }

@@ -23,7 +23,8 @@
 
 using namespace muse::workspace;
 
-bool WorkspaceUtils::workspaceLessThan(const IWorkspacePtr& workspace1, const IWorkspacePtr& workspace2)
+bool WorkspaceUtils::workspaceLessThan(const IWorkspacePtr& workspace1,
+                                       const IWorkspacePtr& workspace2)
 {
     bool isWorkspace1Builtin = workspace1->isBuiltin();
     bool isWorkspace2Builtin = workspace2->isBuiltin();

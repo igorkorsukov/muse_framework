@@ -34,11 +34,13 @@
 #include "ui/iuiactionsregister.h"
 
 namespace muse::midiremote {
-class MidiDeviceMappingModel : public QAbstractListModel, public Contextable, public async::Asyncable
+class MidiDeviceMappingModel : public QAbstractListModel, public Contextable,
+    public async::Asyncable
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool useRemoteControl READ useRemoteControl WRITE setUseRemoteControl NOTIFY useRemoteControlChanged)
+    Q_PROPERTY(
+        bool useRemoteControl READ useRemoteControl WRITE setUseRemoteControl NOTIFY useRemoteControlChanged)
 
     Q_PROPERTY(QItemSelection selection READ selection WRITE setSelection NOTIFY selectionChanged)
     Q_PROPERTY(bool canEditAction READ canEditAction NOTIFY selectionChanged)

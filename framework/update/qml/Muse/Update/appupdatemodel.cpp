@@ -63,8 +63,10 @@ void AppUpdateModel::load(const QString& mode)
     setProgressTitle(muse::qtrc("update", "Downloading MuseScore Studio %1")
                      .arg(QString::fromStdString(info.val.version)));
 
-    m_progress.progressChanged().onReceive(this, [this](int64_t current, int64_t total, const std::string&) {
-        setCurrentProgress(current);
+    m_progress.progressChanged().onReceive(this,
+                                           [this](int64_t current, int64_t total, const std::string&) {
+        setCurrentProgress(
+            current);
         setTotalProgress(total);
     });
 

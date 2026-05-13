@@ -36,14 +36,17 @@ using namespace muse::extensions::legacy;
 
 static Uri makeUri(const io::path_t& rootPath, const io::path_t& path)
 {
-    return Uri("musescore://extensions/v1" + path.toQString().sliced(rootPath.size()).toLower().toStdString());
+    return Uri("musescore://extensions/v1" + path.toQString().sliced(
+                   rootPath.size()).toLower().toStdString());
 }
 
-std::map<std::string /*codeKey*/, Uri> ExtPluginsLoader::loadCodekeyUriMap(const io::path_t& defPath, const io::path_t& extPath) const
+std::map<std::string /*codeKey*/, Uri> ExtPluginsLoader::loadCodekeyUriMap(
+    const io::path_t& defPath, const io::path_t& extPath) const
 {
     std::map<std::string /*codeKey*/, Uri> data;
 
-    auto loadUris = [this](std::map<std::string /*codeKey*/, Uri>& data, const io::path_t& rootPath) {
+    auto loadUris
+        = [this](std::map<std::string /*codeKey*/, Uri>& data, const io::path_t& rootPath) {
         io::paths_t paths = qmlsPaths(rootPath);
         for (const io::path_t& path : paths) {
             std::string codeKey = io::completeBasename(path).toStdString();
@@ -62,7 +65,8 @@ std::map<std::string /*codeKey*/, Uri> ExtPluginsLoader::loadCodekeyUriMap(const
     return data;
 }
 
-ManifestList ExtPluginsLoader::loadManifestList(const io::path_t& defPath, const io::path_t& extPath) const
+ManifestList ExtPluginsLoader::loadManifestList(const io::path_t& defPath,
+                                                const io::path_t& extPath) const
 {
     TRACEFUNC;
 

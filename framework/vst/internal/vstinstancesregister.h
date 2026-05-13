@@ -36,35 +36,46 @@ public:
     IVstPluginInstancePtr makeAndRegisterInstrPlugin(const muse::audio::AudioResourceId& resourceId,
                                                      const muse::audio::TrackId trackId) override;
 
-    IVstPluginInstancePtr makeAndRegisterFxPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId,
-                                                  const muse::audio::AudioFxChainOrder chainOrder) override;
+    IVstPluginInstancePtr makeAndRegisterFxPlugin(const muse::audio::AudioResourceId& resourceId,
+                                                  const muse::audio::TrackId trackId,
+                                                  const muse::audio::AudioFxChainOrder chainOrder)
+    override;
 
-    IVstPluginInstancePtr makeAndRegisterMasterFxPlugin(const muse::audio::AudioResourceId& resourceId,
-                                                        const muse::audio::AudioFxChainOrder chainOrder) override;
+    IVstPluginInstancePtr makeAndRegisterMasterFxPlugin(
+        const muse::audio::AudioResourceId& resourceId,
+        const muse::audio::AudioFxChainOrder chainOrder) override;
 
     // register
-    void registerInstrPlugin(const muse::audio::TrackId trackId, IVstPluginInstancePtr instance) override;
+    void registerInstrPlugin(const muse::audio::TrackId trackId,
+                             IVstPluginInstancePtr instance) override;
 
-    void registerFxPlugin(const muse::audio::TrackId trackId, const muse::audio::AudioFxChainOrder chainOrder,
+    void registerFxPlugin(const muse::audio::TrackId trackId,
+                          const muse::audio::AudioFxChainOrder chainOrder,
                           IVstPluginInstancePtr instance) override;
 
-    void registerMasterFxPlugin(const muse::audio::AudioFxChainOrder chainOrder, IVstPluginInstancePtr instance) override;
+    void registerMasterFxPlugin(const muse::audio::AudioFxChainOrder chainOrder,
+                                IVstPluginInstancePtr instance) override;
 
     // get
     IVstPluginInstancePtr instanceById(const VstPluginInstanceId id) const override;
     IVstPluginInstancePtr instrumentPlugin(const muse::audio::AudioResourceId& resourceId,
                                            const muse::audio::TrackId trackId) const override;
-    IVstPluginInstancePtr fxPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId,
+    IVstPluginInstancePtr fxPlugin(const muse::audio::AudioResourceId& resourceId,
+                                   const muse::audio::TrackId trackId,
                                    const muse::audio::AudioFxChainOrder chainOrder) const override;
     IVstPluginInstancePtr masterFxPlugin(const muse::audio::AudioResourceId& resourceId,
-                                         const muse::audio::AudioFxChainOrder chainOrder) const override;
+                                         const muse::audio::AudioFxChainOrder chainOrder) const
+    override;
 
     // unregister
     void unregisterById(const VstPluginInstanceId id) override;
-    void unregisterInstrPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId) override;
-    void unregisterFxPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::TrackId trackId,
+    void unregisterInstrPlugin(const muse::audio::AudioResourceId& resourceId,
+                               const muse::audio::TrackId trackId) override;
+    void unregisterFxPlugin(const muse::audio::AudioResourceId& resourceId,
+                            const muse::audio::TrackId trackId,
                             const muse::audio::AudioFxChainOrder chainOrder) override;
-    void unregisterMasterFxPlugin(const muse::audio::AudioResourceId& resourceId, const muse::audio::AudioFxChainOrder chainOrder) override;
+    void unregisterMasterFxPlugin(const muse::audio::AudioResourceId& resourceId,
+                                  const muse::audio::AudioFxChainOrder chainOrder) override;
 
     void unregisterAllInstrPlugin() override;
     void unregisterAllFx() override;
@@ -86,7 +97,8 @@ private:
 
         inline bool operator ==(const Key& k) const
         {
-            return type == k.type && trackId == k.trackId && resourceId == k.resourceId && chainOrder == k.chainOrder;
+            return type == k.type && trackId == k.trackId && resourceId == k.resourceId
+                   && chainOrder == k.chainOrder;
         }
 
         inline bool operator <(const Key& k) const

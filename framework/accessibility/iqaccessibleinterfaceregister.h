@@ -36,7 +36,8 @@ public:
 
     using InterfaceGetter = std::function<QAccessibleInterface* (QObject*)>;
 
-    virtual void registerInterfaceGetter(const QString& className, const InterfaceGetter& interfaceGetter) = 0;
+    virtual void registerInterfaceGetter(const QString& className,
+                                         const InterfaceGetter& interfaceGetter) = 0;
     virtual InterfaceGetter interfaceGetter(const QString& className) const = 0;
 };
 }

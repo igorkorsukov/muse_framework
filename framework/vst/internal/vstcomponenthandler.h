@@ -55,7 +55,8 @@ public:
 
 private:
     Steinberg::tresult beginEdit(Steinberg::Vst::ParamID id) override;
-    Steinberg::tresult performEdit(Steinberg::Vst::ParamID id, Steinberg::Vst::ParamValue valueNormalized) override;
+    Steinberg::tresult performEdit(Steinberg::Vst::ParamID id,
+                                   Steinberg::Vst::ParamValue valueNormalized) override;
     Steinberg::tresult endEdit(Steinberg::Vst::ParamID id) override;
     Steinberg::tresult restartComponent(Steinberg::int32 flags) override;
 

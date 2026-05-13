@@ -50,16 +50,19 @@ public:
 
     QUrl scoreManagerUrl() const override;
 
-    ProgressPtr uploadScore(DevicePtr scoreData, const QString& title, Visibility visibility = Visibility::Private,
+    ProgressPtr uploadScore(DevicePtr scoreData, const QString& title,
+                            Visibility visibility = Visibility::Private,
                             const QUrl& sourceUrl = QUrl(), int revisionId = 0) override;
-    ProgressPtr uploadAudio(DevicePtr audioData, const QString& audioFormat, const QUrl& sourceUrl) override;
+    ProgressPtr uploadAudio(DevicePtr audioData, const QString& audioFormat,
+                            const QUrl& sourceUrl) override;
 
     RetVal<ScoreInfo> downloadScoreInfo(const QUrl& sourceUrl) override;
     RetVal<ScoreInfo> downloadScoreInfo(int scoreId) override;
 
     async::Promise<ScoresList> downloadScoresList(int scoresPerBatch, int batchNumber) override;
 
-    ProgressPtr downloadScore(int scoreId, DevicePtr scoreData, const QString& hash = QString(),
+    ProgressPtr downloadScore(int scoreId, DevicePtr scoreData,
+                              const QString& hash = QString(),
                               const QString& secret = QString()) override;
 
 private:
@@ -70,15 +73,19 @@ private:
 
     network::RequestHeaders headers() const;
 
-    void doDownloadScoreInfo(int scoreId, std::function<void(const RetVal<ScoreInfo>& res)> finished);
+    void doDownloadScoreInfo(int scoreId,
+                             std::function<void(const RetVal<ScoreInfo>& res)> finished);
 
-    async::Promise<Ret> doDownloadScore(int scoreId, DevicePtr scoreData, const QString& hash, const QString& secret, ProgressPtr progress);
+    async::Promise<Ret> doDownloadScore(int scoreId, DevicePtr scoreData, const QString& hash,
+                                        const QString& secret, ProgressPtr progress);
 
     async::Promise<RetVal<bool> > checkScoreAlreadyUploaded(const ID& scoreId);
 
-    async::Promise<Ret> doUploadScore(DevicePtr scoreData, const QString& title, Visibility visibility, const QUrl& sourceUrl,
-                                      int revisionId, ProgressPtr progress);
+    async::Promise<Ret> doUploadScore(DevicePtr scoreData, const QString& title,
+                                      Visibility visibility, const QUrl& sourceUrl, int revisionId,
+                                      ProgressPtr progress);
 
-    async::Promise<Ret> doUploadAudio(DevicePtr audioData, const QString& audioFormat, const QUrl& sourceUrl, ProgressPtr progress);
+    async::Promise<Ret> doUploadAudio(DevicePtr audioData, const QString& audioFormat,
+                                      const QUrl& sourceUrl, ProgressPtr progress);
 };
 }

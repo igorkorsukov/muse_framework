@@ -169,7 +169,8 @@ size_t WavEncoder::encode(const samples_t samplesPerChannel, const float* input)
         for (samples_t sampleIdx = 0; sampleIdx < samplesPerChannel; ++sampleIdx) {
             for (audioch_t audioChNum = 0; audioChNum < channels; ++audioChNum) {
                 const int idx = static_cast<int>(sampleIdx) * channels + audioChNum;
-                if (m_dstDevice->write(reinterpret_cast<const std::uint8_t*>(input + idx), 4) != 4) {
+                if (m_dstDevice->write(reinterpret_cast<const std::uint8_t*>(input + idx),
+                                       4) != 4) {
                     return 0;
                 }
             }
@@ -193,7 +194,8 @@ size_t WavEncoder::encode(const samples_t samplesPerChannel, const float* input)
             for (audioch_t audioChNum = 0; audioChNum < channels; ++audioChNum) {
                 const int idx = static_cast<int>(sampleIdx) * channels + audioChNum;
 
-                const int32_t sampleInt = dsp::convertFloatSamples<int32_t>(input[idx], bitsPerSample);
+                const int32_t sampleInt = dsp::convertFloatSamples<int32_t>(input[idx],
+                                                                            bitsPerSample);
 
                 m_dstDevice->write(reinterpret_cast<const std::uint8_t*>(&sampleInt), bytesToWrite);
             }

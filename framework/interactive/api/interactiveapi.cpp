@@ -115,7 +115,8 @@ std::vector<muse::IInteractive::Button> InteractiveApi::buttons(const QJSValueLi
  *      ...
  * }
  */
-QString InteractiveApi::question(const QString& contentTitle, const QString& text, const QJSValueList& btns)
+QString InteractiveApi::question(const QString& contentTitle, const QString& text,
+                                 const QJSValueList& btns)
 {
     IInteractive::Result res = interactive()->questionSync(contentTitle.toStdString(),
                                                            text.toStdString(),

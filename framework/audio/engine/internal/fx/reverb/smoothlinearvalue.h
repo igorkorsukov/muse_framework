@@ -32,7 +32,8 @@ class SmoothLinearValue
 public:
     SmoothLinearValue(const ValueT& startValue = ValueT(0))
     {
-        static_assert(std::is_floating_point<StepT>::value, "Internal step type needs to be floating point.");
+        static_assert(std::is_floating_point<StepT>::value,
+                      "Internal step type needs to be floating point.");
         m_targetValue = m_currentValue = startValue;
         m_currentSteps = (StepT)_initialSteps;
         m_targetSteps = 0;

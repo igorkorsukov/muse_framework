@@ -10,7 +10,8 @@
 #include "io/ifilesystem.h"
 
 namespace muse::extensions {
-class ExtensionInstaller : public IExtensionInstaller, public async::Asyncable, public muse::Contextable
+class ExtensionInstaller : public IExtensionInstaller, public async::Asyncable,
+    public muse::Contextable
 {
     muse::GlobalInject<IExtensionsConfiguration> configuration;
     muse::GlobalInject<io::IFileSystem> fileSystem;

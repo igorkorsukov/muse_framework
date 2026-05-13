@@ -172,7 +172,8 @@ Settings::Items Settings::readItems() const
 {
     Items result;
 #ifdef MUSE_MODULE_MULTIWINDOWS
-    muse::mi::ReadResourceLockGuard resource_lock(multiwindowsProvider.get(), SETTINGS_RESOURCE_NAME);
+    muse::mi::ReadResourceLockGuard resource_lock(multiwindowsProvider.get(),
+                                                  SETTINGS_RESOURCE_NAME);
 #endif
     for (const QString& key : m_settings->allKeys()) {
         Item item;
@@ -233,7 +234,8 @@ void Settings::setLocalValue(const Key& key, const Val& value)
 void Settings::writeValue(const Key& key, const Val& value)
 {
 #ifdef MUSE_MODULE_MULTIWINDOWS
-    muse::mi::WriteResourceLockGuard resource_lock(multiwindowsProvider.get(), SETTINGS_RESOURCE_NAME);
+    muse::mi::WriteResourceLockGuard resource_lock(multiwindowsProvider.get(),
+                                                   SETTINGS_RESOURCE_NAME);
 #endif
     // TODO: implement writing/reading first part of key (module name)
     m_settings->setValue(QString::fromStdString(key.key), value.toQVariant());
@@ -242,7 +244,8 @@ void Settings::writeValue(const Key& key, const Val& value)
 QString Settings::dataPath() const
 {
 #ifdef WIN_PORTABLE
-    return QDir::cleanPath(QString("%1/../../../Data/settings").arg(QCoreApplication::applicationDirPath()));
+    return QDir::cleanPath(QString("%1/../../../Data/settings").arg(QCoreApplication::
+                                                                    applicationDirPath()));
 #else
     return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif
@@ -270,7 +273,8 @@ void Settings::setDescription(const Key& key, const std::string& value)
     item.description = value;
 }
 
-void Settings::setCanBeManuallyEdited(const Settings::Key& key, bool canBeManuallyEdited, const Val& minValue, const Val& maxValue)
+void Settings::setCanBeManuallyEdited(const Settings::Key& key, bool canBeManuallyEdited,
+                                      const Val& minValue, const Val& maxValue)
 {
     Item& item = findItem(key);
 

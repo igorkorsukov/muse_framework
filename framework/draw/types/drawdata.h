@@ -133,7 +133,10 @@ struct DrawData
         std::vector<DrawText> texts;
         std::vector<DrawPixmap> pixmaps;
 
-        bool empty() const { return paths.empty() && polygons.empty() && texts.empty() && pixmaps.empty(); }
+        bool empty() const
+        {
+            return paths.empty() && polygons.empty() && texts.empty() && pixmaps.empty();
+        }
     };
 
     struct Item {

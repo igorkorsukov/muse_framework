@@ -26,7 +26,8 @@ using namespace muse::vst;
 using namespace muse::audio;
 using namespace muse::audio::synth;
 
-ISynthesizerPtr VstiResolver::resolveSynth(const audio::TrackId trackId, const audio::AudioInputParams& params,
+ISynthesizerPtr VstiResolver::resolveSynth(const audio::TrackId trackId,
+                                           const audio::AudioInputParams& params,
                                            const audio::OutputSpec& outputSpec) const
 {
     return createSynth(trackId, params, outputSpec);
@@ -42,7 +43,8 @@ void VstiResolver::refresh()
     pluginModulesRepo()->refresh();
 }
 
-VstSynthPtr VstiResolver::createSynth(const TrackId trackId, const AudioInputParams& params, const OutputSpec& outputSpec) const
+VstSynthPtr VstiResolver::createSynth(const TrackId trackId, const AudioInputParams& params,
+                                      const OutputSpec& outputSpec) const
 {
     if (!pluginModulesRepo()->exists(params.resourceMeta.id)) {
         return nullptr;

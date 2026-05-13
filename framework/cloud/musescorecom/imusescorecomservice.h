@@ -48,9 +48,11 @@ public:
 
     virtual QUrl scoreManagerUrl() const = 0;
 
-    virtual ProgressPtr uploadScore(DevicePtr scoreData, const QString& title, cloud::Visibility visibility = cloud::Visibility::Private,
+    virtual ProgressPtr uploadScore(DevicePtr scoreData, const QString& title,
+                                    cloud::Visibility visibility = cloud::Visibility::Private,
                                     const QUrl& sourceUrl = QUrl(), int revisionId = 0) = 0;
-    virtual ProgressPtr uploadAudio(DevicePtr audioData, const QString& audioFormat, const QUrl& sourceUrl) = 0;
+    virtual ProgressPtr uploadAudio(DevicePtr audioData, const QString& audioFormat,
+                                    const QUrl& sourceUrl) = 0;
 
     virtual RetVal<ScoreInfo> downloadScoreInfo(const QUrl& sourceUrl) = 0;
     virtual RetVal<ScoreInfo> downloadScoreInfo(int scoreId) = 0;
@@ -61,7 +63,8 @@ public:
     /// big list of all issues, but you have many pages, with 25 issues per page.
     virtual async::Promise<ScoresList> downloadScoresList(int scoresPerBatch, int batchNumber) = 0;
 
-    virtual ProgressPtr downloadScore(int scoreId, DevicePtr scoreData, const QString& hash = QString(),
+    virtual ProgressPtr downloadScore(int scoreId, DevicePtr scoreData,
+                                      const QString& hash = QString(),
                                       const QString& secret = QString()) = 0;
 };
 }

@@ -26,7 +26,8 @@
 
 using namespace muse::musesampler;
 
-static const muse::Settings::Key USE_LEGACY_AUDITION("musesampler", "museSampler/useLegacyAudition");
+static const muse::Settings::Key USE_LEGACY_AUDITION("musesampler",
+                                                     "museSampler/useLegacyAudition");
 
 void MuseSamplerConfiguration::init()
 {

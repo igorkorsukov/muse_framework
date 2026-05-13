@@ -27,14 +27,16 @@
 
 using namespace muse::uicomponents;
 
-PopupViewCloseController::PopupViewCloseController(const modularity::ContextPtr& iocCtx, QObject* parent)
+PopupViewCloseController::PopupViewCloseController(const modularity::ContextPtr& iocCtx,
+                                                   QObject* parent)
     : QObject(parent), muse::Contextable(iocCtx)
 {
 }
 
 void PopupViewCloseController::init()
 {
-    connect(qApp, &QApplication::applicationStateChanged, this, &PopupViewCloseController::onApplicationStateChanged);
+    connect(qApp, &QApplication::applicationStateChanged, this,
+            &PopupViewCloseController::onApplicationStateChanged);
 
     interactive()->currentUriAboutToBeChanged().onNotify(this, [this]() {
         notifyAboutClose();

@@ -59,7 +59,8 @@ Ret Dir::mkpath(const path_t& path)
     return fileSystem()->makePath(path);
 }
 
-RetVal<io::paths_t> Dir::scanFiles(const io::path_t& rootDir, const std::vector<std::string>& filters, ScanMode mode)
+RetVal<io::paths_t> Dir::scanFiles(const io::path_t& rootDir,
+                                   const std::vector<std::string>& filters, ScanMode mode)
 {
     return fileSystem()->scanFiles(rootDir, filters, mode);
 }

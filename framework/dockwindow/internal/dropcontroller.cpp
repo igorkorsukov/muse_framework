@@ -89,12 +89,15 @@ static bool isPointAllowedForDrop(const QPoint& point, const DropDestination& dr
 
 using namespace muse::dock;
 
-DropController::DropController(KDDockWidgets::DropArea* dropArea, const modularity::ContextPtr& iocCtx)
+DropController::DropController(KDDockWidgets::DropArea* dropArea,
+                               const modularity::ContextPtr& iocCtx)
     : KDDockWidgets::DropIndicatorOverlayInterface(dropArea), Contextable(iocCtx)
 {
     const int ctx = iocCtx->id;
-    KDDockWidgets::DragController::instance(ctx)->setResolveDropAreaFunc([ctx](const QPoint& globalPos) -> KDDockWidgets::DropArea* {
-        for (auto mainWindow : KDDockWidgets::DockRegistry::self(ctx)->mainwindows()) {
+    KDDockWidgets::DragController::instance(ctx)->setResolveDropAreaFunc([ctx](const QPoint&
+                                                                               globalPos) -> KDDockWidgets::DropArea* {
+        for (auto mainWindow : KDDockWidgets::DockRegistry::self(
+                 ctx)->mainwindows()) {
             if (mainWindow->windowGeometry().contains(globalPos)) {
                 return mainWindow->dropArea();
             }
@@ -177,7 +180,8 @@ bool DropController::isMouseOverDock(const QPoint& mouseLocalPos, const DockBase
     return geometry.contains(mouseLocalPos);
 }
 
-void DropController::updateToolBarOrientation(DockToolBarView* draggedToolBar, const DropDestination& dropDestination)
+void DropController::updateToolBarOrientation(DockToolBarView* draggedToolBar,
+                                              const DropDestination& dropDestination)
 {
     IF_ASSERT_FAILED(draggedToolBar) {
         return;
@@ -207,7 +211,8 @@ void DropController::updateToolBarOrientation(DockToolBarView* draggedToolBar, c
     draggedToolBar->setOrientation(static_cast<Qt::Orientation>(orientation));
 }
 
-void DropController::setCurrentDropDestination(const DockBase* draggedDock, const DropDestination& dropDestination)
+void DropController::setCurrentDropDestination(const DockBase* draggedDock,
+                                               const DropDestination& dropDestination)
 {
     if (m_currentDropDestination == dropDestination) {
         return;
@@ -250,12 +255,14 @@ void DropController::setCurrentDropDestination(const DockBase* draggedDock, cons
     m_currentDropDestination.dock->init();
 }
 
-DropDestination DropController::resolveDropDestination(const DockBase* draggedDock, const QPoint& localPos) const
+DropDestination DropController::resolveDropDestination(const DockBase* draggedDock,
+                                                       const QPoint& localPos) const
 {
     if (draggedDock->type() == DockType::Panel) {
         DropDestination destination;
 
-        destination.dock = resolvePanelForDrop(dynamic_cast<const DockPanelView*>(draggedDock), localPos);
+        destination.dock = resolvePanelForDrop(dynamic_cast<const DockPanelView*>(draggedDock),
+                                               localPos);
         destination.dropLocation = resolveDropLocation(destination.dock, localPos);
 
         if (destination.isValid()) {
@@ -279,7 +286,8 @@ DropDestination DropController::resolveDropDestination(const DockBase* draggedDo
     return DropDestination();
 }
 
-DockingHolderView* DropController::resolveDockingHolder(DockType draggedDockType, const QPoint& localPos) const
+DockingHolderView* DropController::resolveDockingHolder(DockType draggedDockType,
+                                                        const QPoint& localPos) const
 {
     if (!dockWindow()->asItem().contains(localPos)) {
         return nullptr;
@@ -307,7 +315,8 @@ DockingHolderView* DropController::resolveDockingHolder(DockType draggedDockType
     return nullptr;
 }
 
-DockPanelView* DropController::resolvePanelForDrop(const DockPanelView* panel, const QPoint& localPos) const
+DockPanelView* DropController::resolvePanelForDrop(const DockPanelView* panel,
+                                                   const QPoint& localPos) const
 {
     QList<DockPanelView*> panels = currentPage()->findPanelsForDropping(panel);
 
@@ -320,7 +329,8 @@ DockPanelView* DropController::resolvePanelForDrop(const DockPanelView* panel, c
     return nullptr;
 }
 
-Location DropController::resolveDropLocation(const DockBase* hoveredDock, const QPoint& localPos) const
+Location DropController::resolveDropLocation(const DockBase* hoveredDock,
+                                             const QPoint& localPos) const
 {
     if (!hoveredDock) {
         return Location::Undefined;
@@ -356,7 +366,8 @@ Location DropController::resolveDropLocation(const DockBase* hoveredDock, const 
     return Location::Undefined;
 }
 
-QRect DropController::resolveHighlightingRect(const DockBase* draggedDock, const DropDestination& destination) const
+QRect DropController::resolveHighlightingRect(const DockBase* draggedDock,
+                                              const DropDestination& destination) const
 {
     if (!destination.isValid()) {
         return QRect();
@@ -413,7 +424,8 @@ DockPageView* DropController::currentPage() const
 
 DockBase* DropController::draggedDock() const
 {
-    auto windowBeingDragged = KDDockWidgets::DragController::instance(iocContext()->id)->windowBeingDragged();
+    auto windowBeingDragged
+        = KDDockWidgets::DragController::instance(iocContext()->id)->windowBeingDragged();
     if (!windowBeingDragged || windowBeingDragged->dockWidgets().isEmpty()) {
         return nullptr;
     }

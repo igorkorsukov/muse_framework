@@ -38,7 +38,8 @@ void ToursProviderModel::init()
     // TODO: avoid direct usage of ToursProvider, and use IToursProvider only
     ToursProvider* providerPtr = toursProvider();
     connect(providerPtr, &ToursProvider::openTourStep, this, &ToursProviderModel::openTourStep);
-    connect(providerPtr, &ToursProvider::closeCurrentTourStep, this, &ToursProviderModel::closeCurrentTourStep);
+    connect(providerPtr, &ToursProvider::closeCurrentTourStep, this,
+            &ToursProviderModel::closeCurrentTourStep);
 }
 
 void ToursProviderModel::showNext()

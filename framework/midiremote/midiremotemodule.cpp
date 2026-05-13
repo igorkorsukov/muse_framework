@@ -48,7 +48,8 @@ void MidiRemoteModule::registerExports()
 
     globalIoc()->registerExport<IMidiRemoteConfiguration>(mname, m_configuration);
 
-    globalIoc()->registerExport<IMMCDecoderFactory>(moduleName(), std::make_shared<MMCDecoderFactory>());
+    globalIoc()->registerExport<IMMCDecoderFactory>(
+        moduleName(), std::make_shared<MMCDecoderFactory>());
 
 #ifdef MUSE_MODULE_DIAGNOSTICS
     auto pr = globalIoc()->resolve<muse::diagnostics::IDiagnosticsPathsRegister>(mname);

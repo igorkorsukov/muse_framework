@@ -62,7 +62,8 @@ class ToolBarItem : public QObject, public Contextable, public async::Asyncable
 
     Q_PROPERTY(bool selected READ selected_property NOTIFY selectedChanged)
 
-    Q_PROPERTY(bool isTransparent READ isTransparent WRITE setIsTransparent NOTIFY isTransparentChanged)
+    Q_PROPERTY(
+        bool isTransparent READ isTransparent WRITE setIsTransparent NOTIFY isTransparentChanged)
 
     Q_PROPERTY(int type READ type_property NOTIFY typeChanged)
 

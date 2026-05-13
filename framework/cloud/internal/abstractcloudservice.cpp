@@ -103,7 +103,8 @@ void AbstractCloudService::initOAuthIfNecessary()
 #else
     m_oauth2->setAccessTokenUrl(m_serverConfig.accessTokenUrl);
 #endif
-    m_oauth2->setModifyParametersFunction([this](QAbstractOAuth::Stage, QMultiMap<QString, QVariant>* parameters) {
+    m_oauth2->setModifyParametersFunction([this](QAbstractOAuth::Stage,
+                                                 QMultiMap<QString, QVariant>* parameters) {
         for (const QString& key : m_serverConfig.authorizationParameters.keys()) {
             parameters->replace(key, m_serverConfig.authorizationParameters.value(key));
         }
@@ -111,8 +112,10 @@ void AbstractCloudService::initOAuthIfNecessary()
 
     m_oauth2->setReplyHandler(m_replyHandler);
 
-    connect(m_oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, this, &AbstractCloudService::openUrl);
-    connect(m_oauth2, &QOAuth2AuthorizationCodeFlow::granted, this, &AbstractCloudService::onUserAuthorized);
+    connect(m_oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, this,
+            &AbstractCloudService::openUrl);
+    connect(m_oauth2, &QOAuth2AuthorizationCodeFlow::granted, this,
+            &AbstractCloudService::onUserAuthorized);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
     connect(m_oauth2, &QOAuth2AuthorizationCodeFlow::serverReportedErrorOccurred,
@@ -120,7 +123,8 @@ void AbstractCloudService::initOAuthIfNecessary()
         LOGE() << "Error during authorization: " << error << "\n Description: " << errorDescription << "\n URI: " << uri.toString();
     });
 #else
-    connect(m_oauth2, &QOAuth2AuthorizationCodeFlow::error, [](const QString& error, const QString& errorDescription, const QUrl& uri) {
+    connect(m_oauth2, &QOAuth2AuthorizationCodeFlow::error,
+            [](const QString& error, const QString& errorDescription, const QUrl& uri) {
         LOGE() << "Error during authorization: " << error << "\n Description: " << errorDescription << "\n URI: " << uri.toString();
     });
 #endif
@@ -133,7 +137,8 @@ bool AbstractCloudService::readTokens()
     io::path_t tokensPath = tokensFilePath();
     RetVal<ByteArray> tokensData;
     {
-        mi::ReadResourceLockGuard resource_guard(multiwindowsProvider(), CLOUD_ACCESS_TOKEN_RESOURCE_NAME);
+        mi::ReadResourceLockGuard resource_guard(multiwindowsProvider(),
+                                                 CLOUD_ACCESS_TOKEN_RESOURCE_NAME);
         tokensData = fileSystem()->readFile(tokensPath);
     }
 
@@ -174,7 +179,8 @@ Ret AbstractCloudService::saveTokens()
 
     Ret ret;
     {
-        mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(), CLOUD_ACCESS_TOKEN_RESOURCE_NAME);
+        mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(),
+                                                  CLOUD_ACCESS_TOKEN_RESOURCE_NAME);
         ret = fileSystem()->writeFile(tokensFilePath(), ByteArray::fromQByteArrayNoCopy(json));
     }
 
@@ -184,7 +190,8 @@ Ret AbstractCloudService::saveTokens()
 void AbstractCloudService::removeTokens()
 {
     {
-        mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(), CLOUD_ACCESS_TOKEN_RESOURCE_NAME);
+        mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(),
+                                                  CLOUD_ACCESS_TOKEN_RESOURCE_NAME);
         Ret ret = fileSystem()->remove(tokensFilePath());
         if (!ret) {
             LOGE() << ret.toString();
@@ -231,7 +238,8 @@ RequestHeaders AbstractCloudService::defaultHeaders() const
     return configuration()->headers();
 }
 
-RetVal<QUrl> AbstractCloudService::prepareUrlForRequest(QUrl apiUrl, const QVariantMap& params) const
+RetVal<QUrl> AbstractCloudService::prepareUrlForRequest(QUrl apiUrl,
+                                                        const QVariantMap& params) const
 {
     if (m_accessToken.isEmpty()) {
         return make_ret(cloud::Err::AccessTokenIsEmpty);
@@ -295,7 +303,8 @@ void AbstractCloudService::signOut()
         return;
     }
 
-    RetVal<Progress> progress = m_networkManager->get(signOutUrl.val, nullptr, m_serverConfig.headers);
+    RetVal<Progress> progress = m_networkManager->get(signOutUrl.val, nullptr,
+                                                      m_serverConfig.headers);
     if (!progress.ret) {
         LOGE() << progress.ret.toString();
         removeTokens();
@@ -336,7 +345,8 @@ const AccountInfo& AbstractCloudService::accountInfo() const
 
 Ret AbstractCloudService::checkCloudIsAvailable() const
 {
-    RetVal<Progress> progress = m_networkManager->get(m_serverConfig.serverAvailabilityUrl, nullptr, m_serverConfig.headers);
+    RetVal<Progress> progress = m_networkManager->get(m_serverConfig.serverAvailabilityUrl, nullptr,
+                                                      m_serverConfig.headers);
     if (!progress.ret) {
         return progress.ret;
     }
@@ -405,7 +415,8 @@ Promise<Ret> AbstractCloudService::executeAsyncRequest(const AsyncRequestCallbac
     });
 }
 
-Ret AbstractCloudService::uploadingDownloadingRetFromRawRet(const Ret& rawRet, bool isAlreadyUploaded) const
+Ret AbstractCloudService::uploadingDownloadingRetFromRawRet(const Ret& rawRet,
+                                                            bool isAlreadyUploaded) const
 {
     if (rawRet) {
         return rawRet; // OK

@@ -156,12 +156,14 @@ void DockFrameModel::listenChangesInFrame()
 
         DockProperties properties = readPropertiesFromObject(allDocks.first());
         bool isHorizontalPanel = (properties.type == DockType::Panel)
-                                 && (properties.location == Location::Top || properties.location == Location::Bottom);
+                                 && (properties.location == Location::Top
+                                     || properties.location == Location::Bottom);
         setIsHorizontalPanel(isHorizontalPanel);
 
         updateTitleBar();
 
-        bool titleBarAllowed = (properties.type == DockType::Panel) && (properties.floatable || properties.closable);
+        bool titleBarAllowed = (properties.type == DockType::Panel)
+                               && (properties.floatable || properties.closable);
         setTitleBarAllowed(titleBarAllowed);
 
         updateNavigationSection();

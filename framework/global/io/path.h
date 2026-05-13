@@ -75,7 +75,12 @@ struct path_t {
     path_t(const QString& s);
     explicit path_t(const QUrl& u);
     inline path_t& operator=(const QString& other) { m_path = other.toStdString(); return *this; }
-    inline path_t operator+(const QString& other) const { path_t p = *this; p += String::fromQString(other); return p; }
+    inline path_t operator+(const QString& other) const
+    {
+        path_t p = *this;
+        p += String::fromQString(other);
+        return p;
+    }
     inline path_t& operator+=(const QString& other) { m_path += other.toStdString(); return *this; }
     QString toQString() const;
     QUrl toQUrl() const;

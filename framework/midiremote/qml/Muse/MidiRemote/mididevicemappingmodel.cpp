@@ -90,15 +90,19 @@ QVariant MidiDeviceMappingModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-QVariantMap MidiDeviceMappingModel::midiMappingToObject(const MidiControlsMapping& midiMapping) const
+QVariantMap MidiDeviceMappingModel::midiMappingToObject(const MidiControlsMapping& midiMapping)
+const
 {
     const UiAction& action = uiActionsRegister()->action(midiMapping.action);
 
     QVariantMap obj;
-    obj[TITLE_KEY] = !action.description.isEmpty() ? action.description.qTranslated() : action.title.qTranslatedWithoutMnemonic();
+    obj[TITLE_KEY]
+        = !action.description.isEmpty() ? action.description.qTranslated() : action.title.
+          qTranslatedWithoutMnemonic();
     obj[ICON_KEY] = static_cast<int>(action.iconCode);
     obj[ENABLED_KEY] = midiMapping.isValid();
-    obj[STATUS_KEY] = midiMapping.isValid() ? midiMapping.event.name().toQString() : muse::qtrc("global", "Inactive");
+    obj[STATUS_KEY] = midiMapping.isValid() ? midiMapping.event.name().toQString() : muse::qtrc(
+        "global", "Inactive");
     obj[MAPPED_TYPE_KEY] = static_cast<int>(midiMapping.event.type);
     obj[MAPPED_VALUE_KEY] = midiMapping.event.value;
 

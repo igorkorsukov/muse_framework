@@ -35,7 +35,8 @@ WebSocketServerApi::WebSocketServerApi(muse::api::IApiEngine* e)
 {
     m_server = new QWebSocketServer("muse_extension", QWebSocketServer::NonSecureMode);
 
-    QObject::connect(m_server, &QWebSocketServer::newConnection, this, &WebSocketServerApi::onNewConnection);
+    QObject::connect(m_server, &QWebSocketServer::newConnection, this,
+                     &WebSocketServerApi::onNewConnection);
 }
 
 WebSocketServerApi::~WebSocketServerApi()
@@ -101,7 +102,8 @@ void WebSocketServerApi::onMessage(int id, QJSValue onMessage)
 
     it->second.onMessage = onMessage;
 
-    QObject::connect(it->second.socket, &QWebSocket::textMessageReceived, this, [this, id](const QString& message) {
+    QObject::connect(it->second.socket, &QWebSocket::textMessageReceived, this,
+                     [this, id](const QString& message) {
         LOGD() << "messageReceived client id: " << id << ", message: " << message;
         auto it = m_clients.find(id);
         IF_ASSERT_FAILED(it != m_clients.end()) {

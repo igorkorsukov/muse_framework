@@ -42,12 +42,14 @@ public:
     FluidResolver();
     ~FluidResolver() override;
 
-    ISynthesizerPtr resolveSynth(const audio::TrackId trackId, const audio::AudioInputParams& params,
+    ISynthesizerPtr resolveSynth(const audio::TrackId trackId,
+                                 const audio::AudioInputParams& params,
                                  const OutputSpec& spec) const override;
     bool hasCompatibleResources(const audio::PlaybackSetupData& setup) const override;
 
     audio::AudioResourceMetaList resolveResources() const override;
-    audio::SoundPresetList resolveSoundPresets(const AudioResourceMeta& resourceMeta) const override;
+    audio::SoundPresetList resolveSoundPresets(
+        const AudioResourceMeta& resourceMeta) const override;
 
     void refresh() override;
     void clearSources() override;

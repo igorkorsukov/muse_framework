@@ -35,7 +35,8 @@
 #include "navigationevent.h"
 
 namespace muse::ui {
-class AbstractNavigation : public QObject, public QQmlParserStatus, public Contextable, public async::Asyncable
+class AbstractNavigation : public QObject, public QQmlParserStatus, public Contextable,
+    public async::Asyncable
 {
     Q_OBJECT
     QML_ELEMENT;
@@ -52,7 +53,9 @@ class AbstractNavigation : public QObject, public QQmlParserStatus, public Conte
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
     Q_PROPERTY(bool highlight READ highlight NOTIFY highlightChanged)
 
-    Q_PROPERTY(muse::ui::AccessibleItem * accessible READ accessible WRITE setAccessible NOTIFY accessibleChanged)
+    Q_PROPERTY(
+        muse::ui::AccessibleItem
+        * accessible READ accessible WRITE setAccessible NOTIFY accessibleChanged)
 
     Q_INTERFACES(QQmlParserStatus)
 
@@ -61,7 +64,8 @@ public:
 
 public:
     explicit AbstractNavigation(QObject* parent = nullptr);
-    explicit AbstractNavigation(const muse::modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
+    explicit AbstractNavigation(const muse::modularity::ContextPtr& iocCtx,
+                                QObject* parent = nullptr);
 
     int order() const;
     int column() const;

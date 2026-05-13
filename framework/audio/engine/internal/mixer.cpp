@@ -284,7 +284,8 @@ void Mixer::prepareAuxBuffers(size_t outBufferSize)
     }
 }
 
-void Mixer::writeTrackToAuxBuffers(const float* trackBuffer, size_t outBufferSize, const AuxSendsParams& auxSends)
+void Mixer::writeTrackToAuxBuffers(const float* trackBuffer, size_t outBufferSize,
+                                   const AuxSendsParams& auxSends)
 {
     for (aux_channel_idx_t auxIdx = 0; auxIdx < auxSends.size(); ++auxIdx) {
         if (auxIdx >= m_auxTracks.size()) {

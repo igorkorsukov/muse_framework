@@ -37,12 +37,14 @@ class DockingHolderView;
 class DockToolBarView;
 class DockPageView;
 
-class DropController : public KDDockWidgets::Core::ClassicIndicatorWindowViewInterface, public Contextable
+class DropController : public KDDockWidgets::Core::ClassicIndicatorWindowViewInterface,
+    public Contextable
 {
     ContextInject<IDockWindowProvider> dockWindowProvider = { this };
 
 public:
-    explicit DropController(KDDockWidgets::Core::ClassicDropIndicatorOverlay* classicIndicators, KDDockWidgets::Core::View* parent,
+    explicit DropController(KDDockWidgets::Core::ClassicDropIndicatorOverlay* classicIndicators,
+                            KDDockWidgets::Core::View* parent,
                             const modularity::ContextPtr& iocCtx);
 
     // ClassicIndicatorWindowViewInterface
@@ -61,14 +63,18 @@ private:
     void endHover();
 
     bool isMouseOverDock(const QPoint& mouseLocalPos, const DockBase* dock) const;
-    void updateToolBarOrientation(DockToolBarView* draggedToolBar, const DropDestination& dropDestination = DropDestination());
-    void setCurrentDropDestination(const DockBase* draggedDock, const DropDestination& dropDestination);
+    void updateToolBarOrientation(DockToolBarView* draggedToolBar,
+                                  const DropDestination& dropDestination = DropDestination());
+    void setCurrentDropDestination(const DockBase* draggedDock,
+                                   const DropDestination& dropDestination);
 
-    DropDestination resolveDropDestination(const DockBase* draggedDock, const QPoint& localPos) const;
+    DropDestination resolveDropDestination(const DockBase* draggedDock,
+                                           const QPoint& localPos) const;
     DockingHolderView* resolveDockingHolder(DockType draggedDockType, const QPoint& localPos) const;
     DockPanelView* resolvePanelForDrop(const DockPanelView* panel, const QPoint& localPos) const;
     Location resolveDropLocation(const DockBase* hoveredDock, const QPoint& localPos) const;
-    QRect resolveHighlightingRect(const DockBase* draggedDock, const DropDestination& destination) const;
+    QRect resolveHighlightingRect(const DockBase* draggedDock,
+                                  const DropDestination& destination) const;
 
     IDockWindow* dockWindow() const;
     DockPageView* currentPage() const;

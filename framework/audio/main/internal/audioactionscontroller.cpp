@@ -26,8 +26,12 @@ using namespace muse::audio;
 
 void AudioActionsController::init()
 {
-    dispatcher()->reg(this, "action://audio/dev/use-drivermode", [this]() { setMode(workmode::DriverMode); });
-    dispatcher()->reg(this, "action://audio/dev/use-hybridmode", [this]() { setMode(workmode::HybridMode); });
+    dispatcher()->reg(this, "action://audio/dev/use-drivermode", [this]() {
+        setMode(workmode::DriverMode);
+    });
+    dispatcher()->reg(this, "action://audio/dev/use-hybridmode", [this]() {
+        setMode(workmode::HybridMode);
+    });
 }
 
 void AudioActionsController::setMode(workmode::Mode m)

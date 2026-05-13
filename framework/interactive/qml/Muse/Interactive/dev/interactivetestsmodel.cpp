@@ -56,21 +56,26 @@ void InteractiveTestsModel::init()
 
 void InteractiveTestsModel::selectOpeningFile()
 {
-    io::path_t path = interactive()->selectOpeningFileSync("Sample select file", qApp->applicationDirPath(),
-                                                           { "Text files (*.txt)", "Cmake files (*.cmake)" });
+    io::path_t path = interactive()->selectOpeningFileSync("Sample select file",
+                                                           qApp->applicationDirPath(),
+                                                           { "Text files (*.txt)",
+                                                             "Cmake files (*.cmake)" });
     LOGI() << "path: " << path;
 }
 
 void InteractiveTestsModel::selectSavingFile()
 {
-    io::path_t path = interactive()->selectSavingFileSync("Sample select file", qApp->applicationDirPath(),
-                                                          { "Text files (*.txt)", "Cmake files (*.cmake)" });
+    io::path_t path = interactive()->selectSavingFileSync("Sample select file",
+                                                          qApp->applicationDirPath(),
+                                                          { "Text files (*.txt)",
+                                                            "Cmake files (*.cmake)" });
     LOGI() << "path: " << path;
 }
 
 void InteractiveTestsModel::selectDirectory()
 {
-    io::path_t path = interactive()->selectDirectory("Sample select file", qApp->applicationDirPath());
+    io::path_t path = interactive()->selectDirectory("Sample select file",
+                                                     qApp->applicationDirPath());
     LOGI() << "path: " << path;
 }
 
@@ -132,14 +137,16 @@ void InteractiveTestsModel::openSampleDialogAsyncWithPromise()
 void InteractiveTestsModel::openWidgetDialog()
 {
     LOGI() << "cpp: before open ";
-    RetVal<Val> rv = interactive()->openSync("muse://devtools/interactive/testdialog?title='And from its properties'");
+    RetVal<Val> rv = interactive()->openSync(
+        "muse://devtools/interactive/testdialog?title='And from its properties'");
     LOGI() << "cpp: after open ret: " << rv.ret.toString() << ", val: " << rv.val.toString();
 }
 
 void InteractiveTestsModel::openWidgetDialogAsync()
 {
     LOGI() << "cpp: before open ";
-    auto promise = interactive()->open("muse://devtools/interactive/testdialog?title='And from its properties'");
+    auto promise = interactive()->open(
+        "muse://devtools/interactive/testdialog?title='And from its properties'");
     LOGI() << "cpp: after open";
     promise.onResolve(this, [](const Val& val) {
         LOGI() << "success val: " << val.toString();
@@ -227,11 +234,15 @@ void InteractiveTestsModel::information()
 
 void InteractiveTestsModel::warning()
 {
-    IInteractive::Result result = interactive()->warningSync("Do you want to save changes to the score “Untitled” before closing?",
-                                                             "Your changes will be lost if you don’t save them.",
-                                                             { interactive()->buttonData(IInteractive::Button::DontSave),
-                                                               interactive()->buttonData(IInteractive::Button::Save),
-                                                               interactive()->buttonData(IInteractive::Button::Cancel) });
+    IInteractive::Result result = interactive()->warningSync(
+        "Do you want to save changes to the score “Untitled” before closing?",
+        "Your changes will be lost if you don’t save them.",
+        { interactive()->buttonData(
+                                                                   IInteractive::Button::DontSave),
+                                                               interactive()->buttonData(
+                                                                   IInteractive::Button::Save),
+                                                               interactive()->buttonData(
+                                                                   IInteractive::Button::Cancel) });
 
     if (result.standardButton() == IInteractive::Button::DontSave) {
         LOGI() << "Don’t save!!";
@@ -244,8 +255,10 @@ void InteractiveTestsModel::warning()
 
 void InteractiveTestsModel::critical()
 {
-    IInteractive::Result result = interactive()->errorSync("Cannot read file C:/Users/Username/Desktop/Composition.mscz",
-                                                           std::string("An error has occurred when trying to open this file"));
+    IInteractive::Result result = interactive()->errorSync(
+        "Cannot read file C:/Users/Username/Desktop/Composition.mscz",
+        std::string(
+            "An error has occurred when trying to open this file"));
     LOGD() << interactive()->buttonData(result.standardButton()).text;
 }
 
@@ -254,7 +267,8 @@ void InteractiveTestsModel::criticalWithDetailedText()
     IInteractive::Text text;
     text.text = std::string("An error has occurred when trying to open this file");
     text.detailedText = std::string("Permission denied");
-    IInteractive::Result result = interactive()->errorSync("Cannot read file C:/Users/Username/Desktop/Composition.mscz", text);
+    IInteractive::Result result = interactive()->errorSync(
+        "Cannot read file C:/Users/Username/Desktop/Composition.mscz", text);
     LOGD() << interactive()->buttonData(result.standardButton()).text;
 }
 

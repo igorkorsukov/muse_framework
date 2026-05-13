@@ -84,7 +84,8 @@ public:
     void reload();
     void load();
 
-    void reset(bool keepDefaultSettings = false, bool notifyAboutChanges = true, bool notifyOtherInstances = true);
+    void reset(bool keepDefaultSettings = false, bool notifyAboutChanges = true,
+               bool notifyOtherInstances = true);
 
     const Val& value(const Key& key) const;
     const Val& defaultValue(const Key& key) const;
@@ -99,8 +100,8 @@ public:
 
     void setDescription(const Key& key, const std::string& value);
 
-    void setCanBeManuallyEdited(const Settings::Key& key, bool canBeManuallyEdited, const Val& minValue = Val(),
-                                const Val& maxValue = Val());
+    void setCanBeManuallyEdited(const Settings::Key& key, bool canBeManuallyEdited,
+                                const Val& minValue = Val(), const Val& maxValue = Val());
 
     void beginTransaction(bool notifyToOtherInstances = true);
     void commitTransaction(bool notifyToOtherInstances = true);

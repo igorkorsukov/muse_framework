@@ -475,7 +475,8 @@ void DockWindow::alignTopLevelToolBars(const DockPageView* page)
     lastLeftToolBar->setMinimumWidth(lastLeftToolBar->contentWidth() + deltaForLastLeftToolbar);
 
     if (freeSpace >= 0) {
-        lastCentralToolBar->setMinimumWidth(lastCentralToolBar->contentWidth() + deltaForLastCentralToolBar);
+        lastCentralToolBar->setMinimumWidth(
+            lastCentralToolBar->contentWidth() + deltaForLastCentralToolBar);
     }
 }
 
@@ -494,12 +495,14 @@ void DockWindow::addDock(DockBase* dock, Location location, const DockBase* rela
             KDDockWidgets::QtQuick::asQQuickItem(relativeTo->dockWidget()));
     }
 
-    auto visibilityOption = dock->defaultVisibility() ? KDDockWidgets::InitialVisibilityOption::StartVisible
-                            : KDDockWidgets::InitialVisibilityOption::StartHidden;
+    auto visibilityOption
+        = dock->defaultVisibility() ? KDDockWidgets::InitialVisibilityOption::StartVisible
+          : KDDockWidgets::InitialVisibilityOption::StartHidden;
 
     KDDockWidgets::InitialOption options(visibilityOption, dock->preferredSize());
 
-    m_mainWindow->addDockWidget(dockWidgetView, locationToKLocation(location), relativeDockWidgetView, options);
+    m_mainWindow->addDockWidget(dockWidgetView, locationToKLocation(
+                                    location), relativeDockWidgetView, options);
 }
 
 void DockWindow::addPanelAsTab(DockPanelView* panel, DockPanelView* destinationPanel)

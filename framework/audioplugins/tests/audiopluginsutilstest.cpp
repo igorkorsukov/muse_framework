@@ -43,8 +43,10 @@ TEST_F(AudioPlugins_AudioUtilsTest, AudioPluginTypeFromCategoriesString)
     EXPECT_EQ(AudioPluginType::Instrument, audioPluginTypeFromCategoriesString(u"Test|Instrument"));
 
     //! NOTE: "Instrument" has the highest priority for compatibility reasons
-    EXPECT_EQ(AudioPluginType::Instrument, audioPluginTypeFromCategoriesString(u"Instrument|Fx|Test"));
-    EXPECT_EQ(AudioPluginType::Instrument, audioPluginTypeFromCategoriesString(u"Fx|Instrument|Test"));
+    EXPECT_EQ(AudioPluginType::Instrument, audioPluginTypeFromCategoriesString(
+                  u"Instrument|Fx|Test"));
+    EXPECT_EQ(AudioPluginType::Instrument, audioPluginTypeFromCategoriesString(
+                  u"Fx|Instrument|Test"));
 
     EXPECT_EQ(AudioPluginType::Undefined, audioPluginTypeFromCategoriesString(u"Test"));
     EXPECT_EQ(AudioPluginType::Undefined, audioPluginTypeFromCategoriesString(u"FX|Test"));

@@ -38,7 +38,8 @@ CrashHandler::~CrashHandler()
     delete m_client;
 }
 
-bool CrashHandler::start(const muse::io::path_t& handlerFilePath, const muse::io::path_t& dumpsDir, const std::string& serverUrl)
+bool CrashHandler::start(const muse::io::path_t& handlerFilePath, const muse::io::path_t& dumpsDir,
+                         const std::string& serverUrl)
 {
     if (!fileSystem()->exists(handlerFilePath)) {
         LOGE() << "crash handler not exists, path: " << handlerFilePath;
@@ -61,7 +62,9 @@ bool CrashHandler::start(const muse::io::path_t& handlerFilePath, const muse::io
 
     // Optional annotations passed via --annotations to the handler
     std::map<std::string, std::string> annotations = {
-        { "sentry[release]", application()->fullVersion().toStdString() + "." + application()->build().toStdString() }
+        { "sentry[release]",
+          application()->fullVersion().toStdString() + "."
+          + application()->build().toStdString() }
     };
     // Optional arguments to pass to the handler
     std::vector<std::string> arguments;
@@ -98,7 +101,8 @@ void CrashHandler::removePendingLockFiles(const muse::io::path_t& dumpsDir)
     return;
 #else
     muse::io::path_t pendingDir = dumpsDir + "/pending";
-    muse::RetVal<muse::io::paths_t> rv = fileSystem()->scanFiles(pendingDir, { "*.lock" }, muse::io::ScanMode::FilesInCurrentDir);
+    muse::RetVal<muse::io::paths_t> rv = fileSystem()->scanFiles(pendingDir, { "*.lock" },
+                                                                 muse::io::ScanMode::FilesInCurrentDir);
     if (!rv.ret) {
         LOGE() << "failed get pending lock files, err: " << rv.ret.toString();
         return;

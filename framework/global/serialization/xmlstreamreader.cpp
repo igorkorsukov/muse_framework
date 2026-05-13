@@ -279,7 +279,8 @@ void XmlStreamReader::tryParseEntity(Xml* xml)
         if (nameBegin < nameEnd && *nameBegin == '%') {
             ++nameBegin;
             while (nameBegin < nameEnd
-                   && (*nameBegin == ' ' || *nameBegin == '\t' || *nameBegin == '\r' || *nameBegin == '\n')) {
+                   && (*nameBegin == ' ' || *nameBegin == '\t' || *nameBegin == '\r'
+                       || *nameBegin == '\n')) {
                 ++nameBegin;
             }
         }

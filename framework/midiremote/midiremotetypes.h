@@ -101,7 +101,8 @@ using MidiMappingList = std::vector<MidiControlsMapping>;
 inline RemoteEvent remoteEventFromMidiEvent(const midi::Event& midiEvent)
 {
     RemoteEvent event;
-    bool isNote = midiEvent.isOpcodeIn({ midi::Event::Opcode::NoteOff, midi::Event::Opcode::NoteOn });
+    bool isNote
+        = midiEvent.isOpcodeIn({ midi::Event::Opcode::NoteOff, midi::Event::Opcode::NoteOn });
     bool isController = midiEvent.isOpcodeIn({ midi::Event::Opcode::ControlChange });
     if (isNote) {
         event.type = RemoteEventType::Note;

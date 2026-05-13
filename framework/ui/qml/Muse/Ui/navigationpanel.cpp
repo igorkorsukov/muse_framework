@@ -199,7 +199,8 @@ void NavigationPanel::setSection_property(NavigationSection* section)
 
     if (m_section) {
         m_section->addPanel(this);
-        connect(m_section, &NavigationSection::destroyed, this, &NavigationPanel::onSectionDestroyed);
+        connect(m_section, &NavigationSection::destroyed, this,
+                &NavigationPanel::onSectionDestroyed);
     }
 
     emit sectionChanged(m_section);

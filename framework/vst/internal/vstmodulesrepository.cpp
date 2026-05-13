@@ -50,7 +50,8 @@ bool VstModulesRepository::exists(const muse::audio::AudioResourceId& resourceId
     return knownPlugins()->exists(resourceId);
 }
 
-PluginModulePtr VstModulesRepository::pluginModule(const muse::audio::AudioResourceId& resourceId) const
+PluginModulePtr VstModulesRepository::pluginModule(const muse::audio::AudioResourceId& resourceId)
+const
 {
     ONLY_AUDIO_OR_MAIN_THREAD(threadSecurer);
 
@@ -120,10 +121,12 @@ void VstModulesRepository::refresh()
 {
 }
 
-muse::audio::AudioResourceMetaList VstModulesRepository::modulesMetaList(const audioplugins::AudioPluginType& type) const
+muse::audio::AudioResourceMetaList VstModulesRepository::modulesMetaList(
+    const audioplugins::AudioPluginType& type) const
 {
     auto infoAccepted = [type](const audioplugins::AudioPluginInfo& info) {
-        return info.type == type && info.meta.type == muse::audio::AudioResourceType::VstPlugin && info.enabled;
+        return info.type == type && info.meta.type == muse::audio::AudioResourceType::VstPlugin
+               && info.enabled;
     };
 
     audioplugins::AudioPluginInfoList infoList = knownPlugins()->pluginInfoList(infoAccepted);

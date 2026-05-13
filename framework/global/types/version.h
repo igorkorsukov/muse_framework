@@ -31,7 +31,8 @@ class Version
 {
 public:
     Version() = default;
-    Version(int major, int minor = 0, int patch = 0, const String& suffix = String(), int suffixVersion = 0);
+    Version(int major, int minor = 0, int patch = 0,
+            const String& suffix = String(), int suffixVersion = 0);
     Version(const String& versionStr);
     Version(const std::string& versionStr);
 

@@ -108,7 +108,8 @@ static JsonObject toObj(const Font& font)
 
 static void fromObj(const JsonObject& obj, Font& font)
 {
-    font.setFamily(obj.value("family").toString(), static_cast<Font::Type>(obj.value("type").toInt()));
+    font.setFamily(obj.value("family").toString(), static_cast<Font::Type>(obj.value(
+                                                                               "type").toInt()));
     font.setPointSizeF(obj.value("pointSize").toDouble());
     font.setWeight(static_cast<Font::Weight>(obj.value("weight").toInt()));
     font.setItalic(obj.value("italic").toBool());
@@ -158,7 +159,9 @@ static void fromArr(const JsonArray& arr, RectF& r)
     IF_ASSERT_FAILED(arr.size() == 4) {
         return;
     }
-    r = RectF(itor(arr.at(0).toInt()), itor(arr.at(1).toInt()), itor(arr.at(2).toInt()), itor(arr.at(3).toInt()));
+    r
+        = RectF(itor(arr.at(0).toInt()), itor(arr.at(1).toInt()), itor(arr.at(2).toInt()),
+                itor(arr.at(3).toInt()));
 }
 
 static JsonArray toArr(const Size& sz)
@@ -262,7 +265,8 @@ static void fromObj(const JsonObject& obj, PainterPath& path)
                 continue;
             }
 
-            path.cubicTo(curveEls.at(0).x, curveEls.at(0).y, curveEls.at(1).x, curveEls.at(1).y, x, y);
+            path.cubicTo(curveEls.at(0).x, curveEls.at(0).y, curveEls.at(1).x, curveEls.at(
+                             1).y, x, y);
             curveEls.clear();
         } break;
         }
@@ -509,7 +513,8 @@ ByteArray DrawDataJson::toJson(const DrawDataPtr& data, bool prettify)
 
     JsonObject root;
     toJson(root, data);
-    return JsonDocument(root).toJson(prettify ? JsonDocument::Format::Indented : JsonDocument::Format::Compact);
+    return JsonDocument(root).toJson(
+        prettify ? JsonDocument::Format::Indented : JsonDocument::Format::Compact);
 }
 
 RetVal<DrawDataPtr> DrawDataJson::fromJson(const ByteArray& json)

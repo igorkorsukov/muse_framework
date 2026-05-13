@@ -62,7 +62,8 @@ static inline qreal toPxY(const QQuickItem* item, qreal yN)
     return inset + (1.0 - yN) * drawableHeight;
 }
 
-static qreal pointToSegmentDistance(const QPointF& point, const QPointF& segmentStart, const QPointF& segmentEnd)
+static qreal pointToSegmentDistance(const QPointF& point, const QPointF& segmentStart,
+                                    const QPointF& segmentEnd)
 {
     const QPointF segment = segmentEnd - segmentStart;
     const qreal segmentLengthSquared = QPointF::dotProduct(segment, segment);
@@ -78,12 +79,14 @@ static qreal pointToSegmentDistance(const QPointF& point, const QPointF& segment
     return std::hypot(point.x() - closestPoint.x(), point.y() - closestPoint.y());
 }
 
-static GhostPoint ghostPointToSegmentDistance(const QPointF& point, const QPointF& segmentStart, const QPointF& segmentEnd)
+static GhostPoint ghostPointToSegmentDistance(const QPointF& point, const QPointF& segmentStart,
+                                              const QPointF& segmentEnd)
 {
     const QPointF segment = segmentEnd - segmentStart;
     const qreal segmentLengthSquared = QPointF::dotProduct(segment, segment);
     if (segmentLengthSquared <= EPSILON) {
-        const qreal distance = std::hypot(point.x() - segmentStart.x(), point.y() - segmentStart.y());
+        const qreal distance
+            = std::hypot(point.x() - segmentStart.x(), point.y() - segmentStart.y());
         return { segmentStart, distance };
     }
 
@@ -604,7 +607,9 @@ bool PolylinePlot::hasValidYRange() const
 
 bool PolylinePlot::hasValidYSplit() const
 {
-    return hasValidYRange() && !muse::RealIsEqualOrLess(m_ySplitNormalized, 0.0) && !muse::RealIsEqualOrMore(m_ySplitNormalized, 1.0);
+    return hasValidYRange()
+           && !muse::RealIsEqualOrLess(m_ySplitNormalized, 0.0) && !muse::RealIsEqualOrMore(
+        m_ySplitNormalized, 1.0);
 }
 
 qreal PolylinePlot::yDomainFromNormalized(qreal yNormalized) const
@@ -710,7 +715,8 @@ void PolylinePlot::updateActivePoint()
 
     const int activeDomainIdx = (draggedDisplayDomainIdx >= 0)
                                 ? draggedDisplayDomainIdx
-                                : ((m_pressedPointIndex >= 0) ? m_pressedPointIndex : hoveredDomainIdx);
+                                : ((m_pressedPointIndex
+                                    >= 0) ? m_pressedPointIndex : hoveredDomainIdx);
 
     if (activeDomainIdx < 0) {
         if (m_hasActivePoint) {
@@ -970,7 +976,8 @@ int PolylinePlot::pointIndexAtPx(const QPointF& px) const
 {
     // search in visible points, skip synthetic boundary points
     for (int i = 0; i < m_pointsNVisible.size(); ++i) {
-        const int domainIdx = (i < m_visibleToDomainIndex.size()) ? m_visibleToDomainIndex[i] : INVALID_POINT_IDX;
+        const int domainIdx
+            = (i < m_visibleToDomainIndex.size()) ? m_visibleToDomainIndex[i] : INVALID_POINT_IDX;
         if (domainIdx < 0) {
             continue;
         }
@@ -1362,7 +1369,8 @@ void PolylinePlot::mouseReleaseEvent(QMouseEvent* e)
     }
 
     // click-without-drag on line: finalize the point that was added during press
-    if (isClick && m_pressedOnLine && m_pressedPointIndex >= 0 && m_pressedPointIndex < m_points.size()) {
+    if (isClick && m_pressedOnLine && m_pressedPointIndex >= 0
+        && m_pressedPointIndex < m_points.size()) {
         const QPointF pDomain = m_points[m_pressedPointIndex];
         emit pointAdded(pDomain.x(), pDomain.y(), /*completed*/ true);
     }

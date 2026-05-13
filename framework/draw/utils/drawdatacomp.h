@@ -35,7 +35,8 @@ public:
             : base(b) {}
     };
 
-    static Diff compare(const DrawDataPtr& data, const DrawDataPtr& origin, Tolerance tolerance = Tolerance());
+    static Diff compare(const DrawDataPtr& data, const DrawDataPtr& origin,
+                        Tolerance tolerance = Tolerance());
 };
 }
 

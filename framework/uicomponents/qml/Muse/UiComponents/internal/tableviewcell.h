@@ -80,7 +80,8 @@ signals:
 protected:
     Val m_val;
 
-    std::function<bool(int /*row*/, int /*column*/, const Val& /*newValue*/)> m_requestChangeFunction;
+    std::function<bool(int /*row*/, int /*column*/,
+                       const Val& /*newValue*/)> m_requestChangeFunction;
 
     int m_row = -1;
     int m_column = -1;

@@ -80,13 +80,15 @@ Ret DiagnosticFilesWriter::writeDiagnosticFiles(const path_t& destinationPath)
 
 RetVal<muse::io::paths_t> DiagnosticFilesWriter::scanDir(const std::string& dirName)
 {
-    RetVal<io::paths_t> paths = fileSystem()->scanFiles(globalConfiguration()->userAppDataPath() + "/" + dirName,
-                                                        { "*" },
-                                                        ScanMode::FilesInCurrentDirAndSubdirs);
+    RetVal<io::paths_t> paths = fileSystem()->scanFiles(
+        globalConfiguration()->userAppDataPath() + "/" + dirName,
+        { "*" },
+        ScanMode::FilesInCurrentDirAndSubdirs);
     return paths;
 }
 
-Ret DiagnosticFilesWriter::addFileToZip(const path_t& filePath, ZipWriter& zip, const std::string& destinationDirName)
+Ret DiagnosticFilesWriter::addFileToZip(const path_t& filePath, ZipWriter& zip,
+                                        const std::string& destinationDirName)
 {
     RetVal<ByteArray> data = fileSystem()->readFile(filePath);
     if (!data.ret) {
@@ -94,7 +96,8 @@ Ret DiagnosticFilesWriter::addFileToZip(const path_t& filePath, ZipWriter& zip, 
     }
 
     std::string fileName = io::filename(filePath).toStdString();
-    std::string filePathInZip = destinationDirName.empty() ? fileName : destinationDirName + "/" + fileName;
+    std::string filePathInZip = destinationDirName.empty() ? fileName : destinationDirName + "/"
+                                + fileName;
 
     zip.addFile(filePathInZip, data.val);
 

@@ -40,7 +40,8 @@ using namespace muse::extensions;
 KnownCategories ExtensionsProvider::knownCategories() const
 {
     static KnownCategories categories {
-        { "composing-arranging-tools", TranslatableString("extensions", "Composing/arranging tools") },
+        { "composing-arranging-tools",
+          TranslatableString("extensions", "Composing/arranging tools") },
         { "color-notes", TranslatableString("extensions", "Color notes") },
         { "playback", TranslatableString("extensions", "Playback") },
         { "lyrics", TranslatableString("extensions", "Lyrics") }

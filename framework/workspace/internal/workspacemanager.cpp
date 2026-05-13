@@ -106,9 +106,11 @@ async::Notification WorkspaceManager::workspacesListChanged() const
     return m_workspacesListChanged;
 }
 
-IWorkspacePtr WorkspaceManager:: cloneWorkspace(const IWorkspacePtr& workspace, const std::string& newWorkspaceName) const
+IWorkspacePtr WorkspaceManager:: cloneWorkspace(const IWorkspacePtr& workspace,
+                                                const std::string& newWorkspaceName) const
 {
-    return std::make_shared<Workspace>(makeNewWorkspacePath(newWorkspaceName), dynamic_cast<Workspace*>(workspace.get()), iocContext());
+    return std::make_shared<Workspace>(makeNewWorkspacePath(newWorkspaceName),
+                                       dynamic_cast<Workspace*>(workspace.get()), iocContext());
 }
 
 void WorkspaceManager::changeCurrentWorkspace(const std::string& newWorkspaceName)
@@ -387,7 +389,8 @@ void WorkspaceManager::setupCurrentWorkspace()
 
     if (!workspace) {
         std::string defaultWorkspaceName = configuration()->defaultWorkspaceName();
-        LOGW() << "failed get workspace: " << workspaceName << ", will use " << defaultWorkspaceName;
+        LOGW() << "failed get workspace: " << workspaceName << ", will use " <<
+        defaultWorkspaceName;
 
         //! NOTE Already should be inited
         IF_ASSERT_FAILED(m_defaultWorkspace) {

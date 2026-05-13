@@ -53,7 +53,8 @@ void* FFmpegLibHandler::getSymbol(void* lib, const char* name) const
 
 bool FFmpegLibHandler::loadApi()
 {
-    if (!m_avUtilLibrary || !m_avCodecLibrary || !m_avFormatLibrary || !m_swsScaleLibrary || !m_swResampleLibrary) {
+    if (!m_avUtilLibrary || !m_avCodecLibrary || !m_avFormatLibrary || !m_swsScaleLibrary
+        || !m_swResampleLibrary) {
         return false;
     }
 
@@ -111,7 +112,8 @@ bool FFmpegLibHandler::loadApi()
     return functionsValid();
 }
 
-bool FFmpegLibHandler::loadLib(const io::path_t& avUtilPath, const io::path_t& avCodecPath, const io::path_t& avFormatPath,
+bool FFmpegLibHandler::loadLib(const io::path_t& avUtilPath, const io::path_t& avCodecPath,
+                               const io::path_t& avFormatPath,
                                const io::path_t& swScalePath, const io::path_t& swResamplePath)
 {
     unload();
@@ -125,7 +127,8 @@ bool FFmpegLibHandler::loadLib(const io::path_t& avUtilPath, const io::path_t& a
         return false;
     }
 
-    LOGI() << "FFmpeg loaded: avutil=" << avUtilPath << ", avcodec=" << avCodecPath << ", avformat=" << avFormatPath
+    LOGI() << "FFmpeg loaded: avutil=" << avUtilPath << ", avcodec=" << avCodecPath <<
+        ", avformat=" << avFormatPath
            << ", swscale=" << swScalePath << ", swresample=" << swResamplePath;
 
     return true;
@@ -177,9 +180,12 @@ bool FFmpegLibHandler::functionsValid() const
            && avformat_close_input && avformat_free_context
            && avformat_alloc_output_context2 && av_read_frame
            && avformat_alloc_context && avio_alloc_context && avio_context_free
-           && avcodec_alloc_context3 && avcodec_find_encoder && avcodec_find_decoder && avcodec_free_context
-           && avcodec_open2 && avcodec_parameters_from_context && avcodec_parameters_to_context && avcodec_parameters_copy
-           && avcodec_send_frame && avcodec_receive_packet && avcodec_send_packet && avcodec_receive_frame
+           && avcodec_alloc_context3 && avcodec_find_encoder && avcodec_find_decoder
+           && avcodec_free_context
+           && avcodec_open2 && avcodec_parameters_from_context && avcodec_parameters_to_context
+           && avcodec_parameters_copy
+           && avcodec_send_frame && avcodec_receive_packet && avcodec_send_packet
+           && avcodec_receive_frame
            && av_frame_alloc && av_frame_free
            && av_packet_alloc && av_packet_free && av_packet_unref && av_packet_rescale_ts
            && av_malloc

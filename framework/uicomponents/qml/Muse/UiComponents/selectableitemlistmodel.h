@@ -36,7 +36,8 @@ class SelectableItemListModel : public QAbstractListModel
     Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
 
     Q_PROPERTY(bool isMovingUpAvailable READ isMovingUpAvailable NOTIFY isMovingUpAvailableChanged)
-    Q_PROPERTY(bool isMovingDownAvailable READ isMovingDownAvailable NOTIFY isMovingDownAvailableChanged)
+    Q_PROPERTY(
+        bool isMovingDownAvailable READ isMovingDownAvailable NOTIFY isMovingDownAvailableChanged)
     Q_PROPERTY(bool isRemovingAvailable READ isRemovingAvailable NOTIFY isRemovingAvailableChanged)
 
     Q_PROPERTY(bool hasSelection READ hasSelection NOTIFY selectionChanged)
@@ -101,8 +102,8 @@ protected:
     ItemMultiSelectionModel* selection() const;
 
 private:
-    bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count, const QModelIndex& destinationParent,
-                  int destinationChild) override;
+    bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
+                  const QModelIndex& destinationParent, int destinationChild) override;
 
     bool isRowValid(int row) const;
 

@@ -186,7 +186,8 @@ QVariant AbstractTableViewModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-QVariant AbstractTableViewModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant AbstractTableViewModel::headerData(int section, Qt::Orientation orientation,
+                                            int role) const
 {
     if (role != Qt::DisplayRole) {
         return QVariant();
@@ -229,7 +230,8 @@ bool AbstractTableViewModel::isColumnValid(int column) const
     return column >= 0 && column < m_horizontalHeaders.size();
 }
 
-TableViewHeader* AbstractTableViewModel::makeHorizontalHeader(const QString& title, TableViewCellType::Type cellType,
+TableViewHeader* AbstractTableViewModel::makeHorizontalHeader(const QString& title,
+                                                              TableViewCellType::Type cellType,
                                                               TableViewCellEditMode::Mode cellEditMode, int preferredWidth,
                                                               const MenuItemList& availableFormats)
 {
@@ -297,8 +299,10 @@ void AbstractTableViewModel::connectCellSignals(TableViewCell* cell)
         return;
     }
 
-    connect(cell, &TableViewCell::hoveredChanged, this, &AbstractTableViewModel::onCellHoveredChanged);
-    connect(cell, &TableViewCell::pressedChanged, this, &AbstractTableViewModel::onCellPressedChanged);
+    connect(cell, &TableViewCell::hoveredChanged, this,
+            &AbstractTableViewModel::onCellHoveredChanged);
+    connect(cell, &TableViewCell::pressedChanged, this,
+            &AbstractTableViewModel::onCellPressedChanged);
 
     cell->setRequestChangeFunction([&](int row, int column, const Val& value)-> bool {
         return doCellValueChangeRequested(row, column, value);
@@ -311,8 +315,10 @@ void AbstractTableViewModel::disconnectCellSignals(TableViewCell* cell)
         return;
     }
 
-    disconnect(cell, &TableViewCell::hoveredChanged, this, &AbstractTableViewModel::onCellHoveredChanged);
-    disconnect(cell, &TableViewCell::pressedChanged, this, &AbstractTableViewModel::onCellPressedChanged);
+    disconnect(cell, &TableViewCell::hoveredChanged, this,
+               &AbstractTableViewModel::onCellHoveredChanged);
+    disconnect(cell, &TableViewCell::pressedChanged, this,
+               &AbstractTableViewModel::onCellPressedChanged);
 
     cell->setRequestChangeFunction(nullptr);
 }
@@ -424,7 +430,8 @@ int AbstractTableViewModel::findColumnForCell(TableViewCell* cell) const
     return column;
 }
 
-void AbstractTableViewModel::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void AbstractTableViewModel::onSelectionChanged(const QItemSelection& selected,
+                                                const QItemSelection& deselected)
 {
     if (m_updatingSelection) {
         return;

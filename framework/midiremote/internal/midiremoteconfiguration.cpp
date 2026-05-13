@@ -28,14 +28,16 @@
 using namespace muse;
 using namespace muse::midiremote;
 
-static const Settings::Key ADVANCE_TO_NEXT_NOTE_ON_KEY_RELEASE("midiremote", "io/midi/advanceOnRelease");
+static const Settings::Key ADVANCE_TO_NEXT_NOTE_ON_KEY_RELEASE("midiremote",
+                                                               "io/midi/advanceOnRelease");
 
 static const std::string MIDIMAPPINGS_FILE_NAME("/midi_mappings.xml");
 
 void MidiRemoteConfiguration::init()
 {
     settings()->setDefaultValue(ADVANCE_TO_NEXT_NOTE_ON_KEY_RELEASE, Val(true));
-    settings()->valueChanged(ADVANCE_TO_NEXT_NOTE_ON_KEY_RELEASE).onReceive(this, [this](const Val& val) {
+    settings()->valueChanged(ADVANCE_TO_NEXT_NOTE_ON_KEY_RELEASE).onReceive(this,
+                                                                            [this](const Val& val) {
         m_advanceToNextNoteOnKeyReleaseChanged.send(val.toBool());
     });
 }

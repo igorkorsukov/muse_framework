@@ -99,9 +99,11 @@ public:
             : btn(btn), text(text) {}
         ButtonData(Button btn, const std::string& text)
             : btn(int(btn)), text(text) {}
-        ButtonData(int btn, const std::string& text, bool accent, bool leftSide = false, ButtonRole role = ButtonRole::CustomRole)
+        ButtonData(int btn, const std::string& text, bool accent, bool leftSide = false,
+                   ButtonRole role = ButtonRole::CustomRole)
             : btn(btn), text(text), accent(accent), leftSide(leftSide), role(role) {}
-        ButtonData(Button btn, const std::string& text, bool accent, bool leftSide = false, ButtonRole role = ButtonRole::CustomRole)
+        ButtonData(Button btn, const std::string& text, bool accent, bool leftSide = false,
+                   ButtonRole role = ButtonRole::CustomRole)
             : btn(int(btn)), text(text), accent(accent), leftSide(leftSide), role(role) {}
     };
     using ButtonDatas = std::vector<ButtonData>;
@@ -166,62 +168,86 @@ public:
     }
 
     // question
-    virtual async::Promise<Result> question(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons,
-                                            int defBtn = int(Button::NoButton), const Options& options = {},
+    virtual async::Promise<Result> question(const std::string& contentTitle, const Text& text,
+                                            const ButtonDatas& buttons,
+                                            int defBtn = int(Button::NoButton),
+                                            const Options& options = {},
                                             const std::string& dialogTitle = {}) = 0;
 
-    async::Promise<Result> question(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                                    Button defBtn = Button::NoButton, const Options& options = {}, const std::string& dialogTitle = {})
+    async::Promise<Result> question(const std::string& contentTitle, const std::string& text,
+                                    const Buttons& buttons,
+                                    Button defBtn = Button::NoButton, const Options& options = {},
+                                    const std::string& dialogTitle = {})
     {
-        return question(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return question(contentTitle, Text(text), buttonDataList(
+                            buttons), (int)defBtn, options, dialogTitle);
     }
 
     // info
-    virtual async::Promise<Result> info(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons = {},
-                                        int defBtn = int(Button::NoButton), const Options& options = {},
+    virtual async::Promise<Result> info(const std::string& contentTitle, const Text& text,
+                                        const ButtonDatas& buttons = {},
+                                        int defBtn = int(Button::NoButton),
+                                        const Options& options = {},
                                         const std::string& dialogTitle = {}) = 0;
 
-    async::Promise<Result> info(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                                Button defBtn, const Options& options = {}, const std::string& dialogTitle = {})
+    async::Promise<Result> info(const std::string& contentTitle, const std::string& text,
+                                const Buttons& buttons,
+                                Button defBtn, const Options& options = {},
+                                const std::string& dialogTitle = {})
     {
-        return info(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return info(contentTitle, Text(text), buttonDataList(
+                        buttons), (int)defBtn, options, dialogTitle);
     }
 
     // warning
-    virtual async::Promise<Result> warning(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons = {},
-                                           int defBtn = int(Button::NoButton), const Options& options = { WithIcon },
+    virtual async::Promise<Result> warning(const std::string& contentTitle, const Text& text,
+                                           const ButtonDatas& buttons = {},
+                                           int defBtn = int(Button::NoButton),
+                                           const Options& options = { WithIcon },
                                            const std::string& dialogTitle = {}) = 0;
 
-    async::Promise<Result> warning(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                                   Button defBtn = Button::NoButton, const Options& options = { WithIcon },
+    async::Promise<Result> warning(const std::string& contentTitle, const std::string& text,
+                                   const Buttons& buttons,
+                                   Button defBtn = Button::NoButton,
+                                   const Options& options = { WithIcon },
                                    const std::string& dialogTitle = {})
     {
-        return warning(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return warning(contentTitle, Text(text), buttonDataList(
+                           buttons), (int)defBtn, options, dialogTitle);
     }
 
     // error
-    virtual async::Promise<Result> error(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons = {},
-                                         int defBtn = int(Button::NoButton), const Options& options = { WithIcon },
+    virtual async::Promise<Result> error(const std::string& contentTitle, const Text& text,
+                                         const ButtonDatas& buttons = {},
+                                         int defBtn = int(Button::NoButton),
+                                         const Options& options = { WithIcon },
                                          const std::string& dialogTitle = {}) = 0;
 
-    async::Promise<Result> error(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                                 Button defBtn = Button::NoButton, const Options& options = { WithIcon },
+    async::Promise<Result> error(const std::string& contentTitle, const std::string& text,
+                                 const Buttons& buttons,
+                                 Button defBtn = Button::NoButton,
+                                 const Options& options = { WithIcon },
                                  const std::string& dialogTitle = {})
     {
-        return error(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return error(contentTitle, Text(text), buttonDataList(
+                         buttons), (int)defBtn, options, dialogTitle);
     }
 
     // progress
     virtual void showProgress(const std::string& title, Progress progress) = 0;
 
     // files
-    virtual async::Promise<io::path_t> selectOpeningFile(const std::string& title, const io::path_t& dir,
+    virtual async::Promise<io::path_t> selectOpeningFile(const std::string& title,
+                                                         const io::path_t& dir,
                                                          const std::vector<std::string>& filter) = 0;
-    virtual io::path_t selectOpeningFileSync(const std::string& title, const io::path_t& dir, const std::vector<std::string>& filter,
+    virtual io::path_t selectOpeningFileSync(const std::string& title, const io::path_t& dir,
+                                             const std::vector<std::string>& filter,
                                              const int options = 0) = 0;
-    virtual io::paths_t selectOpeningFilesSync(const std::string& title, const io::path_t& dir, const std::vector<std::string>& filter,
+    virtual io::paths_t selectOpeningFilesSync(const std::string& title, const io::path_t& dir,
+                                               const std::vector<std::string>& filter,
                                                const int options = 0) = 0;
-    virtual io::path_t selectSavingFileSync(const std::string& title, const io::path_t& path, const std::vector<std::string>& filter,
+    virtual io::path_t selectSavingFileSync(const std::string& title, const io::path_t& path,
+                                            const std::vector<std::string>& filter,
                                             bool confirmOverwrite = true) = 0;
 
     // dirs
@@ -230,7 +256,8 @@ public:
                                                   const io::paths_t& selectedDirectories) = 0;
 
     // color
-    virtual async::Promise<Color> selectColor(const Color& color = Color::WHITE, const std::string& title = {},
+    virtual async::Promise<Color> selectColor(const Color& color = Color::WHITE,
+                                              const std::string& title = {},
                                               bool allowAlpha = false) = 0;
     virtual bool isSelectColorOpened() const = 0;
 
@@ -261,42 +288,59 @@ public:
     //! =================================
     //! NOTE Please don't use this
     //! =================================
-    virtual Result questionSync(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons,
-                                int defBtn = int(Button::NoButton), const Options& options = {}, const std::string& dialogTitle = {}) = 0;
+    virtual Result questionSync(const std::string& contentTitle, const Text& text,
+                                const ButtonDatas& buttons, int defBtn = int(Button::NoButton),
+                                const Options& options = {},
+                                const std::string& dialogTitle = {}) = 0;
 
-    Result questionSync(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                        const Button& defBtn = Button::NoButton, const Options& options = {}, const std::string& dialogTitle = {})
+    Result questionSync(const std::string& contentTitle, const std::string& text,
+                        const Buttons& buttons,
+                        const Button& defBtn = Button::NoButton, const Options& options = {},
+                        const std::string& dialogTitle = {})
     {
-        return questionSync(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return questionSync(contentTitle, Text(text), buttonDataList(
+                                buttons), (int)defBtn, options, dialogTitle);
     }
 
-    virtual Result infoSync(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons = {},
-                            int defBtn = int(Button::NoButton), const Options& options = {}, const std::string& dialogTitle = {}) = 0;
+    virtual Result infoSync(const std::string& contentTitle, const Text& text,
+                            const ButtonDatas& buttons = {}, int defBtn = int(Button::NoButton),
+                            const Options& options = {}, const std::string& dialogTitle = {}) = 0;
 
-    Result infoSync(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                    const Button& defBtn = Button::NoButton, const Options& options = {}, const std::string& dialogTitle = {})
+    Result infoSync(const std::string& contentTitle, const std::string& text,
+                    const Buttons& buttons,
+                    const Button& defBtn = Button::NoButton, const Options& options = {},
+                    const std::string& dialogTitle = {})
     {
-        return infoSync(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return infoSync(contentTitle, Text(text), buttonDataList(
+                            buttons), (int)defBtn, options, dialogTitle);
     }
 
-    virtual Result warningSync(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons = {},
-                               int defBtn = int(Button::NoButton), const Options& options = { WithIcon },
+    virtual Result warningSync(const std::string& contentTitle, const Text& text,
+                               const ButtonDatas& buttons = {}, int defBtn = int(Button::NoButton),
+                               const Options& options = { WithIcon },
                                const std::string& dialogTitle = {}) = 0;
 
-    Result warningSync(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                       const Button& defBtn = Button::NoButton, const Options& options = { WithIcon }, const std::string& dialogTitle = {})
+    Result warningSync(const std::string& contentTitle, const std::string& text,
+                       const Buttons& buttons,
+                       const Button& defBtn = Button::NoButton,
+                       const Options& options = { WithIcon }, const std::string& dialogTitle = {})
     {
-        return warningSync(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return warningSync(contentTitle, Text(text), buttonDataList(
+                               buttons), (int)defBtn, options, dialogTitle);
     }
 
-    virtual Result errorSync(const std::string& contentTitle, const Text& text, const ButtonDatas& buttons = {},
-                             int defBtn = int(Button::NoButton), const Options& options = { WithIcon },
+    virtual Result errorSync(const std::string& contentTitle, const Text& text,
+                             const ButtonDatas& buttons = {}, int defBtn = int(Button::NoButton),
+                             const Options& options = { WithIcon },
                              const std::string& dialogTitle = {}) = 0;
 
-    Result errorSync(const std::string& contentTitle, const std::string& text, const Buttons& buttons,
-                     const Button& defBtn = Button::NoButton, const Options& options = { WithIcon }, const std::string& dialogTitle = {})
+    Result errorSync(const std::string& contentTitle, const std::string& text,
+                     const Buttons& buttons,
+                     const Button& defBtn = Button::NoButton, const Options& options = { WithIcon },
+                     const std::string& dialogTitle = {})
     {
-        return errorSync(contentTitle, Text(text), buttonDataList(buttons), (int)defBtn, options, dialogTitle);
+        return errorSync(contentTitle, Text(text), buttonDataList(
+                             buttons), (int)defBtn, options, dialogTitle);
     }
 
     virtual RetVal<Val> openSync(const UriQuery& uri) = 0;

@@ -89,7 +89,8 @@ async::Notification UiState::toolConfigChanged(const QString& toolName) const
     return m_uiArrangement.toolConfigChanged(toolName);
 }
 
-void UiState::updateToolConfig(const QString& toolName, ToolConfig& userConfig, const ToolConfig& defaultConfig) const
+void UiState::updateToolConfig(const QString& toolName, ToolConfig& userConfig,
+                               const ToolConfig& defaultConfig) const
 {
     bool hasChanged = false;
 
@@ -101,7 +102,8 @@ void UiState::updateToolConfig(const QString& toolName, ToolConfig& userConfig, 
                 continue;
             }
 
-            if (std::find_if(defaultConfig.items.cbegin(), defaultConfig.items.cend(), [item](const auto& defaultItem) {
+            if (std::find_if(defaultConfig.items.cbegin(), defaultConfig.items.cend(),
+                             [item](const auto& defaultItem) {
                 return item.action == defaultItem.action;
             }) == defaultConfig.items.cend()) {
                 itemsToRemove << item;
@@ -121,7 +123,8 @@ void UiState::updateToolConfig(const QString& toolName, ToolConfig& userConfig, 
                 continue;
             }
 
-            if (std::find_if(userConfig.items.cbegin(), userConfig.items.cend(), [defaultItem](const auto& item) {
+            if (std::find_if(userConfig.items.cbegin(), userConfig.items.cend(),
+                             [defaultItem](const auto& item) {
                 return defaultItem.action == item.action;
             }) == userConfig.items.cend()) {
                 hasChanged = true;
@@ -147,7 +150,9 @@ void UiState::updateToolConfig(const QString& toolName, ToolConfig& userConfig, 
                 {
                     const auto& itemBefore = defaultConfig.items[indexOfDefaultItem - 1];
                     if (!itemBefore.isSeparator()) {
-                        auto it = std::find_if(userConfig.items.begin(), userConfig.items.end(), [itemBefore](const auto& item) {
+                        auto it
+                            = std::find_if(userConfig.items.begin(),
+                                           userConfig.items.end(), [itemBefore](const auto& item) {
                             return item.action == itemBefore.action;
                         });
 
@@ -162,7 +167,9 @@ void UiState::updateToolConfig(const QString& toolName, ToolConfig& userConfig, 
                 {
                     const auto& itemAfter  = defaultConfig.items[indexOfDefaultItem + 1];
                     if (!itemAfter.isSeparator()) {
-                        auto it = std::find_if(userConfig.items.begin(), userConfig.items.end(), [itemAfter](const auto& item) {
+                        auto it
+                            = std::find_if(userConfig.items.begin(),
+                                           userConfig.items.end(), [itemAfter](const auto& item) {
                             return item.action == itemAfter.action;
                         });
 

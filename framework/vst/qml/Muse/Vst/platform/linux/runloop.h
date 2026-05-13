@@ -39,11 +39,14 @@ public:
 
     Steinberg::tresult PLUGIN_API registerEventHandler(Steinberg::Linux::IEventHandler* handler,
                                                        Steinberg::Linux::FileDescriptor fd) override;
-    Steinberg::tresult PLUGIN_API unregisterEventHandler(Steinberg::Linux::IEventHandler* handler) override;
+    Steinberg::tresult PLUGIN_API unregisterEventHandler(Steinberg::Linux::IEventHandler* handler)
+    override;
 
     Steinberg::tresult PLUGIN_API registerTimer(Steinberg::Linux::ITimerHandler* handler,
-                                                Steinberg::Linux::TimerInterval milliseconds) override;
-    Steinberg::tresult PLUGIN_API unregisterTimer(Steinberg::Linux::ITimerHandler* handler) override;
+                                                Steinberg::Linux::TimerInterval milliseconds)
+    override;
+    Steinberg::tresult PLUGIN_API unregisterTimer(
+        Steinberg::Linux::ITimerHandler* handler) override;
 
     void stop();
 

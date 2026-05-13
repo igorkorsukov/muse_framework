@@ -59,7 +59,8 @@ public:
 
 private:
 
-    void updateToolConfig(const QString& toolName, ToolConfig& userConfig, const ToolConfig& defaultConfig) const;
+    void updateToolConfig(const QString& toolName, ToolConfig& userConfig,
+                          const ToolConfig& defaultConfig) const;
 
     UiArrangement m_uiArrangement;
 

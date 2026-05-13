@@ -58,7 +58,8 @@ void WindowsController::setMainWindowTitleBarMoveArea(const QRect& area)
     m_mainWindowTitleBarMoveArea = area;
 }
 
-bool WindowsController::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result)
+bool WindowsController::nativeEventFilter(const QByteArray& eventType, void* message,
+                                          qintptr* result)
 {
     Q_UNUSED(eventType)
     Q_UNUSED(message)

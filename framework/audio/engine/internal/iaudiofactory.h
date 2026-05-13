@@ -43,7 +43,8 @@ public:
     virtual AudioResourceMetaList availableOutputResources() const = 0;
 
     // Make audio sources
-    virtual RetVal<synth::ISynthesizerPtr> makeSynth(const TrackId trackId, const AudioInputParams& params,
+    virtual RetVal<synth::ISynthesizerPtr> makeSynth(const TrackId trackId,
+                                                     const AudioInputParams& params,
                                                      const PlaybackSetupData& setupData) const = 0;
 
     virtual RetVal<synth::ISynthesizerPtr> makeDefaultSynth(const TrackId trackId) const = 0;
@@ -53,12 +54,15 @@ public:
     // This method clears this registry.
     virtual void clearSynthSources() = 0;
 
-    virtual RetVal<AudioSourceNodePtr> makeEventSource(const TrackId trackId, const mpe::PlaybackData& playbackData,
+    virtual RetVal<AudioSourceNodePtr> makeEventSource(const TrackId trackId,
+                                                       const mpe::PlaybackData& playbackData,
                                                        const AudioInputParams& params,
-                                                       const std::function<void()> onOffStreamReceived = nullptr) const = 0;
+                                                       const std::function<void()> onOffStreamReceived = nullptr)
+    const = 0;
     // Make FX
     virtual FxChainPtr makeMasterFxChain(const AudioFxChain& fxChain) const = 0;
-    virtual FxChainPtr makeTrackFxChain(const TrackId trackId, const AudioFxChain& fxChain) const = 0;
+    virtual FxChainPtr makeTrackFxChain(const TrackId trackId,
+                                        const AudioFxChain& fxChain) const = 0;
 
     //! NOTE For internal purposes,
     // created effect instances are registered in an internal registry (see VST).

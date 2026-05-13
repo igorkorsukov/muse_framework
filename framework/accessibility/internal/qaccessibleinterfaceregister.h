@@ -28,7 +28,8 @@ namespace muse::accessibility {
 class QAccessibleInterfaceRegister : public IQAccessibleInterfaceRegister
 {
 public:
-    void registerInterfaceGetter(const QString& className, const InterfaceGetter& interfaceGetter) override;
+    void registerInterfaceGetter(const QString& className,
+                                 const InterfaceGetter& interfaceGetter) override;
     InterfaceGetter interfaceGetter(const QString& className) const override;
 
 private:

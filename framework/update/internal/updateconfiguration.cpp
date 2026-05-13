@@ -31,8 +31,10 @@ using namespace muse::update;
 static const std::string module_name("update");
 
 static const Settings::Key CHECK_FOR_UPDATE_KEY(module_name, "application/checkForUpdate");
-static const Settings::Key CHECK_FOR_UPDATE_TEST_MODE_KEY(module_name, "application/checkForUpdateTestMode");
-static const Settings::Key ALLOW_UPDATE_ON_PRERELEASE(module_name, "application/allowUpdateOnPreRelease");
+static const Settings::Key CHECK_FOR_UPDATE_TEST_MODE_KEY(module_name,
+                                                          "application/checkForUpdateTestMode");
+static const Settings::Key ALLOW_UPDATE_ON_PRERELEASE(module_name,
+                                                      "application/allowUpdateOnPreRelease");
 static const Settings::Key SKIPPED_VERSION_KEY(module_name, "application/skippedVersion");
 
 void UpdateConfiguration::init()

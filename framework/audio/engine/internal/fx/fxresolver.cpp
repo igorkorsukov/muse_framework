@@ -30,7 +30,8 @@ using namespace muse::async;
 using namespace muse::audio;
 using namespace muse::audio::fx;
 
-std::vector<IFxProcessorPtr> FxResolver::resolveMasterFxList(const AudioFxChain& fxChain, const OutputSpec& outputSpec)
+std::vector<IFxProcessorPtr> FxResolver::resolveMasterFxList(const AudioFxChain& fxChain,
+                                                             const OutputSpec& outputSpec)
 {
     ONLY_AUDIO_ENGINE_THREAD;
 
@@ -53,14 +54,17 @@ std::vector<IFxProcessorPtr> FxResolver::resolveMasterFxList(const AudioFxChain&
             continue;
         }
 
-        std::vector<IFxProcessorPtr> fxList = resolver.second->resolveMasterFxList(std::move(fxChainByType), outputSpec);
+        std::vector<IFxProcessorPtr> fxList
+            = resolver.second->resolveMasterFxList(std::move(fxChainByType), outputSpec);
         result.insert(result.end(), fxList.begin(), fxList.end());
     }
 
     return result;
 }
 
-std::vector<IFxProcessorPtr> FxResolver::resolveFxList(const TrackId trackId, const AudioFxChain& fxChain, const OutputSpec& outputSpec)
+std::vector<IFxProcessorPtr> FxResolver::resolveFxList(const TrackId trackId,
+                                                       const AudioFxChain& fxChain,
+                                                       const OutputSpec& outputSpec)
 {
     ONLY_AUDIO_ENGINE_THREAD;
 
@@ -83,7 +87,8 @@ std::vector<IFxProcessorPtr> FxResolver::resolveFxList(const TrackId trackId, co
             continue;
         }
 
-        std::vector<IFxProcessorPtr> fxList = resolver.second->resolveFxList(trackId, std::move(fxChainByType), outputSpec);
+        std::vector<IFxProcessorPtr> fxList
+            = resolver.second->resolveFxList(trackId, std::move(fxChainByType), outputSpec);
         result.insert(result.end(), fxList.begin(), fxList.end());
     }
 

@@ -68,7 +68,8 @@ QUrl LanguagesConfiguration::languagesUpdateUrl() const
 QUrl LanguagesConfiguration::languageFileServerUrl(const QString& languageCode) const
 {
     TRACEFUNC;
-    return QUrl(m_config.value("server_url").toQString() + QString("locale_%1.zip").arg(languageCode));
+    return QUrl(m_config.value("server_url").toQString() + QString("locale_%1.zip").arg(
+                    languageCode));
 }
 
 io::path_t LanguagesConfiguration::languagesAppDataPath() const
@@ -86,12 +87,14 @@ io::path_t LanguagesConfiguration::builtinLanguagesJsonPath() const
     return languagesAppDataPath() + "/languages.json";
 }
 
-io::path_t LanguagesConfiguration::builtinLanguageFilePath(const QString& resourceName, const QString& languageCode) const
+io::path_t LanguagesConfiguration::builtinLanguageFilePath(const QString& resourceName,
+                                                           const QString& languageCode) const
 {
     return languagesAppDataPath() + QString("/%1_%2.qm").arg(resourceName, languageCode);
 }
 
-io::path_t LanguagesConfiguration::userLanguageFilePath(const QString& resourceName, const QString& languageCode) const
+io::path_t LanguagesConfiguration::userLanguageFilePath(const QString& resourceName,
+                                                        const QString& languageCode) const
 {
     return languagesUserAppDataPath() + QString("/%1_%2.qm").arg(resourceName, languageCode);
 }

@@ -53,7 +53,8 @@ Ret MacOSInteractiveHelper::canOpenApp(const UriQuery& uri)
 {
     NSString* nsUrlString = [NSString stringWithUTF8String:uri.toString().c_str()];
     if (nsUrlString == nil) {
-        return make_ret(Ret::Code::InternalError, std::string("Invalid UTF-8 string passed as URI"));
+        return make_ret(Ret::Code::InternalError,
+                        std::string("Invalid UTF-8 string passed as URI"));
     }
 
     NSURL* nsUrl = [NSURL URLWithString:nsUrlString];

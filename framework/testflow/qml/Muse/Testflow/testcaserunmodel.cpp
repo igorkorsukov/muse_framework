@@ -39,7 +39,8 @@ void TestCaseRunModel::init()
     });
 
     testflow()->stepStatusChanged().onReceive(this, [this](const StepInfo& stepInfo, const Ret& ret) {
-        updateStep(stepInfo, ret);
+        updateStep(stepInfo,
+                   ret);
     });
 }
 

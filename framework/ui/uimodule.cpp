@@ -103,11 +103,14 @@ void UiModule::registerApi()
 
     auto api = globalIoc()->resolve<IApiRegister>(moduleName());
     if (api) {
-        api->regApiCreator(moduleName(), "MuseInternal.Navigation", new ApiCreator<muse::api::NavigationApi>());
-        api->regApiCreator(moduleName(), "MuseInternal.Keyboard", new ApiCreator<muse::api::KeyboardApi>());
+        api->regApiCreator(moduleName(), "MuseInternal.Navigation",
+                           new ApiCreator<muse::api::NavigationApi>());
+        api->regApiCreator(moduleName(), "MuseInternal.Keyboard",
+                           new ApiCreator<muse::api::KeyboardApi>());
         api->regApiSingltone(moduleName(), "MuseApi.Theme", m_theme);
 
-        qmlRegisterUncreatableMetaObject(IconCode::staticMetaObject, "MuseApi.Controls", 1, 0, "IconCode",
+        qmlRegisterUncreatableMetaObject(IconCode::staticMetaObject, "MuseApi.Controls", 1, 0,
+                                         "IconCode",
                                          "Not creatable as it is an enum type");
     }
 }
@@ -166,7 +169,8 @@ void UiModuleContext::registerExports()
     m_windowsController = std::make_shared<WindowsController>();
     #endif
 
-    ioc()->registerExport<IUiContextConfiguration>(module_name, new UiContextConfiguration(iocContext()));
+    ioc()->registerExport<IUiContextConfiguration>(module_name,
+                                                   new UiContextConfiguration(iocContext()));
     ioc()->registerExport<IUiState>(module_name, m_uistate);
     ioc()->registerExport<IUiEngine>(module_name, m_uiengine);
     ioc()->registerExport<IUiActionsRegister>(module_name, m_uiactionsRegister);

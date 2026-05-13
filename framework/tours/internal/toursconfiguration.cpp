@@ -61,7 +61,8 @@ void ToursConfiguration::setLastShownTourIdForEvent(const String& eventCode, con
         allLastShownTours.push_back(newTourId);
     }
 
-    settings()->setSharedValue(UI_LAST_SHOWN_TOURS_KEY, Val(allLastShownTours.join(u",").toStdString()));
+    settings()->setSharedValue(UI_LAST_SHOWN_TOURS_KEY,
+                               Val(allLastShownTours.join(u",").toStdString()));
 }
 
 StringList ToursConfiguration::lastShownTours() const

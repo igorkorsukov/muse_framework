@@ -50,7 +50,8 @@ void GeneralSoundFontInstallScenario::installSoundFont(const synth::SoundFontUri
         }
 
         if (fileSystem()->exists(newPath.val)) {
-            std::string title = muse::trc("audio", "File already exists. Do you want to overwrite it?");
+            std::string title
+                = muse::trc("audio", "File already exists. Do you want to overwrite it?");
 
             std::string body = muse::qtrc("audio", "File path: %1")
                                .arg(newPath.val.toQString()).toStdString();
@@ -68,7 +69,8 @@ void GeneralSoundFontInstallScenario::installSoundFont(const synth::SoundFontUri
                 Ret ret = doAddSoundFont(path, newPath.val);
                 if (ret) {
                     interactive()->info(muse::trc("audio", "SoundFont installed"),
-                                        muse::trc("audio", "You can assign soundfonts to instruments using the mixer panel."),
+                                        muse::trc("audio",
+                                                  "You can assign soundfonts to instruments using the mixer panel."),
                                         {}, 0, IInteractive::Option::WithIcon);
                 } else {
                     LOGE() << "failed add soundfont, err: " << ret.toString();
@@ -78,7 +80,8 @@ void GeneralSoundFontInstallScenario::installSoundFont(const synth::SoundFontUri
             Ret ret = doAddSoundFont(path, newPath.val);
             if (ret) {
                 interactive()->info(muse::trc("audio", "SoundFont installed"),
-                                    muse::trc("audio", "You can assign soundfonts to instruments using the mixer panel."),
+                                    muse::trc("audio",
+                                              "You can assign soundfonts to instruments using the mixer panel."),
                                     {}, 0, IInteractive::Option::WithIcon);
             } else {
                 LOGE() << "failed add soundfont, err: " << ret.toString();
@@ -87,7 +90,8 @@ void GeneralSoundFontInstallScenario::installSoundFont(const synth::SoundFontUri
     });
 }
 
-RetVal<io::path_t> GeneralSoundFontInstallScenario::resolveInstallationPath(const io::path_t& path) const
+RetVal<io::path_t> GeneralSoundFontInstallScenario::resolveInstallationPath(const io::path_t& path)
+const
 {
     io::paths_t dirs = configuration()->userSoundFontDirectories();
 

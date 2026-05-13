@@ -123,7 +123,9 @@ bool VideoEncoder::open(const muse::io::path_t& fileName, const Options& options
     m_ffmpeg->width = options.width;
     m_ffmpeg->height = options.height;
 
-    if (m_ffmpegHandler->avformat_alloc_output_context2(&m_ffmpeg->formatCtx, nullptr, options.format.c_str(), fileName.c_str()) < 0
+    if (m_ffmpegHandler->avformat_alloc_output_context2(&m_ffmpeg->formatCtx, nullptr,
+                                                        options.format.c_str(),
+                                                        fileName.c_str()) < 0
         || !m_ffmpeg->formatCtx) {
         LOGE() << "failed to allocate output context";
         return false;
@@ -158,7 +160,8 @@ bool VideoEncoder::open(const muse::io::path_t& fileName, const Options& options
     m_ffmpeg->videoStream->codecpar->format = AV_PIX_FMT_YUV420P;
     m_ffmpeg->videoStream->codecpar->bit_rate = options.bitrate;
 
-    if (m_ffmpegHandler->avcodec_parameters_to_context(m_ffmpeg->codecCtx, m_ffmpeg->videoStream->codecpar) < 0) {
+    if (m_ffmpegHandler->avcodec_parameters_to_context(m_ffmpeg->codecCtx,
+                                                       m_ffmpeg->videoStream->codecpar) < 0) {
         m_ffmpegHandler->avcodec_free_context(&m_ffmpeg->codecCtx);
         LOGE() << "failed to set codec parameters from stream";
         return false;
@@ -195,7 +198,8 @@ bool VideoEncoder::open(const muse::io::path_t& fileName, const Options& options
     }
 
     // Copy codec params to stream AFTER open - codec adds extradata (SPS/PPS) during open
-    if (m_ffmpegHandler->avcodec_parameters_from_context(m_ffmpeg->videoStream->codecpar, m_ffmpeg->codecCtx) < 0) {
+    if (m_ffmpegHandler->avcodec_parameters_from_context(m_ffmpeg->videoStream->codecpar,
+                                                         m_ffmpeg->codecCtx) < 0) {
         m_ffmpegHandler->avcodec_free_context(&m_ffmpeg->codecCtx);
         LOGE() << "failed to copy codec parameters to stream";
         return false;
@@ -212,7 +216,8 @@ bool VideoEncoder::open(const muse::io::path_t& fileName, const Options& options
     m_ffmpeg->ppicture->height = options.height;
     m_ffmpeg->ppicture->format = AV_PIX_FMT_YUV420P;
 
-    int size = m_ffmpegHandler->av_image_get_buffer_size(AV_PIX_FMT_YUV420P, m_ffmpeg->width, m_ffmpeg->height, 1);
+    int size = m_ffmpegHandler->av_image_get_buffer_size(AV_PIX_FMT_YUV420P, m_ffmpeg->width,
+                                                         m_ffmpeg->height, 1);
     m_ffmpeg->picture_buf = new uint8_t[size];
     if (!m_ffmpeg->picture_buf) {
         LOGE() << "failed allocate frame buf";
@@ -221,10 +226,12 @@ bool VideoEncoder::open(const muse::io::path_t& fileName, const Options& options
     }
 
     // Setup the planes
-    m_ffmpegHandler->av_image_fill_arrays(m_ffmpeg->ppicture->data, m_ffmpeg->ppicture->linesize, m_ffmpeg->picture_buf,
+    m_ffmpegHandler->av_image_fill_arrays(m_ffmpeg->ppicture->data, m_ffmpeg->ppicture->linesize,
+                                          m_ffmpeg->picture_buf,
                                           AV_PIX_FMT_YUV420P, m_ffmpeg->width, m_ffmpeg->height, 1);
 
-    if (m_ffmpegHandler->avio_open(&m_ffmpeg->formatCtx->pb, fileName.c_str(), AVIO_FLAG_WRITE) < 0) {
+    if (m_ffmpegHandler->avio_open(&m_ffmpeg->formatCtx->pb, fileName.c_str(),
+                                   AVIO_FLAG_WRITE) < 0) {
         LOGE() << "failed open file: " << fileName;
         return false;
     }
@@ -267,9 +274,11 @@ void VideoEncoder::finishEncode()
             return;
         }
 
-        m_ffmpeg->pkt->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter, m_ffmpeg->codecCtx->time_base,
+        m_ffmpeg->pkt->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter,
+                                                           m_ffmpeg->codecCtx->time_base,
                                                            m_ffmpeg->videoStream->time_base);
-        m_ffmpeg->pkt->dts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter, m_ffmpeg->codecCtx->time_base,
+        m_ffmpeg->pkt->dts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter,
+                                                           m_ffmpeg->codecCtx->time_base,
                                                            m_ffmpeg->videoStream->time_base);
 
         m_ffmpeg->ptsCounter++;
@@ -341,7 +350,8 @@ bool VideoEncoder::encodeImage(const QImage& img)
 
     convertImage_sws(img);
 
-    m_ffmpeg->ppicture->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->codecCtx->frame_num, m_ffmpeg->codecCtx->time_base,
+    m_ffmpeg->ppicture->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->codecCtx->frame_num,
+                                                            m_ffmpeg->codecCtx->time_base,
                                                             m_ffmpeg->videoStream->time_base);
 
     int ret = m_ffmpegHandler->avcodec_send_frame(m_ffmpeg->codecCtx, m_ffmpeg->ppicture);
@@ -361,9 +371,11 @@ bool VideoEncoder::encodeImage(const QImage& img)
             return false;
         }
 
-        m_ffmpeg->pkt->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter, m_ffmpeg->codecCtx->time_base,
+        m_ffmpeg->pkt->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter,
+                                                           m_ffmpeg->codecCtx->time_base,
                                                            m_ffmpeg->videoStream->time_base);
-        m_ffmpeg->pkt->dts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter, m_ffmpeg->codecCtx->time_base,
+        m_ffmpeg->pkt->dts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter,
+                                                           m_ffmpeg->codecCtx->time_base,
                                                            m_ffmpeg->videoStream->time_base);
 
         m_ffmpeg->ptsCounter++;
@@ -508,7 +520,8 @@ bool VideoEncoder::encodeVideo(const ByteArray& videoData, int maxFrames)
                                    m_ffmpeg->ppicture->data, m_ffmpeg->ppicture->linesize);
 
         m_ffmpeg->ppicture->pts = m_ffmpegHandler->av_rescale_q(
-            m_ffmpeg->codecCtx->frame_num, m_ffmpeg->codecCtx->time_base, m_ffmpeg->videoStream->time_base);
+            m_ffmpeg->codecCtx->frame_num, m_ffmpeg->codecCtx->time_base,
+            m_ffmpeg->videoStream->time_base);
 
         int ret = m_ffmpegHandler->avcodec_send_frame(m_ffmpeg->codecCtx, m_ffmpeg->ppicture);
         if (ret < 0) {
@@ -527,9 +540,11 @@ bool VideoEncoder::encodeVideo(const ByteArray& videoData, int maxFrames)
                 return false;
             }
 
-            outPkt->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter, m_ffmpeg->codecCtx->time_base,
+            outPkt->pts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter,
+                                                        m_ffmpeg->codecCtx->time_base,
                                                         m_ffmpeg->videoStream->time_base);
-            outPkt->dts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter, m_ffmpeg->codecCtx->time_base,
+            outPkt->dts = m_ffmpegHandler->av_rescale_q(m_ffmpeg->ptsCounter,
+                                                        m_ffmpeg->codecCtx->time_base,
                                                         m_ffmpeg->videoStream->time_base);
             m_ffmpeg->ptsCounter++;
 
@@ -629,7 +644,8 @@ bool VideoEncoder::addAudio(const io::path_t& audioPath)
         cleanup();
     };
 
-    if (m_ffmpegHandler->avformat_open_input(&videoFmtCtx, videoPath.c_str(), nullptr, nullptr) < 0) {
+    if (m_ffmpegHandler->avformat_open_input(&videoFmtCtx, videoPath.c_str(), nullptr,
+                                             nullptr) < 0) {
         LOGE() << "addAudio: failed to open video input: " << videoPath;
         return false;
     }
@@ -638,7 +654,8 @@ bool VideoEncoder::addAudio(const io::path_t& audioPath)
         return false;
     }
 
-    if (m_ffmpegHandler->avformat_open_input(&audioFmtCtx, audioPath.c_str(), nullptr, nullptr) < 0) {
+    if (m_ffmpegHandler->avformat_open_input(&audioFmtCtx, audioPath.c_str(), nullptr,
+                                             nullptr) < 0) {
         LOGE() << "addAudio: failed to open audio input: " << audioPath;
         return false;
     }
@@ -647,7 +664,8 @@ bool VideoEncoder::addAudio(const io::path_t& audioPath)
         return false;
     }
 
-    if (m_ffmpegHandler->avformat_alloc_output_context2(&outputFmtCtx, nullptr, "mp4", tmpPath.c_str()) < 0 || !outputFmtCtx) {
+    if (m_ffmpegHandler->avformat_alloc_output_context2(&outputFmtCtx, nullptr, "mp4",
+                                                        tmpPath.c_str()) < 0 || !outputFmtCtx) {
         LOGE() << "addAudio: failed to allocate output context";
         return false;
     }
@@ -665,7 +683,8 @@ bool VideoEncoder::addAudio(const io::path_t& audioPath)
                 LOGE() << "addAudio: failed to create output video stream";
                 return false;
             }
-            m_ffmpegHandler->avcodec_parameters_copy(outStream->codecpar, videoFmtCtx->streams[i]->codecpar);
+            m_ffmpegHandler->avcodec_parameters_copy(outStream->codecpar,
+                                                     videoFmtCtx->streams[i]->codecpar);
             outStream->codecpar->codec_tag = 0;
             outStream->time_base = videoFmtCtx->streams[i]->time_base;
             outVideoIdx = outStream->index;
@@ -681,7 +700,8 @@ bool VideoEncoder::addAudio(const io::path_t& audioPath)
                 LOGE() << "addAudio: failed to create output audio stream";
                 return false;
             }
-            m_ffmpegHandler->avcodec_parameters_copy(outStream->codecpar, audioFmtCtx->streams[i]->codecpar);
+            m_ffmpegHandler->avcodec_parameters_copy(outStream->codecpar,
+                                                     audioFmtCtx->streams[i]->codecpar);
             outStream->codecpar->codec_tag = 0;
             outStream->time_base = audioFmtCtx->streams[i]->time_base;
             outAudioIdx = outStream->index;
@@ -756,9 +776,14 @@ bool VideoEncoder::convertImage_sws(const QImage& img)
         return false;
     }
 
-    m_ffmpeg->img_convert_ctx = m_ffmpegHandler->sws_getCachedContext(m_ffmpeg->img_convert_ctx, m_ffmpeg->width, m_ffmpeg->height,
+    m_ffmpeg->img_convert_ctx = m_ffmpegHandler->sws_getCachedContext(m_ffmpeg->img_convert_ctx,
+                                                                      m_ffmpeg->width,
+                                                                      m_ffmpeg->height,
                                                                       AV_PIX_FMT_BGRA,
-                                                                      m_ffmpeg->width, m_ffmpeg->height, AV_PIX_FMT_YUV420P, SWS_BICUBIC,
+                                                                      m_ffmpeg->width,
+                                                                      m_ffmpeg->height,
+                                                                      AV_PIX_FMT_YUV420P,
+                                                                      SWS_BICUBIC,
                                                                       NULL, NULL, NULL);
 
     if (!m_ffmpeg->img_convert_ctx) {
@@ -776,7 +801,8 @@ bool VideoEncoder::convertImage_sws(const QImage& img)
     srcstride[1] = 0;
     srcstride[2 ]= 0;
 
-    m_ffmpegHandler->sws_scale(m_ffmpeg->img_convert_ctx, srcplanes, srcstride, 0, m_ffmpeg->height, m_ffmpeg->ppicture->data,
+    m_ffmpegHandler->sws_scale(m_ffmpeg->img_convert_ctx, srcplanes, srcstride, 0, m_ffmpeg->height,
+                               m_ffmpeg->ppicture->data,
                                m_ffmpeg->ppicture->linesize);
 
     return true;

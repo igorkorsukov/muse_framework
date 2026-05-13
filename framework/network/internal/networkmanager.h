@@ -46,12 +46,16 @@ public:
 
     RetVal<Progress> get(const QUrl& url, IncomingDevicePtr incomingData = nullptr,
                          const RequestHeaders& headers = RequestHeaders()) override;
-    RetVal<Progress> head(const QUrl& url, const RequestHeaders& headers = RequestHeaders()) override;
-    RetVal<Progress> post(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData = nullptr,
+    RetVal<Progress> head(const QUrl& url,
                           const RequestHeaders& headers = RequestHeaders()) override;
-    RetVal<Progress> put(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData = nullptr,
+    RetVal<Progress> post(const QUrl& url, OutgoingDeviceVar outgoingData,
+                          IncomingDevicePtr incomingData = nullptr,
+                          const RequestHeaders& headers = RequestHeaders()) override;
+    RetVal<Progress> put(const QUrl& url, OutgoingDeviceVar outgoingData,
+                         IncomingDevicePtr incomingData = nullptr,
                          const RequestHeaders& headers = RequestHeaders()) override;
-    RetVal<Progress> patch(const QUrl& url, OutgoingDeviceVar outgoingData, IncomingDevicePtr incomingData = nullptr,
+    RetVal<Progress> patch(const QUrl& url, OutgoingDeviceVar outgoingData,
+                           IncomingDevicePtr incomingData = nullptr,
                            const RequestHeaders& headers = RequestHeaders()) override;
     RetVal<Progress> del(const QUrl& url, IncomingDevicePtr incomingData = nullptr,
                          const RequestHeaders& headers = RequestHeaders()) override;
@@ -66,11 +70,13 @@ private:
         DELETE_REQUEST
     };
 
-    RetVal<Progress> execRequest(RequestType requestType, const QUrl& url, IncomingDevicePtr incomingData, OutgoingDeviceVar outgoingData,
+    RetVal<Progress> execRequest(RequestType requestType, const QUrl& url,
+                                 IncomingDevicePtr incomingData, OutgoingDeviceVar outgoingData,
                                  const RequestHeaders& headers);
 
     QNetworkRequest prepareRequest(const QUrl& url, const RequestHeaders& headers) const;
-    QNetworkReply* sendRequest(RequestType type, const QNetworkRequest& request, const OutgoingDeviceVar& device);
+    QNetworkReply* sendRequest(RequestType type, const QNetworkRequest& request,
+                               const OutgoingDeviceVar& device);
 
     struct RequestData {
         IncomingDevicePtr incomingData;

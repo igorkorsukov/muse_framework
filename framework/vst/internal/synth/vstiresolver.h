@@ -35,15 +35,19 @@ class VstiResolver : public audio::synth::ISynthResolver::IResolver
     GlobalInject<IVstModulesRepository> pluginModulesRepo;
     GlobalInject<IVstInstancesRegister> instancesRegister;
 public:
-    muse::audio::synth::ISynthesizerPtr resolveSynth(const audio::TrackId trackId, const audio::AudioInputParams& params,
-                                                     const audio::OutputSpec& outputSpec) const override;
+    muse::audio::synth::ISynthesizerPtr resolveSynth(const audio::TrackId trackId,
+                                                     const audio::AudioInputParams& params,
+                                                     const audio::OutputSpec& outputSpec) const
+    override;
     bool hasCompatibleResources(const muse::audio::PlaybackSetupData& setup) const override;
     muse::audio::AudioResourceMetaList resolveResources() const override;
-    muse::audio::SoundPresetList resolveSoundPresets(const muse::audio::AudioResourceMeta& resourceMeta) const override;
+    muse::audio::SoundPresetList resolveSoundPresets(
+        const muse::audio::AudioResourceMeta& resourceMeta) const override;
     void refresh() override;
     void clearSources() override;
 
 private:
-    VstSynthPtr createSynth(const audio::TrackId trackId, const audio::AudioInputParams& params, const audio::OutputSpec& outputSpec) const;
+    VstSynthPtr createSynth(const audio::TrackId trackId, const audio::AudioInputParams& params,
+                            const audio::OutputSpec& outputSpec) const;
 };
 }

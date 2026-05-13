@@ -34,7 +34,8 @@
 #include "actions/iactionsdispatcher.h"
 
 namespace muse::uicomponents {
-class AbstractMenuModel : public QAbstractListModel, public muse::Contextable, public async::Asyncable
+class AbstractMenuModel : public QAbstractListModel, public muse::Contextable,
+    public async::Asyncable
 {
     Q_OBJECT
 
@@ -91,13 +92,16 @@ protected:
     MenuItemList findItems(const muse::actions::ActionCode& actionCode);
     MenuItem& findMenu(const QString& menuId);
 
-    MenuItem* makeMenu(const TranslatableString& title, const MenuItemList& items, const QString& menuId = "", bool enabled = true);
+    MenuItem* makeMenu(const TranslatableString& title, const MenuItemList& items,
+                       const QString& menuId = "", bool enabled = true);
 
-    MenuItem* makeMenuItem(const muse::actions::ActionCode& actionCode, const TranslatableString& title = {});
+    MenuItem* makeMenuItem(const muse::actions::ActionCode& actionCode,
+                           const TranslatableString& title = {});
     MenuItem* makeSeparator();
 
     bool isIndexValid(int index) const;
-    void dispatch(const muse::actions::ActionCode& actionCode, const muse::actions::ActionData& args = muse::actions::ActionData());
+    void dispatch(const muse::actions::ActionCode& actionCode,
+                  const muse::actions::ActionData& args = muse::actions::ActionData());
     void dispatch(const muse::actions::ActionQuery& actionQuery);
 
 private:
@@ -105,8 +109,9 @@ private:
     MenuItemList items(MenuItemList& items, const muse::actions::ActionCode& actionCode);
     MenuItem& menu(MenuItemList& items, const QString& menuId);
 
-    void updateState(MenuItemList& items, const muse::actions::ActionCodeList& codes, std::map<muse::actions::ActionCode,
-                                                                                               muse::ui::UiActionState>& states);
+    void updateState(MenuItemList& items, const muse::actions::ActionCodeList& codes,
+                     std::map<muse::actions::ActionCode,
+                              muse::ui::UiActionState>& states);
 
     void updateShortcutsAll();
     void updateShortcuts(MenuItem* item);

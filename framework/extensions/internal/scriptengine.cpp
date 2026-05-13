@@ -59,7 +59,8 @@ ScriptEngine::ScriptEngine(const modularity::ContextPtr& iocCtx, int apiversion)
 
     globalObj.setProperty("api", m_engine->newQObject(m_api));
 
-    const std::vector<muse::api::IApiRegister::GlobalEnum>& globalEnums = apiRegister()->globalEnums();
+    const std::vector<muse::api::IApiRegister::GlobalEnum>& globalEnums
+        = apiRegister()->globalEnums();
     for (const muse::api::IApiRegister::GlobalEnum& e : globalEnums) {
         QString name = QString::fromStdString(e.name);
         QJSValue enumObj = muse::api::enumToJsValue(m_apiengine, e.meta, e.type);
@@ -76,7 +77,8 @@ ScriptEngine::ScriptEngine(const modularity::ContextPtr& iocCtx, int apiversion)
 }
 
 ScriptEngine::ScriptEngine(ScriptEngine* engine)
-    : m_iocContext(engine->m_iocContext), m_engine(engine->m_engine), m_apiengine(engine->m_apiengine), m_api(engine->m_api),
+    : m_iocContext(engine->m_iocContext), m_engine(engine->m_engine), m_apiengine(
+        engine->m_apiengine), m_api(engine->m_api),
     m_moduleLoader(engine->m_moduleLoader),
     m_isRequireMode(true)
 {
@@ -114,7 +116,8 @@ QJSValue ScriptEngine::requireModule(const QString& module)
         return QJSValue();
     }
     bool isNeedDelete = obj.second;
-    QJSEngine::setObjectOwnership(obj.first, isNeedDelete ? QJSEngine::JavaScriptOwnership : QJSEngine::CppOwnership);
+    QJSEngine::setObjectOwnership(obj.first,
+                                  isNeedDelete ? QJSEngine::JavaScriptOwnership : QJSEngine::CppOwnership);
     return m_engine->newQObject(obj.first);
 }
 
@@ -128,7 +131,8 @@ QJSValue ScriptEngine::requireFile(const QString& filePath)
         return QJSValue();
     }
 
-    QByteArray content = QByteArray("(function() { \n") + data.val.toQByteArrayNoCopy() + QByteArray("}());");
+    QByteArray content = QByteArray("(function() { \n") + data.val.toQByteArrayNoCopy()
+                         + QByteArray("}());");
 
     ScriptEngine requireEngine(this);
     requireEngine.setScriptPath(filePath);
@@ -251,7 +255,9 @@ Ret ScriptEngine::jsValueToRet(const QJSValue& val)
         if (err == "Error: abort") {
             return make_ret(Ret::Code::Cancel, QString("script is aborted"));
         }
-        Ret ret = make_ret(Ret::Code::UnknownError, QString("File: %1, Exception at line: %2, %3").arg(fileName).arg(line).arg(err));
+        Ret ret = make_ret(Ret::Code::UnknownError, QString(
+                               "File: %1, Exception at line: %2, %3").arg(fileName).arg(line).arg(
+                               err));
         ret.setData("file", fileName);
         ret.setData("line", line);
         ret.setData("err", err);
@@ -295,7 +301,8 @@ RetVal<ByteArray> ScriptEngine::readScriptContent(const io::path_t& scriptPath) 
     return fileSystem()->readFile(scriptPath);
 }
 
-RetVal<QJSValue> ScriptEngine::evaluateContent(const QByteArray& fileContent, const io::path_t& filePath)
+RetVal<QJSValue> ScriptEngine::evaluateContent(const QByteArray& fileContent,
+                                               const io::path_t& filePath)
 {
     TRACEFUNC;
     RetVal<QJSValue> rv;

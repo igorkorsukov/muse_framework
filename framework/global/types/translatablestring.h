@@ -42,9 +42,13 @@ public:
     int defaultN = -1;
 
     TranslatableString() = default;
-    TranslatableString(const char* context, const char* str, const char* disambiguation = nullptr, int n = -1)
-        : context(context), str(String::fromUtf8(str)), disambiguation(disambiguation), defaultN(n) {}
-    TranslatableString(const char* context, const String& str, const char* disambiguation = nullptr, int n = -1)
+    TranslatableString(const char* context, const char* str, const char* disambiguation = nullptr,
+                       int n = -1)
+        : context(context), str(String::fromUtf8(str)), disambiguation(disambiguation), defaultN(n)
+    {
+    }
+    TranslatableString(const char* context, const String& str, const char* disambiguation = nullptr,
+                       int n = -1)
         : context(context), str(str), disambiguation(disambiguation), defaultN(n) {}
 
     static TranslatableString untranslatable(const char* str)
@@ -115,10 +119,12 @@ public:
 
     bool operator ==(const TranslatableString& other) const
     {
-        return (context == other.context || (context && other.context && strcmp(context, other.context) == 0))
+        return (context == other.context
+                || (context && other.context && strcmp(context, other.context) == 0))
                && str == other.str
                && (disambiguation == other.disambiguation
-                   || (disambiguation && other.disambiguation && strcmp(disambiguation, other.disambiguation) == 0))
+                   || (disambiguation && other.disambiguation
+                       && strcmp(disambiguation, other.disambiguation) == 0))
                && defaultN == other.defaultN
                && args == other.args;
     }

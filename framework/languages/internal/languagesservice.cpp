@@ -110,7 +110,9 @@ const Language& LanguagesService::placeholderLanguage() const
 bool LanguagesService::hasPlaceholderLanguage() const
 {
     for (const QString& resourceName : configuration()->languageResourceNames()) {
-        if (!fileSystem()->exists(configuration()->builtinLanguageFilePath(resourceName, PLACEHOLDER_LANGUAGE_CODE))) {
+        if (!fileSystem()->exists(configuration()->builtinLanguageFilePath(resourceName,
+                                                                           PLACEHOLDER_LANGUAGE_CODE)))
+        {
             return false;
         }
     }
@@ -293,7 +295,8 @@ Ret LanguagesService::loadLanguage(Language& lang)
         if (!fallbackLang.isLoaded()) {
             ret = doLoadLanguage(fallbackLang);
             if (!ret) {
-                LOGE() << "Failed to load fallback language " << fallbackLang.code << ": " << ret.toString();
+                LOGE() << "Failed to load fallback language " << fallbackLang.code << ": " <<
+                    ret.toString();
                 return ret;
             }
         }
@@ -313,7 +316,8 @@ Ret LanguagesService::doLoadLanguage(Language& lang)
 
     RetVal<io::paths_t> appFilePaths = fileSystem()->scanFiles(languagesAppDataPath, { filter });
     if (!appFilePaths.ret) {
-        LOGE() << "Failed to scan files for language " << lang.code << ": " << appFilePaths.ret.toString();
+        LOGE() << "Failed to scan files for language " << lang.code << ": " <<
+            appFilePaths.ret.toString();
         return appFilePaths.ret;
     }
 
@@ -323,7 +327,8 @@ Ret LanguagesService::doLoadLanguage(Language& lang)
 
         QFileInfo appFileInfo(appFilePath.toQString());
         QFileInfo userFileInfo(userFilePath.toQString());
-        bool useUserPath = userFileInfo.exists() && userFileInfo.lastModified() > appFileInfo.lastModified();
+        bool useUserPath = userFileInfo.exists()
+                           && userFileInfo.lastModified() > appFileInfo.lastModified();
 
         QString resourceName = filename.toQString().chopped(languageSuffix.size());
         lang.files[resourceName] = useUserPath ? userFilePath : appFilePath;
@@ -376,7 +381,8 @@ Progress LanguagesService::update(const QString& languageCode)
         }
 
         QJsonObject serverLanguagesInfo = res.val;
-        QStringList languagesToUpdate = this->languagesToUpdate(effectiveLanguageCode, serverLanguagesInfo);
+        QStringList languagesToUpdate
+            = this->languagesToUpdate(effectiveLanguageCode, serverLanguagesInfo);
 
         if (languagesToUpdate.isEmpty()) {
             m_languageUpdateInProgress = false;
@@ -408,10 +414,12 @@ async::Channel<bool> LanguagesService::restartRequiredToApplyLanguageChanged() c
     return m_restartRequiredToApplyLanguageChanged;
 }
 
-void LanguagesService::downloadServerLanguagesInfo(const QString& languageCode, std::function<void(const RetVal<QJsonObject>&)> finished)
+void LanguagesService::downloadServerLanguagesInfo(const QString& languageCode,
+                                                   std::function<void(const RetVal<QJsonObject>&)> finished)
 {
     auto buff = std::make_shared<QBuffer>();
-    RetVal<Progress> progress = m_networkManager->get(configuration()->languagesUpdateUrl().toString(), buff);
+    RetVal<Progress> progress = m_networkManager->get(
+        configuration()->languagesUpdateUrl().toString(), buff);
     if (!progress.ret) {
         finished(RetVal<QJsonObject>::make_ret(progress.ret));
         return;
@@ -419,7 +427,8 @@ void LanguagesService::downloadServerLanguagesInfo(const QString& languageCode, 
 
     progress.val.finished().onReceive(this, [languageCode, buff, finished](const ProgressResult& res) {
         if (!res.ret) {
-            finished(RetVal<QJsonObject>::make_ret(res.ret));
+            finished(RetVal<QJsonObject>::make_ret(
+                         res.ret));
             return;
         }
 
@@ -434,7 +443,8 @@ void LanguagesService::downloadServerLanguagesInfo(const QString& languageCode, 
     });
 }
 
-QStringList LanguagesService::languagesToUpdate(const QString& mainLanguageCode, const QJsonObject& serverLanguagesInfo) const
+QStringList LanguagesService::languagesToUpdate(const QString& mainLanguageCode,
+                                                const QJsonObject& serverLanguagesInfo) const
 {
     QStringList languagesToUpdate;
 
@@ -478,16 +488,20 @@ void LanguagesService::doUpdateLanguages(const QStringList& languageCodes, Progr
     // instead. The type of this parameter cannot be written directly, as it
     // would be a recursive type.
     auto updateLanguage
-        = [this, languageCodes, overallProgress, overallFinished](int languageIndex, auto updateNextLanguage) mutable -> void {
+        = [this, languageCodes, overallProgress, overallFinished](int languageIndex,
+                                                                  auto updateNextLanguage) mutable
+          -> void {
         auto progressCallback
-            = [languageCodes, overallProgress, languageIndex](int64_t current, int64_t total, const std::string& msg) mutable {
+            = [languageCodes, overallProgress, languageIndex](int64_t current, int64_t total,
+                                                              const std::string& msg) mutable {
             const int64_t overallTotal = languageCodes.size() * 10000;
             const int64_t overallCurrent = languageIndex * 10000 + current * 10000 / total;
             overallProgress.progress(overallCurrent, overallTotal, msg);
         };
 
         auto finished
-            = [languageCodes, overallFinished, languageIndex, updateNextLanguage](const Ret& ret) mutable {
+            = [languageCodes, overallFinished, languageIndex,
+               updateNextLanguage](const Ret& ret) mutable {
             if (ret) {
                 if (++languageIndex < languageCodes.size()) {
                     updateNextLanguage(languageIndex, updateNextLanguage);
@@ -506,7 +520,8 @@ void LanguagesService::doUpdateLanguages(const QStringList& languageCodes, Progr
 }
 
 void LanguagesService::doUpdateLanguage(const QString& languageCode,
-                                        std::function<void(int64_t current, int64_t total, const std::string&)> progressCallback,
+                                        std::function<void(int64_t current, int64_t total,
+                                                           const std::string&)> progressCallback,
                                         std::function<void(const Ret&)> finished)
 {
     auto qbuff = std::make_shared<QBuffer>();
@@ -517,22 +532,30 @@ void LanguagesService::doUpdateLanguage(const QString& languageCode,
         return;
     }
 
-    const std::string downloadingMsg = muse::qtrc("global", "Downloading %1…").arg(languageCode).toStdString();
+    const std::string downloadingMsg
+        = muse::qtrc("global", "Downloading %1…").arg(languageCode).toStdString();
     progressCallback(0, 1, downloadingMsg);
 
     downloadProgress.val.progressChanged().onReceive(this,
-                                                     [progressCallback, downloadingMsg](int64_t current, int64_t total, const std::string&) {
+                                                     [progressCallback,
+                                                      downloadingMsg](int64_t current,
+                                                                      int64_t total,
+                                                                      const std::string&) {
         progressCallback(current, total,
                          downloadingMsg);
     });
 
-    downloadProgress.val.finished().onReceive(this, [this, progressCallback, finished, languageCode, qbuff](const ProgressResult& res) {
+    downloadProgress.val.finished().onReceive(this,
+                                              [this, progressCallback, finished, languageCode,
+                                               qbuff](const ProgressResult& res) {
         if (!res.ret) {
-            finished(make_ret(Err::ErrorDownloadLanguage));
+            finished(make_ret(
+                         Err::ErrorDownloadLanguage));
             return;
         }
 
-        progressCallback(1, 1, muse::qtrc("global", "Unpacking %1…").arg(languageCode).toStdString());
+        progressCallback(1, 1, muse::qtrc("global", "Unpacking %1…").arg(
+                             languageCode).toStdString());
 
         Ret ret = unpackAndWriteLanguage(qbuff->data());
         finished(ret);
@@ -551,8 +574,11 @@ Ret LanguagesService::unpackAndWriteLanguage(const QByteArray& zipData)
         mi::WriteResourceLockGuard lock_guard(multiwindowsProvider(), LANGUAGES_RESOURCE_NAME);
 
         for (const auto& info : zipReader.fileInfoList()) {
-            io::path_t userFilePath = configuration()->languagesUserAppDataPath().appendingComponent(info.filePath);
-            Ret ret = fileSystem()->writeFile(userFilePath, zipReader.fileData(info.filePath.toStdString()));
+            io::path_t userFilePath
+                = configuration()->languagesUserAppDataPath().appendingComponent(info.filePath);
+            Ret ret
+                = fileSystem()->writeFile(userFilePath,
+                                          zipReader.fileData(info.filePath.toStdString()));
             if (!ret) {
                 return make_ret(Err::ErrorWriteLanguage);
             }

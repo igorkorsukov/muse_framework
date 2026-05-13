@@ -67,7 +67,8 @@ PluginControllerPtr VstPluginProvider::controller() const
 PluginMidiMappingPtr VstPluginProvider::midiMapping() const
 {
     if (!m_impl->midiMapping && m_impl->controller) {
-        m_impl->controller->queryInterface(Steinberg::Vst::IMidiMapping_iid, (void**)&m_impl->midiMapping);
+        m_impl->controller->queryInterface(Steinberg::Vst::IMidiMapping_iid,
+                                           (void**)&m_impl->midiMapping);
     }
     return m_impl->midiMapping;
 }

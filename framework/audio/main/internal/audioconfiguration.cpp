@@ -45,7 +45,8 @@ static const Settings::Key AUDIO_BUFFER_SIZE_KEY("audio", "io/bufferSize");
 static const Settings::Key AUDIO_SAMPLE_RATE_KEY("audio", "io/sampleRate");
 static const Settings::Key AUDIO_MEASURE_INPUT_LAG("audio", "io/measureInputLag");
 
-static const Settings::Key ONLINE_SOUNDS_PROCESS_IN_BACKGROUND("audio", "io/onlineSounds/processInBackground");
+static const Settings::Key ONLINE_SOUNDS_PROCESS_IN_BACKGROUND("audio",
+                                                               "io/onlineSounds/processInBackground");
 
 static const Settings::Key USER_SOUNDFONTS_PATHS("midi", "application/paths/mySoundfonts");
 
@@ -76,7 +77,8 @@ void AudioConfiguration::init()
         m_driverSampleRateChanged.notify();
     });
 
-    settings()->setDefaultValue(USER_SOUNDFONTS_PATHS, Val(globalConfiguration()->userDataPath() + "/SoundFonts"));
+    settings()->setDefaultValue(USER_SOUNDFONTS_PATHS,
+                                Val(globalConfiguration()->userDataPath() + "/SoundFonts"));
     settings()->valueChanged(USER_SOUNDFONTS_PATHS).onReceive(nullptr, [this](const Val&) {
         m_soundFontDirsChanged.send(soundFontDirectories());
     });
@@ -88,7 +90,8 @@ void AudioConfiguration::init()
     settings()->setDefaultValue(AUDIO_MEASURE_INPUT_LAG, Val(false));
 
     settings()->setDefaultValue(ONLINE_SOUNDS_PROCESS_IN_BACKGROUND, Val(true));
-    settings()->valueChanged(ONLINE_SOUNDS_PROCESS_IN_BACKGROUND).onReceive(nullptr, [this](const Val& val) {
+    settings()->valueChanged(ONLINE_SOUNDS_PROCESS_IN_BACKGROUND).onReceive(nullptr,
+                                                                            [this](const Val& val) {
         m_autoProcessOnlineSoundsInBackgroundChanged.send(val.toBool());
     });
 }
@@ -103,7 +106,8 @@ AudioEngineConfig AudioConfiguration::engineConfig() const
 
 void AudioConfiguration::onEngineConfigChanged()
 {
-    rpcChannel()->send(rpc::make_notification(rpc::GLOBAL_CTX_ID, rpc::MsgCode::EngineConfigChanged, rpc::RpcPacker::pack(engineConfig())));
+    rpcChannel()->send(rpc::make_notification(rpc::GLOBAL_CTX_ID, rpc::MsgCode::EngineConfigChanged,
+                                              rpc::RpcPacker::pack(engineConfig())));
 }
 
 std::string AudioConfiguration::defaultAudioDriverName() const

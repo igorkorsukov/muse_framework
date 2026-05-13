@@ -40,7 +40,8 @@ class PopupViewCloseController : public QObject, public muse::Contextable, publi
     muse::ContextInject<ui::IMainWindow> mainWindow = { this };
 
 public:
-    explicit PopupViewCloseController(const muse::modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
+    explicit PopupViewCloseController(const muse::modularity::ContextPtr& iocCtx,
+                                      QObject* parent = nullptr);
     ~PopupViewCloseController() override = default;
 
     void init();

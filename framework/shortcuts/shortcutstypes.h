@@ -99,7 +99,8 @@ inline bool needIgnoreKey(Qt::Key key)
     return ignoredKeys.find(key) != ignoredKeys.end();
 }
 
-inline std::pair<Qt::Key, Qt::KeyboardModifiers> correctKeyInput(Qt::Key key, Qt::KeyboardModifiers modifiers)
+inline std::pair<Qt::Key, Qt::KeyboardModifiers> correctKeyInput(Qt::Key key,
+                                                                 Qt::KeyboardModifiers modifiers)
 {
     // replace Backtab with Shift+Tab
     if (key == Qt::Key_Backtab && modifiers == Qt::ShiftModifier) {
@@ -122,7 +123,8 @@ inline QString sequencesToNativeText(const std::vector<std::string>& sequences)
     return QKeySequence::listToString(keySequenceList, QKeySequence::NativeText);
 }
 
-inline bool areContextPrioritiesEqual(const std::string& shortcutCtx1, const std::string& shortcutCtx2)
+inline bool areContextPrioritiesEqual(const std::string& shortcutCtx1,
+                                      const std::string& shortcutCtx2)
 {
     static constexpr std::string_view ANY_CTX("any");
 

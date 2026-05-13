@@ -39,7 +39,8 @@ public:
     using ActionCallBack = std::function<void ()>;
     using ActionCallBackWithName = std::function<void (const ActionCode&)>;
     using ActionCallBackWithData = std::function<void (const ActionData& data)>;
-    using ActionCallBackWithNameAndData = std::function<void (const ActionCode&, const ActionData& data)>;
+    using ActionCallBackWithNameAndData = std::function<void (const ActionCode&,
+                                                              const ActionData& data)>;
     using ActionCallBackWithQuery = std::function<void (const ActionQuery&)>;
 
     virtual void dispatch(const ActionCode& actionCode) = 0;
@@ -50,8 +51,10 @@ public:
     virtual async::Channel<ActionCode> postDispatch() const = 0;
 
     virtual void unReg(Actionable* client) = 0;
-    virtual void reg(Actionable* client, const ActionCode& actionCode, const ActionCallBackWithNameAndData& call) = 0;
-    virtual void reg(Actionable* client, const ActionQuery& actionQuery, const ActionCallBackWithQuery& call) = 0;
+    virtual void reg(Actionable* client, const ActionCode& actionCode,
+                     const ActionCallBackWithNameAndData& call) = 0;
+    virtual void reg(Actionable* client, const ActionQuery& actionQuery,
+                     const ActionCallBackWithQuery& call) = 0;
     virtual bool isReg(Actionable* client) const = 0;
     virtual ActionCodeList actionList() const = 0;
 
@@ -71,7 +74,8 @@ public:
     }
 
     template<typename T>
-    void reg(Actionable* client, const ActionCode& action, T* caller, void (T::* func)(const ActionCode& action))
+    void reg(Actionable* client, const ActionCode& action, T* caller, void (T::* func)(
+                 const ActionCode& action))
     {
         reg(client, action, [caller, func](const ActionCode& action) { (caller->*func)(action); });
     }
@@ -83,16 +87,22 @@ public:
     }
 
     template<typename T>
-    void reg(Actionable* client, const ActionCode& action, T* caller, void (T::* func)(const ActionCode& action,
-                                                                                       const ActionData& data))
+    void reg(Actionable* client, const ActionCode& action, T* caller, void (T::* func)(
+                 const ActionCode& action,
+                 const ActionData& data))
     {
-        reg(client, action, [caller, func](const ActionCode& a, const ActionData& data) { (caller->*func)(a, data); });
+        reg(client, action, [caller, func](const ActionCode& a, const ActionData& data) {
+            (caller->*func)(a, data);
+        });
     }
 
     template<typename T>
-    void reg(Actionable* client, const ActionCode& action, T* caller, void (T::* func)(const ActionData& data))
+    void reg(Actionable* client, const ActionCode& action, T* caller, void (T::* func)(
+                 const ActionData& data))
     {
-        reg(client, action, [caller, func](const ActionCode&, const ActionData& data) { (caller->*func)(data); });
+        reg(client, action, [caller, func](const ActionCode&, const ActionData& data) {
+            (caller->*func)(data);
+        });
     }
 
     // as uri query
@@ -102,7 +112,8 @@ public:
     }
 
     template<typename T>
-    void reg(Actionable* client, const ActionQuery& query, T* caller, void (T::* func)(const ActionQuery& query))
+    void reg(Actionable* client, const ActionQuery& query, T* caller, void (T::* func)(
+                 const ActionQuery& query))
     {
         reg(client, query, [caller, func](const ActionQuery& query) { (caller->*func)(query); });
     }

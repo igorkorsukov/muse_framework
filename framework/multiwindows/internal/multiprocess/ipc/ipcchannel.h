@@ -56,7 +56,8 @@ public:
     void broadcast(const QString& method, const QStringList& args = {});
 
     using OnReceived = std::function<bool (const QStringList&, const ID& srcID)>;
-    Code syncRequestToAll(const QString& method, const QStringList& args, const OnReceived& onReceived);
+    Code syncRequestToAll(const QString& method, const QStringList& args,
+                          const OnReceived& onReceived);
 
     QList<ID> instances() const;
     async::Notification instancesChanged() const;

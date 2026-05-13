@@ -110,7 +110,8 @@ void WebRpcChannel::send(const Msg& msg, const Handler& onResponse)
     // makes sense if the reserve is greater than the current capacity
     buffer.reserve(std::max(msg.data.size(), DEFAULT_CAPACITY));
 
-    msgpack::pack(buffer, msg.ctxId, msg.callId, (uint8_t)msg.code, (uint8_t)msg.type, msg.data.constVData());
+    msgpack::pack(buffer, msg.ctxId, msg.callId, (uint8_t)msg.code, (uint8_t)msg.type,
+                  msg.data.constVData());
 
     IF_ASSERT_FAILED(buffer.size() > 0) {
         return;

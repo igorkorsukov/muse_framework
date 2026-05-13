@@ -120,7 +120,8 @@ QVariant ExtensionsListModel::data(const QModelIndex& index, int role) const
         for (const auto& action : plugin.actions) {
             actions::ActionCode code = makeActionCode(plugin.uri, action.code);
             shortcuts::Shortcut shortcut = shortcutsRegister()->shortcut(code);
-            shortcuts.insert(shortcuts.end(), shortcut.sequences.cbegin(), shortcut.sequences.cend());
+            shortcuts.insert(shortcuts.end(), shortcut.sequences.cbegin(),
+                             shortcut.sequences.cend());
         }
 
         if (!shortcuts.empty()) {

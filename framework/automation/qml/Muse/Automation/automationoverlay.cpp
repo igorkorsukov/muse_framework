@@ -80,7 +80,8 @@ void AutomationOverlay::initAutomationLinesData(const QVariant& automationLinesD
 
         QObject::connect(polyline, &muse::uicomponents::PolylinePlot::pointMoved,
                          [this, lineIdx, polyline](int pointIdx, qreal x, qreal y, bool completed) {
-            IF_ASSERT_FAILED(pointIdx > -1 && pointIdx < static_cast<int>(polyline->points().size())) {
+            IF_ASSERT_FAILED(
+                pointIdx > -1 && pointIdx < static_cast<int>(polyline->points().size())) {
                 return;
             }
             QVector<QPointF> points = polyline->points();

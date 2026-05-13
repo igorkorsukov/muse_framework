@@ -42,7 +42,8 @@ struct PlaybackSetupData
 
     PlaybackSetupData() = default;
 
-    PlaybackSetupData(SoundId id, SoundCategory category, SoundSubCategories&& soundSubCategories = {}, bool supportsSND = false)
+    PlaybackSetupData(SoundId id, SoundCategory category,
+                      SoundSubCategories&& soundSubCategories = {}, bool supportsSND = false)
         : id(soundIdToString(id)), category(category), supportsSingleNoteDynamics(supportsSND)
     {
         for (SoundSubCategory subCategory : soundSubCategories) {
@@ -91,7 +92,9 @@ struct PlaybackSetupData
 
     void add(const SoundSubCategory subcategory)
     {
-        auto insertPos = std::find_if(subCategories.cbegin(), subCategories.cend(), [subcategory](const String& str) {
+        auto insertPos
+            = std::find_if(subCategories.cbegin(), subCategories.cend(),
+                           [subcategory](const String& str) {
             SoundSubCategory existingSubCategory = soundSubCategoryFromString(str);
             return subcategory < existingSubCategory;
         });

@@ -183,7 +183,8 @@ QString AccessibleItem::accessibleText(int start, int end) const
 }
 
 //! NOTE: qaccessible.cpp - textLineBoundary
-static QString textLineBoundary(int beforeAtAfter, const QString& text, int offset, int* startOffset, int* endOffset)
+static QString textLineBoundary(int beforeAtAfter, const QString& text, int offset,
+                                int* startOffset, int* endOffset)
 {
     Q_ASSERT(beforeAtAfter >= -1 && beforeAtAfter <= 1);
     Q_ASSERT(*startOffset == -1 && *endOffset == -1);
@@ -217,7 +218,8 @@ static QString textLineBoundary(int beforeAtAfter, const QString& text, int offs
 }
 
 //! NOTE: qaccessible.cpp - textBeforeOffset
-QString AccessibleItem::accessibleTextBeforeOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const
+QString AccessibleItem::accessibleTextBeforeOffset(int offset, TextBoundaryType boundaryType,
+                                                   int* startOffset, int* endOffset) const
 {
     const QString txt = accessibleText(0, accessibleCharacterCount());
 
@@ -259,7 +261,8 @@ QString AccessibleItem::accessibleTextBeforeOffset(int offset, TextBoundaryType 
     boundary.setPosition(offset);
 
     do {
-        if ((boundary.boundaryReasons() & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
+        if ((boundary.boundaryReasons()
+             & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
             break;
         }
     } while (boundary.toPreviousBoundary() > 0);
@@ -267,7 +270,8 @@ QString AccessibleItem::accessibleTextBeforeOffset(int offset, TextBoundaryType 
     *endOffset = boundary.position();
 
     while (boundary.toPreviousBoundary() > 0) {
-        if ((boundary.boundaryReasons() & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
+        if ((boundary.boundaryReasons()
+             & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
             break;
         }
     }
@@ -278,7 +282,8 @@ QString AccessibleItem::accessibleTextBeforeOffset(int offset, TextBoundaryType 
 }
 
 //! NOTE: qaccessible.cpp - textAfterOffset
-QString AccessibleItem::accessibleTextAfterOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const
+QString AccessibleItem::accessibleTextAfterOffset(int offset, TextBoundaryType boundaryType,
+                                                  int* startOffset, int* endOffset) const
 {
     const QString txt = accessibleText(0, accessibleCharacterCount());
 
@@ -321,7 +326,8 @@ QString AccessibleItem::accessibleTextAfterOffset(int offset, TextBoundaryType b
 
     while (true) {
         int toNext = boundary.toNextBoundary();
-        if ((boundary.boundaryReasons() & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
+        if ((boundary.boundaryReasons()
+             & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
             break;
         }
         if (toNext < 0 || toNext >= txt.length()) {
@@ -333,7 +339,8 @@ QString AccessibleItem::accessibleTextAfterOffset(int offset, TextBoundaryType b
 
     while (true) {
         int toNext = boundary.toNextBoundary();
-        if ((boundary.boundaryReasons() & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
+        if ((boundary.boundaryReasons()
+             & (QTextBoundaryFinder::StartOfItem | QTextBoundaryFinder::EndOfItem))) {
             break;
         }
         if (toNext < 0 || toNext >= txt.length()) {
@@ -351,7 +358,8 @@ QString AccessibleItem::accessibleTextAfterOffset(int offset, TextBoundaryType b
     return txt.mid(*startOffset, *endOffset - *startOffset);
 }
 
-QString AccessibleItem::accessibleTextAtOffset(int, TextBoundaryType, int* startOffset, int* endOffset) const
+QString AccessibleItem::accessibleTextAtOffset(int, TextBoundaryType, int* startOffset,
+                                               int* endOffset) const
 {
     //! NOTE: very simplified selection mode
     *startOffset = m_selectionStart;

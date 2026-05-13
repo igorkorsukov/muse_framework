@@ -32,7 +32,8 @@ public:
     Bezier() = default;
     Bezier(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4);
 
-    static Bezier fromPoints(const PointF& p1, const PointF& p2, const PointF& p3, const PointF& p4);
+    static Bezier fromPoints(const PointF& p1, const PointF& p2, const PointF& p3,
+                             const PointF& p4);
     static void coefficients(double t, double& a, double& b, double& c, double& d);
     Bezier bezierOnInterval(double t0, double t1) const;
 

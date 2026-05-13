@@ -34,7 +34,8 @@ bool muse::strings::replace(std::string& str, const std::string& from, const std
     return true;
 }
 
-void muse::strings::split(const std::string& str, std::vector<std::string>& out, const std::string& delim)
+void muse::strings::split(const std::string& str, std::vector<std::string>& out,
+                          const std::string& delim)
 {
     std::size_t current, previous = 0;
     current = str.find(delim);

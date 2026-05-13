@@ -48,7 +48,8 @@ public:
     virtual bool isGlobalMenuAvailable() const = 0;
 
     virtual void applyPlatformStyleOnAppForTheme(const ThemeCode& themeCode) = 0;
-    virtual void applyPlatformStyleOnWindowForTheme(QWindow* window, const ThemeCode& themeCode) = 0;
+    virtual void applyPlatformStyleOnWindowForTheme(QWindow* window,
+                                                    const ThemeCode& themeCode) = 0;
 };
 }
 

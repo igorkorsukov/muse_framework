@@ -69,7 +69,8 @@ public:
     Q_INVOKABLE void importShortcutsFromFile();
     Q_INVOKABLE void exportShortcutsToFile();
 
-    Q_INVOKABLE void applySequenceToCurrentShortcut(const QString& newSequence, int conflictShortcutIndex = -1);
+    Q_INVOKABLE void applySequenceToCurrentShortcut(const QString& newSequence,
+                                                    int conflictShortcutIndex = -1);
 
     Q_INVOKABLE void clearSelectedShortcuts();
     Q_INVOKABLE void resetToDefaultSelectedShortcuts();

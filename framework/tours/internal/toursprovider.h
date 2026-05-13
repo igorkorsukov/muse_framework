@@ -35,7 +35,8 @@
 #include "../itoursprovider.h"
 
 namespace muse::tours {
-class ToursProvider : public QObject, public IToursProvider, public async::Asyncable, public Contextable
+class ToursProvider : public QObject, public IToursProvider, public async::Asyncable,
+    public Contextable
 {
     Q_OBJECT
 
@@ -55,7 +56,8 @@ private slots:
     void doShow();
 
 signals:
-    void openTourStep(const QQuickItem* parentItem, const QString& title, const QString& description, const QString& previewImageOrGifUrl,
+    void openTourStep(const QQuickItem* parentItem, const QString& title,
+                      const QString& description, const QString& previewImageOrGifUrl,
                       const QString& videoExplanationUrl, size_t index, size_t total);
     void closeCurrentTourStep();
 

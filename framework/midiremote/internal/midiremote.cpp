@@ -84,7 +84,8 @@ Ret MidiRemote::setMidiMappings(const MidiMappingList& midiMappings)
 void MidiRemote::resetMidiMappings()
 {
     {
-        muse::mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(), MIDI_MAPPING_RESOURCE_NAME);
+        muse::mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(),
+                                                        MIDI_MAPPING_RESOURCE_NAME);
         fileSystem()->remove(configuration()->midiMappingUserAppDataPath());
     }
 
@@ -144,7 +145,8 @@ void MidiRemote::readMidiMappings()
 {
     RetVal<ByteArray> mappingsData;
     {
-        muse::mi::ReadResourceLockGuard resource_guard(multiwindowsProvider(), MIDI_MAPPING_RESOURCE_NAME);
+        muse::mi::ReadResourceLockGuard resource_guard(multiwindowsProvider(),
+                                                       MIDI_MAPPING_RESOURCE_NAME);
         mappingsData = fileSystem()->readFile(configuration()->midiMappingUserAppDataPath());
     }
 
@@ -218,7 +220,8 @@ bool MidiRemote::writeMidiMappings(const MidiMappingList& midiMappings) const
 
     Ret ret;
     {
-        muse::mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(), MIDI_MAPPING_RESOURCE_NAME);
+        muse::mi::WriteResourceLockGuard resource_guard(multiwindowsProvider(),
+                                                        MIDI_MAPPING_RESOURCE_NAME);
         ret = fileSystem()->writeFile(configuration()->midiMappingUserAppDataPath(), data);
     }
 
@@ -229,7 +232,8 @@ bool MidiRemote::writeMidiMappings(const MidiMappingList& midiMappings) const
     return ret;
 }
 
-void MidiRemote::writeMidiMapping(XmlStreamWriter& writer, const MidiControlsMapping& midiMapping) const
+void MidiRemote::writeMidiMapping(XmlStreamWriter& writer,
+                                  const MidiControlsMapping& midiMapping) const
 {
     writer.startElement(EVENT_TAG);
     writer.element(MAPPING_ACTION_CODE_TAG, midiMapping.action);

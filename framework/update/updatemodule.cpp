@@ -54,7 +54,9 @@ void UpdateModule::resolveImports()
 {
     auto ir = globalIoc()->resolve<interactive::IInteractiveUriRegister>(mname);
     if (ir) {
-        ir->registerQmlUri(Uri("muse://update/appreleaseinfo"), "Muse.Update", "AppReleaseInfoDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://update/appreleaseinfo"), "Muse.Update",
+                           "AppReleaseInfoDialog");
         ir->registerQmlUri(Uri("muse://update/app"), "Muse.Update", "AppUpdateProgressDialog");
     }
 }

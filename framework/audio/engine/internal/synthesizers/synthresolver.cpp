@@ -30,7 +30,8 @@ using namespace muse::async;
 using namespace muse::audio;
 using namespace muse::audio::synth;
 
-void SynthResolver::init(const AudioInputParams& defaultInputParams, const OutputSpec& defaultOutputSpec)
+void SynthResolver::init(const AudioInputParams& defaultInputParams,
+                         const OutputSpec& defaultOutputSpec)
 {
     ONLY_AUDIO_ENGINE_THREAD;
 
@@ -42,7 +43,8 @@ void SynthResolver::init(const AudioInputParams& defaultInputParams, const Outpu
     m_defaultOutputSpec = defaultOutputSpec;
 }
 
-ISynthesizerPtr SynthResolver::resolveSynth(const TrackId trackId, const AudioInputParams& params, const audio::OutputSpec& spec,
+ISynthesizerPtr SynthResolver::resolveSynth(const TrackId trackId, const AudioInputParams& params,
+                                            const audio::OutputSpec& spec,
                                             const PlaybackSetupData& setupData) const
 {
     ONLY_AUDIO_ENGINE_THREAD;
@@ -103,7 +105,8 @@ AudioResourceMetaList SynthResolver::resolveAvailableResources() const
     return result;
 }
 
-SoundPresetList SynthResolver::resolveAvailableSoundPresets(const AudioResourceMeta& resourceMeta) const
+SoundPresetList SynthResolver::resolveAvailableSoundPresets(const AudioResourceMeta& resourceMeta)
+const
 {
     ONLY_AUDIO_ENGINE_THREAD;
 

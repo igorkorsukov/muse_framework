@@ -349,7 +349,8 @@ void Painter::drawLines(const LineF* lines, size_t lineCount)
 
 void Painter::drawLines(const PointF* pointPairs, size_t lineCount)
 {
-    static_assert(sizeof(LineF) == 2 * sizeof(PointF), "must be: sizeof(LineF) == 2 * sizeof(PointF)");
+    static_assert(sizeof(LineF) == 2 * sizeof(PointF),
+                  "must be: sizeof(LineF) == 2 * sizeof(PointF)");
 
     drawLines((const LineF*)pointPairs, lineCount);
 }
@@ -386,7 +387,8 @@ void Painter::drawPolyline(const PointF* points, size_t pointCount)
 
 void Painter::drawPolygon(const PointF* points, size_t pointCount, FillRule fillRule)
 {
-    PolygonMode mode = (fillRule == FillRule::OddEvenFill) ? PolygonMode::OddEven : PolygonMode::Winding;
+    PolygonMode mode
+        = (fillRule == FillRule::OddEvenFill) ? PolygonMode::OddEven : PolygonMode::Winding;
     m_provider->drawPolygon(points, pointCount, mode);
     if (extended) {
         extended->drawPolygon(points, pointCount, mode);
@@ -527,7 +529,9 @@ void Painter::updateViewTransform()
     State& st = editableState();
     double scaleW = double(st.viewport.width()) / double(st.window.width());
     double scaleH = double(st.viewport.height()) / double(st.window.height());
-    st.viewTransform = Transform(scaleW, 0, 0, scaleH, st.viewport.x() - st.window.x() * scaleW, st.viewport.y() - st.window.y() * scaleH);
+    st.viewTransform = Transform(scaleW, 0, 0, scaleH,
+                                 st.viewport.x() - st.window.x() * scaleW,
+                                 st.viewport.y() - st.window.y() * scaleH);
     updateMatrix();
 }
 

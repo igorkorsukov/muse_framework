@@ -62,7 +62,8 @@ bool MacOSPlatformTheme::isFollowSystemThemeAvailable() const
 
 bool MacOSPlatformTheme::isSystemThemeDark() const
 {
-    NSString* systemMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+    NSString* systemMode
+        = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
     return [systemMode isEqualToString:@"Dark"];
 }
 

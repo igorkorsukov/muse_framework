@@ -174,7 +174,8 @@ void NavigationSection::setOnActiveRequested(const OnActiveRequested& func)
     m_onActiveRequested = func;
 }
 
-void NavigationSection::requestActive(INavigationPanel* panel, INavigationControl* control, bool enableHighlight,
+void NavigationSection::requestActive(INavigationPanel* panel, INavigationControl* control,
+                                      bool enableHighlight,
                                       INavigation::ActivationType activationType)
 {
     if (m_onActiveRequested) {

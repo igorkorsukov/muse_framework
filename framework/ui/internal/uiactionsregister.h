@@ -76,8 +76,8 @@ private:
     void updateEnabled(const actions::ActionCodeList& codes);
     void updateEnabledAll();
     void requestUpdateEnabledAll();
-    void doUpdateEnabled(Info& inf, const IUiContextResolverPtr& ctxResolver, const UiContext& currentCtx,
-                         actions::ActionCodeList& changedList);
+    void doUpdateEnabled(Info& inf, const IUiContextResolverPtr& ctxResolver,
+                         const UiContext& currentCtx, actions::ActionCodeList& changedList);
 
     void updateCheckedAll();
     void updateChecked(const actions::ActionCodeList& codes);

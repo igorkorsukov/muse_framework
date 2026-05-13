@@ -142,7 +142,8 @@ public:
     void readAddBlockWithGain(int startOffset, int n, SampleT* targetBlock, float gainFactor) const
     {
         splitBlockOffsetFunction(startOffset, n, [=](int bufferOff, int sampleOff, int n) {
-            vo::constantMultiplyAndAdd(&m_buffer[bufferOff], gainFactor, &targetBlock[sampleOff], n);
+            vo::constantMultiplyAndAdd(&m_buffer[bufferOff], gainFactor, &targetBlock[sampleOff],
+                                       n);
         });
     }
 

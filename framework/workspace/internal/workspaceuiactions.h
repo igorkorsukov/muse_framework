@@ -33,7 +33,8 @@ class WorkspaceUiActions : public ui::IUiActionsModule, public Contextable
     ContextInject<ui::IUiContextResolver> uicontextResolver = { this };
 
 public:
-    WorkspaceUiActions(std::shared_ptr<WorkspaceActionController> controller, const modularity::ContextPtr& iocCtx);
+    WorkspaceUiActions(std::shared_ptr<WorkspaceActionController> controller,
+                       const modularity::ContextPtr& iocCtx);
 
     const ui::UiActionList& actionsList() const override;
 

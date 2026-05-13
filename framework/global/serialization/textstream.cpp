@@ -105,7 +105,8 @@ TextStream& TextStream::operator<<(double val)
     // emulate std::stringstream default behavior
     constexpr auto format = std::chars_format::general;
     constexpr int precision = 6;
-    const auto [last, ec] = std::to_chars(buf.data(), buf.data() + buf.size(), val, format, precision);
+    const auto [last, ec] = std::to_chars(buf.data(),
+                                          buf.data() + buf.size(), val, format, precision);
     IF_ASSERT_FAILED(ec == std::errc {}) {
         return *this;
     }
@@ -184,7 +185,9 @@ TextStream& TextStream::operator<<(const String& s)
 
 void TextStream::write(const char* ch, size_t len)
 {
-    m_buf.insert(m_buf.end(), reinterpret_cast<const uint8_t*>(ch), reinterpret_cast<const uint8_t*>(ch + len));
+    m_buf.insert(
+        m_buf.end(), reinterpret_cast<const uint8_t*>(ch),
+        reinterpret_cast<const uint8_t*>(ch + len));
     if (m_device && m_buf.size() > TEXTSTREAM_BUFFERSIZE) {
         flush();
     }

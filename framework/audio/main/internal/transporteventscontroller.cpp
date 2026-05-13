@@ -33,7 +33,8 @@ void TransportEventsController::init()
     ONLY_AUDIO_MAIN_THREAD;
 
     //! TODO These events are contextual, we need to add context passing here
-    channel()->onNotification(rpc::GLOBAL_CTX_ID, MsgCode::TransportEventReceived, [this](const Msg& msg) {
+    channel()->onNotification(rpc::GLOBAL_CTX_ID, MsgCode::TransportEventReceived,
+                              [this](const Msg& msg) {
         ONLY_AUDIO_MAIN_THREAD;
 
         TransportEvent event;

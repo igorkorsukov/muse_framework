@@ -31,7 +31,8 @@ class VstPluginMetaReader : public audioplugins::IAudioPluginMetaReader
 public:
     audio::AudioResourceType metaType() const override;
     bool canReadMeta(const io::path_t& pluginPath) const override;
-    RetVal<muse::audio::AudioResourceMetaList> readMeta(const io::path_t& pluginPath) const override;
+    RetVal<muse::audio::AudioResourceMetaList> readMeta(
+        const io::path_t& pluginPath) const override;
 };
 }
 

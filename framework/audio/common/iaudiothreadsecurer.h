@@ -43,6 +43,7 @@ public:
 
 #define ONLY_AUDIO_THREAD(securer) assert(securer()->isAudioEngineThread())
 #define ONLY_MAIN_THREAD(securer) assert(securer()->isMainThread())
-#define ONLY_AUDIO_OR_MAIN_THREAD(securer) assert(securer()->isMainThread() || securer()->isAudioEngineThread())
+#define ONLY_AUDIO_OR_MAIN_THREAD(securer) assert( \
+        securer()->isMainThread() || securer()->isAudioEngineThread())
 
 #endif // MUSE_AUDIO_IAUDIOTHREADSECURER_H

@@ -28,12 +28,14 @@
 #include "../../popupviewclosecontroller.h"
 
 namespace muse::uicomponents {
-class WinPopupViewCloseController : public PopupViewCloseController, public QAbstractNativeEventFilter
+class WinPopupViewCloseController : public PopupViewCloseController,
+    public QAbstractNativeEventFilter
 {
     Q_OBJECT
 
 public:
-    explicit WinPopupViewCloseController(const muse::modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
+    explicit WinPopupViewCloseController(const muse::modularity::ContextPtr& iocCtx,
+                                         QObject* parent = nullptr);
     ~WinPopupViewCloseController() override = default;
 
 private:

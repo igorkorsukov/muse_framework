@@ -47,14 +47,17 @@ SortFilterProxyModel::SortFilterProxyModel(QObject* parent)
         }
     };
 
-    connect(m_filters.notifier(), &QmlListPropertyNotifier::appended, this, [this, onFilterChanged](int index) {
+    connect(m_filters.notifier(), &QmlListPropertyNotifier::appended, this,
+            [this, onFilterChanged](int index) {
         FilterValue* filter = m_filters.at(index);
 
         if (filter->enabled()) {
             onFilterChanged(filter);
         }
 
-        connect(filter, &FilterValue::dataChanged, this, [onFilterChanged, filter] { onFilterChanged(filter); });
+        connect(filter, &FilterValue::dataChanged, this, [onFilterChanged, filter] {
+            onFilterChanged(filter);
+        });
     });
 
     auto onSortersChanged = [this] {
@@ -70,7 +73,9 @@ SortFilterProxyModel::SortFilterProxyModel(QObject* parent)
         }
     };
 
-    connect(m_sorters.notifier(), &QmlListPropertyNotifier::appended, this, [this, onSortersChanged](int index) {
+    connect(
+        m_sorters.notifier(), &QmlListPropertyNotifier::appended, this,
+        [this, onSortersChanged](int index) {
         onSortersChanged();
 
         connect(m_sorters.at(index), &SorterValue::dataChanged, this, onSortersChanged);
@@ -156,8 +161,10 @@ void SortFilterProxyModel::setSourceModel(QAbstractItemModel* sourceModel)
     emit sourceModelRoleNamesChanged();
 
     if (auto sourceSortFilterModel = qobject_cast<SortFilterProxyModel*>(sourceModel)) {
-        m_subSourceModelConnection = connect(sourceSortFilterModel, &SortFilterProxyModel::sourceModelRoleNamesChanged,
-                                             this, &SortFilterProxyModel::sourceModelRoleNamesChanged);
+        m_subSourceModelConnection = connect(sourceSortFilterModel,
+                                             &SortFilterProxyModel::sourceModelRoleNamesChanged,
+                                             this,
+                                             &SortFilterProxyModel::sourceModelRoleNamesChanged);
     }
 }
 

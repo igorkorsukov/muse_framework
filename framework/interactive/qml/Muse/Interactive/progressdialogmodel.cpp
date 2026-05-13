@@ -61,7 +61,9 @@ void ProgressDialogModel::load(const QVariant& progressObj)
 
     m_progress = progressObj.value<Progress>();
 
-    m_progress.progressChanged().onReceive(this, [this](int64_t current, int64_t total, const std::string& status) {
+    m_progress.progressChanged().onReceive(this,
+                                           [this](int64_t current, int64_t total,
+                                                  const std::string& status) {
         setValue(current);
         setTo(total);
         setStatusMessage(QString::fromStdString(status));

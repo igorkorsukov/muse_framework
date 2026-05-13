@@ -117,7 +117,8 @@ async::Channel<Playlist> LearnService::advancedPlaylistChanged() const
     return m_advancedPlaylistChannel;
 }
 
-void LearnService::downloadPlaylist(const QUrl& playlistUrl, std::function<void(RetVal<Playlist>)> callBack)
+void LearnService::downloadPlaylist(const QUrl& playlistUrl,
+                                    std::function<void(RetVal<Playlist>)> callBack)
 {
     TRACEFUNC;
 
@@ -134,9 +135,11 @@ void LearnService::downloadPlaylist(const QUrl& playlistUrl, std::function<void(
         return;
     }
 
-    progress.val.finished().onReceive(this, [callBack, playlistInfoData](const muse::ProgressResult& res) {
+    progress.val.finished().onReceive(this,
+                                      [callBack, playlistInfoData](const muse::ProgressResult& res) {
         if (!res.ret) {
-            callBack(res.ret);
+            callBack(
+                res.ret);
             return;
         }
 

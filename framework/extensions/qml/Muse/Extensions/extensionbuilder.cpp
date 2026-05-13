@@ -44,7 +44,8 @@ QString ExtensionBuilder::validateImports(const io::path_t& qmlFilePath) const
     ByteArray data;
     Ret ret = io::File::readFile(qmlFilePath, data);
     if (!ret) {
-        return "failed read file: " + qmlFilePath.toQString() + ", err: " + QString::fromStdString(ret.toString());
+        return "failed read file: " + qmlFilePath.toQString() + ", err: " + QString::fromStdString(
+            ret.toString());
     }
 
     QByteArray qdata = data.toQByteArrayNoCopy();
@@ -90,7 +91,9 @@ void ExtensionBuilder::load(const QString& uri, QObject* itemParent)
         //! making it easier to maintain backward compatibility and stability.
         QQmlComponent component = QQmlComponent(engin, a.path.toQString());
         if (component.isReady()) {
-            qmlObj = component.createWithInitialProperties({ { "parent", QVariant::fromValue(itemParent) } });
+            qmlObj
+                = component.createWithInitialProperties({ { "parent", QVariant::fromValue(
+                                                                itemParent) } });
         } else {
             errorString = component.errorString();
             LOGE() << "Failed to load QML file: " << a.path << ", from extension: " << uri;

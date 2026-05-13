@@ -37,7 +37,8 @@ class TestflowScriptsModel : public QAbstractListModel, public Contextable, publ
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool isRunAllTCMode READ isRunAllTCMode WRITE setIsRunAllTCMode NOTIFY isRunAllTCModeChanged)
+    Q_PROPERTY(
+        bool isRunAllTCMode READ isRunAllTCMode WRITE setIsRunAllTCMode NOTIFY isRunAllTCModeChanged)
     Q_PROPERTY(QString speedMode READ speedMode WRITE setSpeedMode NOTIFY speedModeChanged)
 
     QML_ELEMENT

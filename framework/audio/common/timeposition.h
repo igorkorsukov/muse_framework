@@ -103,7 +103,8 @@ struct TimePosition {
             return TimePosition();
         }
 
-        return TimePosition(static_cast<samples_t>(std::llround(time.raw() * sampleRate)), sampleRate);
+        return TimePosition(static_cast<samples_t>(std::llround(
+                                                       time.raw() * sampleRate)), sampleRate);
     }
 
 private:

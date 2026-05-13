@@ -43,17 +43,20 @@ bool SingleProcessProvider::isFirstWindow() const
     return windowCount() <= 1;
 }
 
-std::shared_ptr<IProjectProvider> SingleProcessProvider::projectProvider(const modularity::ContextPtr& ctx) const
+std::shared_ptr<IProjectProvider> SingleProcessProvider::projectProvider(
+    const modularity::ContextPtr& ctx) const
 {
     return modularity::ioc(ctx)->resolve<IProjectProvider>(pname);
 }
 
-std::shared_ptr<ui::IMainWindow> SingleProcessProvider::mainWindow(const modularity::ContextPtr& ctx) const
+std::shared_ptr<ui::IMainWindow> SingleProcessProvider::mainWindow(
+    const modularity::ContextPtr& ctx) const
 {
     return modularity::ioc(ctx)->resolve<ui::IMainWindow>(pname);
 }
 
-std::shared_ptr<actions::IActionsDispatcher> SingleProcessProvider::dispatcher(const modularity::ContextPtr& ctx) const
+std::shared_ptr<actions::IActionsDispatcher> SingleProcessProvider::dispatcher(
+    const modularity::ContextPtr& ctx) const
 {
     return modularity::ioc(ctx)->resolve<actions::IActionsDispatcher>(pname);
 }

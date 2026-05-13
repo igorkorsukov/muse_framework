@@ -26,12 +26,14 @@
 #include "../../popupviewclosecontroller.h"
 
 namespace muse::uicomponents {
-class MacOSPopupViewCloseController : public PopupViewCloseController, public QAbstractNativeEventFilter
+class MacOSPopupViewCloseController : public PopupViewCloseController,
+    public QAbstractNativeEventFilter
 {
     Q_OBJECT
 
 public:
-    explicit MacOSPopupViewCloseController(const muse::modularity::ContextPtr& iocCtx, QObject* parent = nullptr);
+    explicit MacOSPopupViewCloseController(const muse::modularity::ContextPtr& iocCtx,
+                                           QObject* parent = nullptr);
     ~MacOSPopupViewCloseController() override = default;
 
 private:

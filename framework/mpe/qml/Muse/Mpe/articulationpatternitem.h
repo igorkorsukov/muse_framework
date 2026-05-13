@@ -45,7 +45,8 @@ class ArticulationPatternItem : public QAbstractListModel
     QML_UNCREATABLE("Must be created in C++ only")
 
 public:
-    explicit ArticulationPatternItem(QObject* parent, const ArticulationType type, const bool isSingleNoteType);
+    explicit ArticulationPatternItem(QObject* parent, const ArticulationType type,
+                                     const bool isSingleNoteType);
 
     enum Roles {
         PatternSegmentItem = Qt::UserRole + 1,

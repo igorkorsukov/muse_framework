@@ -98,7 +98,8 @@ TEST_F(DoubleInputValidatorTests, ValidateDotLocale) {
         QString fixInput = input.str;
         m_validator->fixup(fixInput);
 
-        QString expectedStr = QValidator::Acceptable == input.expectedState ? input.str : input.fixedStr;
+        QString expectedStr = QValidator::Acceptable
+                              == input.expectedState ? input.str : input.fixedStr;
         EXPECT_EQ(expectedStr, fixInput);
     }
 
@@ -151,7 +152,8 @@ TEST_F(DoubleInputValidatorTests, ValidateCommaLocale) {
         QString fixInput = input.str;
         m_validator->fixup(fixInput);
 
-        QString expectedStr = QValidator::Acceptable == input.expectedState ? input.str : input.fixedStr;
+        QString expectedStr = QValidator::Acceptable
+                              == input.expectedState ? input.str : input.fixedStr;
         EXPECT_EQ(expectedStr, fixInput);
     }
 
@@ -200,7 +202,8 @@ TEST_F(DoubleInputValidatorTests, ValidateSmallRange) {
         QString fixInput = input.str;
         m_validator->fixup(fixInput);
 
-        QString expectedStr = QValidator::Acceptable == input.expectedState ? input.str : input.fixedStr;
+        QString expectedStr = QValidator::Acceptable
+                              == input.expectedState ? input.str : input.fixedStr;
         EXPECT_EQ(expectedStr, fixInput);
     }
 

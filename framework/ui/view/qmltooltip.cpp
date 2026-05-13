@@ -36,7 +36,8 @@ QmlToolTip::QmlToolTip(QObject* parent, const modularity::ContextPtr& iocCtx)
     qApp->installEventFilter(this);
 }
 
-void QmlToolTip::show(QQuickItem* item, const QString& title, const QString& description, const QString& shortcut)
+void QmlToolTip::show(QQuickItem* item, const QString& title, const QString& description,
+                      const QString& shortcut)
 {
     if (item == m_item) {
         m_closeTimer.stop();

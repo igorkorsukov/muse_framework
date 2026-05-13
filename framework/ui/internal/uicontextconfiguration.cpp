@@ -63,7 +63,8 @@ double UiContextConfiguration::physicalDpi() const
 
 #ifdef Q_OS_WIN
     //! NOTE: copied from MU3, `MuseScore::MuseScore()`
-    if (QOperatingSystemVersion::current() <= QOperatingSystemVersion(QOperatingSystemVersion::Windows, 7)) {
+    if (QOperatingSystemVersion::current()
+        <= QOperatingSystemVersion(QOperatingSystemVersion::Windows, 7)) {
         return screen->logicalDotsPerInch() * screen->devicePixelRatio();
     }
 #endif

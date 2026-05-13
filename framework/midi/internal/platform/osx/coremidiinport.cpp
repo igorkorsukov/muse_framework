@@ -99,7 +99,8 @@ MidiDeviceList CoreMidiInPort::availableDevices() const
 
             CFStringRef stringRef = 0;
             char name[256];
-            if (MIDIObjectGetStringProperty(sourceRef, kMIDIPropertyDisplayName, &stringRef) != noErr) {
+            if (MIDIObjectGetStringProperty(sourceRef, kMIDIPropertyDisplayName,
+                                            &stringRef) != noErr) {
                 LOGE() << "Can't get property kMIDIPropertyDisplayName";
                 continue;
             }
@@ -125,7 +126,8 @@ void CoreMidiInPort::initCore()
 {
     OSStatus result;
 
-    static auto onCoreMidiNotificationReceived = [](const MIDINotification* notification, void* refCon) {
+    static auto onCoreMidiNotificationReceived
+        = [](const MIDINotification* notification, void* refCon) {
         auto self = static_cast<CoreMidiInPort*>(refCon);
         IF_ASSERT_FAILED(self) {
             return;
@@ -162,15 +164,18 @@ void CoreMidiInPort::initCore()
                 break;
             }
 
-            auto propertyChangeNotification = (const MIDIObjectPropertyChangeNotification*)notification;
+            auto propertyChangeNotification
+                = (const MIDIObjectPropertyChangeNotification*)notification;
 
             if (propertyChangeNotification->objectType != kMIDIObjectType_Device
                 && propertyChangeNotification->objectType != kMIDIObjectType_Source) {
                 break;
             }
 
-            if (CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyDisplayName, 0) == kCFCompareEqualTo
-                || CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyName, 0) == kCFCompareEqualTo) {
+            if (CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyDisplayName,
+                                0) == kCFCompareEqualTo
+                || CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyName,
+                                   0) == kCFCompareEqualTo) {
                 self->availableDevicesChanged().notify();
             }
         } break;
@@ -186,7 +191,9 @@ void CoreMidiInPort::initCore()
         }
     };
 
-    result = MIDIClientCreate(CFSTR("MuseScore"), onCoreMidiNotificationReceived, this, &m_core->client);
+    result = MIDIClientCreate(CFSTR(
+                                  "MuseScore"), onCoreMidiNotificationReceived, this,
+                              &m_core->client);
     IF_ASSERT_FAILED(result == noErr) {
         LOGE() << "failed create midi input client";
         return;
@@ -194,7 +201,8 @@ void CoreMidiInPort::initCore()
 
     CFStringRef portName = CFSTR("MuseScore MIDI input port");
     if (__builtin_available(macOS 11.0, *)) {
-        MIDIReceiveBlock receiveBlock = ^ (const MIDIEventList* eventList, void* /*srcConnRefCon*/) {
+        MIDIReceiveBlock receiveBlock
+            = ^ (const MIDIEventList* eventList, void* /*srcConnRefCon*/) {
             const MIDIEventPacket* packet = eventList->packet;
             for (UInt32 index = 0; index < eventList->numPackets; index++) {
                 LOG_MIDI_D() << "Receiving MIDIEventPacket with " << packet->wordCount << " words";
@@ -202,7 +210,9 @@ void CoreMidiInPort::initCore()
                 uint32_t pos = 0;
                 while (pos < packet->wordCount) {
                     uint32_t messageType = packet->words[pos] >> 28;
-                    size_t messageWordCount = Event::wordCountForMessageType(static_cast<Event::MessageType>(messageType));
+                    size_t messageWordCount
+                        = Event::wordCountForMessageType(
+                              static_cast<Event::MessageType>(messageType));
 
                     LOG_MIDI_D() << "Receiving midi message with " << messageWordCount << " words";
                     Event e = Event::fromMidi20Words(&packet->words[pos], messageWordCount);
@@ -214,10 +224,11 @@ void CoreMidiInPort::initCore()
                 }
                 packet = MIDIEventPacketNext(packet);
             }
-        };
+            };
 
         result
-            = MIDIInputPortCreateWithProtocol(m_core->client, portName, kMIDIProtocol_2_0, &m_core->inputPort, receiveBlock);
+            = MIDIInputPortCreateWithProtocol(m_core->client, portName, kMIDIProtocol_2_0,
+                                              &m_core->inputPort, receiveBlock);
     } else {
         MIDIReadBlock readBlock = ^ (const MIDIPacketList* packetList, void* /*srcConnRefCon*/)
         {
@@ -251,7 +262,8 @@ void CoreMidiInPort::initCore()
             }
         };
 
-        result = MIDIInputPortCreateWithBlock(m_core->client, portName, &m_core->inputPort, readBlock);
+        result = MIDIInputPortCreateWithBlock(m_core->client, portName, &m_core->inputPort,
+                                              readBlock);
     }
 
     IF_ASSERT_FAILED(result == noErr) {
@@ -344,7 +356,8 @@ Ret CoreMidiInPort::run()
         return make_ret(Err::MidiNotConnected);
     }
 
-    OSStatus result = MIDIPortConnectSource(m_core->inputPort, m_core->sourceId, nullptr /*connRefCon*/);
+    OSStatus result
+        = MIDIPortConnectSource(m_core->inputPort, m_core->sourceId, nullptr /*connRefCon*/);
     if (result == noErr) {
         m_running = true;
         return Ret(true);

@@ -34,5 +34,6 @@ std::string MultiWindowsModule::moduleName() const
 
 void MultiWindowsModule::registerExports()
 {
-    globalIoc()->registerExport<IMultiWindowsProvider>(moduleName(), new MultiWindowsStubProvider());
+    globalIoc()->registerExport<IMultiWindowsProvider>(moduleName(),
+                                                       new MultiWindowsStubProvider());
 }

@@ -146,7 +146,8 @@ void WebSocketApi::onMessage(int id, QJSValue onMessage)
 
     it->second.onMessage = onMessage;
 
-    QObject::connect(it->second.socket, &QWebSocket::textMessageReceived, this, [this, id](const QString& message) {
+    QObject::connect(it->second.socket, &QWebSocket::textMessageReceived, this,
+                     [this, id](const QString& message) {
         LOGD() << "messageReceived socket id: " << id << ", message: " << message;
         auto it = m_sockets.find(id);
         IF_ASSERT_FAILED(it != m_sockets.end()) {

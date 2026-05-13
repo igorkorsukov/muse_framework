@@ -44,10 +44,13 @@ public:
     };
 
     virtual void regApiCreator(const std::string& module, const std::string& api, ICreator* c) = 0;
-    virtual void regApiSingltone(const std::string& module, const std::string& api, ApiObject* o) = 0;
-    virtual std::pair<ApiObject*, bool /*is need delete*/> createApi(const std::string& api, IApiEngine* e) const = 0;
+    virtual void regApiSingltone(const std::string& module, const std::string& api,
+                                 ApiObject* o) = 0;
+    virtual std::pair<ApiObject*, bool /*is need delete*/> createApi(const std::string& api,
+                                                                     IApiEngine* e) const = 0;
 
-    virtual void regEnum(const char* uri, const char* name, const QMetaEnum& meta, EnumType type) = 0;
+    virtual void regEnum(const char* uri, const char* name, const QMetaEnum& meta,
+                         EnumType type) = 0;
 
     template<typename E>
     void regEnum(const char* uri, EnumType type = EnumType::String, const char* name = nullptr)
@@ -64,8 +67,8 @@ public:
         EnumType type = EnumType::String;
     };
 
-    virtual void regGlobalEnum(const std::string& module, const QMetaEnum& meta, EnumType type = EnumType::String,
-                               const std::string& name = "") = 0;
+    virtual void regGlobalEnum(const std::string& module, const QMetaEnum& meta,
+                               EnumType type = EnumType::String, const std::string& name = "") = 0;
     virtual const std::vector<GlobalEnum>& globalEnums() const = 0;
 
     // dev

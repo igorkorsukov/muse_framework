@@ -73,12 +73,18 @@ void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::SaveSoundTrackStage&
 void pack_custom(muse::msgpack::Packer& p, const muse::audio::AudioSignalVal& value);
 void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::AudioSignalVal& value);
 
-void pack_custom(muse::msgpack::Packer& p, const muse::audio::InputProcessingProgress::ChunkInfo& value);
-void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::InputProcessingProgress::ChunkInfo& value);
-void pack_custom(muse::msgpack::Packer& p, const muse::audio::InputProcessingProgress::ProgressInfo& value);
-void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::InputProcessingProgress::ProgressInfo& value);
-void pack_custom(muse::msgpack::Packer& p, const muse::audio::InputProcessingProgress::StatusInfo& value);
-void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::InputProcessingProgress::StatusInfo& value);
+void pack_custom(muse::msgpack::Packer& p,
+                 const muse::audio::InputProcessingProgress::ChunkInfo& value);
+void unpack_custom(muse::msgpack::UnPacker& p,
+                   muse::audio::InputProcessingProgress::ChunkInfo& value);
+void pack_custom(muse::msgpack::Packer& p,
+                 const muse::audio::InputProcessingProgress::ProgressInfo& value);
+void unpack_custom(muse::msgpack::UnPacker& p,
+                   muse::audio::InputProcessingProgress::ProgressInfo& value);
+void pack_custom(muse::msgpack::Packer& p,
+                 const muse::audio::InputProcessingProgress::StatusInfo& value);
+void unpack_custom(muse::msgpack::UnPacker& p,
+                   muse::audio::InputProcessingProgress::StatusInfo& value);
 
 void pack_custom(muse::msgpack::Packer& p, const muse::audio::TransportEvent& value);
 void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::TransportEvent& value);
@@ -130,12 +136,14 @@ void unpack_custom(muse::msgpack::UnPacker& p, muse::mpe::PlaybackData& value);
 
 inline void pack_custom(muse::msgpack::Packer& p, const muse::audio::AudioEngineConfig& value)
 {
-    p.process(value.autoProcessOnlineSoundsInBackground, value.isLazyProcessingOfOnlineSoundsEnabled);
+    p.process(value.autoProcessOnlineSoundsInBackground,
+              value.isLazyProcessingOfOnlineSoundsEnabled);
 }
 
 inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::AudioEngineConfig& value)
 {
-    p.process(value.autoProcessOnlineSoundsInBackground, value.isLazyProcessingOfOnlineSoundsEnabled);
+    p.process(value.autoProcessOnlineSoundsInBackground,
+              value.isLazyProcessingOfOnlineSoundsEnabled);
 }
 
 inline void pack_custom(muse::msgpack::Packer& p, const muse::audio::OutputSpec& value)
@@ -196,12 +204,14 @@ inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::AudioResource
 
 inline void pack_custom(muse::msgpack::Packer& p, const muse::audio::AudioFxParams& value)
 {
-    p.process(value.categories, value.chainOrder, value.resourceMeta, value.configuration, value.active);
+    p.process(value.categories, value.chainOrder, value.resourceMeta, value.configuration,
+              value.active);
 }
 
 inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::AudioFxParams& value)
 {
-    p.process(value.categories, value.chainOrder, value.resourceMeta, value.configuration, value.active);
+    p.process(value.categories, value.chainOrder, value.resourceMeta, value.configuration,
+              value.active);
 }
 
 inline void pack_custom(muse::msgpack::Packer& p, const muse::audio::AuxSendParams& value)
@@ -312,32 +322,38 @@ inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::AudioSignalVa
     p.process(value.pressure);
 }
 
-inline void pack_custom(muse::msgpack::Packer& p, const muse::audio::InputProcessingProgress::ChunkInfo& value)
+inline void pack_custom(muse::msgpack::Packer& p,
+                        const muse::audio::InputProcessingProgress::ChunkInfo& value)
 {
     p.process(value.start, value.end);
 }
 
-inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::InputProcessingProgress::ChunkInfo& value)
+inline void unpack_custom(muse::msgpack::UnPacker& p,
+                          muse::audio::InputProcessingProgress::ChunkInfo& value)
 {
     p.process(value.start, value.end);
 }
 
-inline void pack_custom(muse::msgpack::Packer& p, const muse::audio::InputProcessingProgress::ProgressInfo& value)
+inline void pack_custom(muse::msgpack::Packer& p,
+                        const muse::audio::InputProcessingProgress::ProgressInfo& value)
 {
     p.process(value.current, value.total);
 }
 
-inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::InputProcessingProgress::ProgressInfo& value)
+inline void unpack_custom(muse::msgpack::UnPacker& p,
+                          muse::audio::InputProcessingProgress::ProgressInfo& value)
 {
     p.process(value.current, value.total);
 }
 
-inline void pack_custom(muse::msgpack::Packer& p, const muse::audio::InputProcessingProgress::StatusInfo& value)
+inline void pack_custom(muse::msgpack::Packer& p,
+                        const muse::audio::InputProcessingProgress::StatusInfo& value)
 {
     p.process(static_cast<uint8_t>(value.status), value.errorCode, value.errorText, value.data);
 }
 
-inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::InputProcessingProgress::StatusInfo& value)
+inline void unpack_custom(muse::msgpack::UnPacker& p,
+                          muse::audio::InputProcessingProgress::StatusInfo& value)
 {
     uint8_t status = 0;
     p.process(status, value.errorCode, value.errorText, value.data);
@@ -370,13 +386,15 @@ inline void unpack_custom(muse::msgpack::UnPacker& p, muse::audio::TransportEven
 // MPE
 inline void pack_custom(muse::msgpack::Packer& p, const muse::mpe::ArrangementContext& value)
 {
-    p.process(value.nominalTimestamp, value.actualTimestamp, value.nominalDuration, value.actualDuration,
+    p.process(value.nominalTimestamp, value.actualTimestamp, value.nominalDuration,
+              value.actualDuration,
               value.voiceLayerIndex, value.staffLayerIndex, value.bps);
 }
 
 inline void unpack_custom(muse::msgpack::UnPacker& p, muse::mpe::ArrangementContext& value)
 {
-    p.process(value.nominalTimestamp, value.actualTimestamp, value.nominalDuration, value.actualDuration,
+    p.process(value.nominalTimestamp, value.actualTimestamp, value.nominalDuration,
+              value.actualDuration,
               value.voiceLayerIndex, value.staffLayerIndex, value.bps);
 }
 
@@ -420,7 +438,8 @@ inline void unpack_custom(muse::msgpack::UnPacker& p, muse::mpe::ExpressionPatte
     p.process(value.dynamicOffsetMap);
 }
 
-inline void pack_custom(muse::msgpack::Packer& p, const muse::mpe::ArticulationPatternSegment& value)
+inline void pack_custom(muse::msgpack::Packer& p,
+                        const muse::mpe::ArticulationPatternSegment& value)
 {
     p.process(value.arrangementPattern, value.pitchPattern, value.expressionPattern);
 }
@@ -468,12 +487,14 @@ inline void unpack_custom(muse::msgpack::UnPacker& p, muse::mpe::ArticulationApp
 
 inline void pack_custom(muse::msgpack::Packer& p, const muse::mpe::ExpressionContext& value)
 {
-    p.process(value.articulations, value.nominalDynamicLevel, value.expressionCurve, value.velocityOverride);
+    p.process(value.articulations, value.nominalDynamicLevel, value.expressionCurve,
+              value.velocityOverride);
 }
 
 inline void unpack_custom(muse::msgpack::UnPacker& p, muse::mpe::ExpressionContext& value)
 {
-    p.process(value.articulations, value.nominalDynamicLevel, value.expressionCurve, value.velocityOverride);
+    p.process(value.articulations, value.nominalDynamicLevel, value.expressionCurve,
+              value.velocityOverride);
 }
 
 inline void pack_custom(muse::msgpack::Packer& p, const muse::mpe::NoteEvent& value)
@@ -546,11 +567,13 @@ inline void pack_custom(muse::msgpack::Packer& p, const muse::mpe::PlaybackEvent
         p.process(event);
     } break;
     case 2: {
-        const muse::mpe::TextArticulationEvent& event = std::get<muse::mpe::TextArticulationEvent>(value);
+        const muse::mpe::TextArticulationEvent& event = std::get<muse::mpe::TextArticulationEvent>(
+            value);
         p.process(event);
     } break;
     case 3: {
-        const muse::mpe::SoundPresetChangeEvent& event = std::get<muse::mpe::SoundPresetChangeEvent>(value);
+        const muse::mpe::SoundPresetChangeEvent& event
+            = std::get<muse::mpe::SoundPresetChangeEvent>(value);
         p.process(event);
     } break;
     case 4: {
@@ -558,7 +581,8 @@ inline void pack_custom(muse::msgpack::Packer& p, const muse::mpe::PlaybackEvent
         p.process(event);
     } break;
     case 5: {
-        const muse::mpe::ControllerChangeEvent& event = std::get<muse::mpe::ControllerChangeEvent>(value);
+        const muse::mpe::ControllerChangeEvent& event = std::get<muse::mpe::ControllerChangeEvent>(
+            value);
         p.process(event);
     } break;
     default: {

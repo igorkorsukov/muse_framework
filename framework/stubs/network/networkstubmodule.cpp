@@ -36,6 +36,8 @@ std::string NetworkModule::moduleName() const
 
 void NetworkModule::registerExports()
 {
-    globalIoc()->registerExport<INetworkManagerCreator>(moduleName(), new NetworkManagerCreatorStub());
-    globalIoc()->registerExport<INetworkConfiguration>(moduleName(), new NetworkConfigurationStub());
+    globalIoc()->registerExport<INetworkManagerCreator>(moduleName(),
+                                                        new NetworkManagerCreatorStub());
+    globalIoc()->registerExport<INetworkConfiguration>(moduleName(),
+                                                       new NetworkConfigurationStub());
 }

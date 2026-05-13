@@ -117,7 +117,8 @@ inline bool operator==(const msdfgen::Shape& s1, const msdfgen::Shape& s2)
                             }
                         } break;
                         case msdfgen::EdgeSegment::ActualType::Quadratic: {
-                            if (!pointsIsEqual(e1.segments.quadratic.p, e2.segments.quadratic.p, 3)) {
+                            if (!pointsIsEqual(e1.segments.quadratic.p, e2.segments.quadratic.p,
+                                               3)) {
                                 return false;
                             }
                         } break;

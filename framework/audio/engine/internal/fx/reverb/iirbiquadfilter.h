@@ -78,7 +78,8 @@ inline std::array<double, 3> _phiCoeffsForBiquadCoeffs(double c0, double c1, dou
 }
 
 /// convert phi matching form coeffs to biquad coeffs
-inline void _biquadCoeffsForPhiCoeffs(const std::array<double, 3>& C, double& c0, double& c1, double& c2)
+inline void _biquadCoeffsForPhiCoeffs(const std::array<double, 3>& C, double& c0, double& c1,
+                                      double& c2)
 {
     auto W = 0.5 * (std::sqrt(C[0]) + std::sqrt(C[1]));
     c0 = 0.5 * (W + std::sqrt(sq(W) + C[2]));
@@ -148,7 +149,8 @@ inline SampleT processSampleDF1(SampleT x0, const Coeffs<CoeffT>& cf, DF1State<S
 }
 
 template<typename SampleT, typename CoeffT, typename StateT>
-inline void processBlockDF1(SampleT* smp, int numSamples, const Coeffs<CoeffT>& coeffs, DF1State<StateT>& state)
+inline void processBlockDF1(SampleT* smp, int numSamples, const Coeffs<CoeffT>& coeffs,
+                            DF1State<StateT>& state)
 {
     const auto cf = coeffs;
     auto st = state;
@@ -218,7 +220,8 @@ public:
             _smooth_n -= smoothSamples;
             if (smoothSamples < n) {
                 for (int ch = 0; ch < numChannels; ++ch) {
-                    processBlockDF1(signal[ch] + smoothSamples, n - smoothSamples, _coeffs_target, _state[ch]);
+                    processBlockDF1(signal[ch] + smoothSamples, n - smoothSamples, _coeffs_target,
+                                    _state[ch]);
                 }
             }
         } else {
@@ -306,7 +309,8 @@ inline Coeffs<coeffT> createGainFilter(coeffT gainFact)
  *
  * @return The coefficients of the biquad filter
  */
-inline Coeffs<double> createBandShelfMatched(double cutOffFrequency, double Q, double gainFact, double sampleRate)
+inline Coeffs<double> createBandShelfMatched(double cutOffFrequency, double Q, double gainFact,
+                                             double sampleRate)
 {
     // From Vicanek: Matched Second Order Digital Filters.
     auto normf = cutOffFrequency / sampleRate;
@@ -457,7 +461,8 @@ inline Coeffs<T> createHighShelf2P(T freq, T gainFact, T sampleRate)
  * @param gainFactH gain factor for high band
  */
 template<typename T>
-inline void create3BandToneControl4P(T xoverFreqLM, T xoverFreqMH, T gainFactL, T gainFactM, T gainFactH, T sampleRate,
+inline void create3BandToneControl4P(T xoverFreqLM, T xoverFreqMH, T gainFactL, T gainFactM,
+                                     T gainFactH, T sampleRate,
                                      Coeffs<T>& cf1, Coeffs<T>& cf2)
 {
     cf1 = createHighShelf2P(xoverFreqLM, gainFactM / gainFactL, sampleRate);

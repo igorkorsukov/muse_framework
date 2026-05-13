@@ -44,11 +44,13 @@ public:
     bool reloadAllInstruments();
     int buildNumber() const;
 
-    audio::synth::ISynthesizerPtr resolveSynth(const audio::TrackId trackId, const audio::AudioInputParams& params,
+    audio::synth::ISynthesizerPtr resolveSynth(const audio::TrackId trackId,
+                                               const audio::AudioInputParams& params,
                                                const audio::OutputSpec& outputSpec) const override;
     bool hasCompatibleResources(const audio::PlaybackSetupData& setup) const override;
     audio::AudioResourceMetaList resolveResources() const override;
-    audio::SoundPresetList resolveSoundPresets(const audio::AudioResourceMeta& resourceMeta) const override;
+    audio::SoundPresetList resolveSoundPresets(const audio::AudioResourceMeta& resourceMeta) const
+    override;
     void refresh() override;
     void clearSources() override;
 
@@ -61,7 +63,8 @@ public:
     std::vector<Instrument> instruments() const override;
 
 private:
-    void loadSoundPresetAttributes(audio::SoundPresetAttributes& attributes, int instrumentId, const char* presetCode) const;
+    void loadSoundPresetAttributes(audio::SoundPresetAttributes& attributes, int instrumentId,
+                                   const char* presetCode) const;
 
     String buildMuseInstrumentId(const String& category, const String& name, int uniqueId) const;
 

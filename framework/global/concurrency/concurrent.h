@@ -55,7 +55,8 @@ public:
     }
 
     template<typename Class, typename Param1, typename Arg1, typename Param2, typename Arg2>
-    static void run(Class* object, void (Class::* fn)(Param1, Param2), const Arg1& arg1, const Arg2& arg2)
+    static void run(Class* object, void (Class::* fn)(Param1,
+                                                      Param2), const Arg1& arg1, const Arg2& arg2)
     {
         UNUSED(QtConcurrent::run(fn, object, arg1, arg2));
     }
@@ -74,7 +75,8 @@ public:
     }
 
     template<typename Class, typename Param1, typename Arg1, typename Param2, typename Arg2>
-    static void run(Class* object, void (Class::* fn)(Param1, Param2) const, const Arg1& arg1, const Arg2& arg2)
+    static void run(Class* object, void (Class::* fn)(Param1,
+                                                      Param2) const, const Arg1& arg1, const Arg2& arg2)
     {
         UNUSED(QtConcurrent::run(fn, object, arg1, arg2));
     }

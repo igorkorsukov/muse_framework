@@ -116,7 +116,8 @@ void TestCaseReport::onStepStatusChanged(const StepInfo& stepInfo, const ITestCa
             m_stream << "    " << it->first << ": " << formatVal(it->second) << Qt::endl;
         }
 
-        m_stream << "  finished step: " << stepInfo.name << " [" << stepInfo.durationMsec << " msec]" << Qt::endl;
+        m_stream << "  finished step: " << stepInfo.name << " [" << stepInfo.durationMsec <<
+            " msec]" << Qt::endl;
     } break;
     case StepStatus::Skipped: {
         m_stream << "  skipped step: " << stepInfo.name << Qt::endl;

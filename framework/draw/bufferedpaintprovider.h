@@ -76,11 +76,13 @@ public:
     void drawSymbol(const PointF& point, char32_t ucs4Code) override;
 
     void drawPixmap(const PointF& p, const Pixmap& pm) override;
-    void drawTiledPixmap(const RectF& rect, const Pixmap& pm, const PointF& offset = PointF()) override;
+    void drawTiledPixmap(const RectF& rect, const Pixmap& pm,
+                         const PointF& offset = PointF()) override;
 
 #ifndef NO_QT_SUPPORT
     void drawPixmap(const PointF& point, const QPixmap& pm) override;
-    void drawTiledPixmap(const RectF& rect, const QPixmap& pm, const PointF& offset = PointF()) override;
+    void drawTiledPixmap(const RectF& rect, const QPixmap& pm,
+                         const PointF& offset = PointF()) override;
 #endif
 
     bool hasClipping() const override;

@@ -47,7 +47,8 @@ public:
     Ret mkpath();
     static Ret mkpath(const path_t& path);
 
-    static RetVal<io::paths_t> scanFiles(const io::path_t& rootDir, const std::vector<std::string>& filters,
+    static RetVal<io::paths_t> scanFiles(const io::path_t& rootDir,
+                                         const std::vector<std::string>& filters,
                                          ScanMode mode = ScanMode::FilesInCurrentDirAndSubdirs);
 
     static path_t fromNativeSeparators(const path_t& pathName);

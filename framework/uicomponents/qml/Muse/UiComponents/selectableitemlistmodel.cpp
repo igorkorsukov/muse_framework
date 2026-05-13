@@ -109,13 +109,15 @@ void SelectableItemListModel::moveSelectionUp()
         return;
     }
 
-    std::sort(selectedIndexList.begin(), selectedIndexList.end(), [](const QModelIndex& f, const QModelIndex& s) -> bool {
+    std::sort(selectedIndexList.begin(), selectedIndexList.end(),
+              [](const QModelIndex& f, const QModelIndex& s) -> bool {
         return f.row() < s.row();
     });
 
     QModelIndex sourceRowFirst = selectedIndexList.first();
 
-    moveRows(sourceRowFirst.parent(), sourceRowFirst.row(), selectedIndexList.count(), sourceRowFirst.parent(), sourceRowFirst.row() - 1);
+    moveRows(sourceRowFirst.parent(), sourceRowFirst.row(),
+             selectedIndexList.count(), sourceRowFirst.parent(), sourceRowFirst.row() - 1);
 }
 
 void SelectableItemListModel::moveSelectionDown()
@@ -128,14 +130,16 @@ void SelectableItemListModel::moveSelectionDown()
         return;
     }
 
-    std::sort(selectedIndexList.begin(), selectedIndexList.end(), [](const QModelIndex& f, const QModelIndex& s) -> bool {
+    std::sort(selectedIndexList.begin(), selectedIndexList.end(),
+              [](const QModelIndex& f, const QModelIndex& s) -> bool {
         return f.row() < s.row();
     });
 
     QModelIndex sourceRowFirst = selectedIndexList.first();
     QModelIndex sourceRowLast = selectedIndexList.last();
 
-    moveRows(sourceRowFirst.parent(), sourceRowFirst.row(), selectedIndexList.count(), sourceRowFirst.parent(), sourceRowLast.row() + 1);
+    moveRows(sourceRowFirst.parent(), sourceRowFirst.row(),
+             selectedIndexList.count(), sourceRowFirst.parent(), sourceRowLast.row() + 1);
 }
 
 void SelectableItemListModel::removeSelection()
@@ -185,7 +189,8 @@ bool SelectableItemListModel::moveRows(const QModelIndex& sourceParent,
 
     int sourceFirstRow = sourceRow;
     int sourceLastRow = sourceRow + count - 1;
-    int destinationRow = (sourceLastRow > destinationChild) ? destinationChild : destinationChild + 1;
+    int destinationRow
+        = (sourceLastRow > destinationChild) ? destinationChild : destinationChild + 1;
 
     beginMoveRows(sourceParent, sourceFirstRow, sourceLastRow, destinationParent, destinationRow);
 

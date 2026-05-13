@@ -70,7 +70,8 @@ QVariant TestflowScriptsModel::data(const QModelIndex& index, int role) const
     case rDescription: return script.description;
     case rPath: return script.path.toQString();
     case rType: return typeToString(script.type);
-    case rStatus: return ITestflow::statusToString(m_statuses.value(script.path, ITestflow::Status::Undefined));
+    case rStatus: return ITestflow::statusToString(m_statuses.value(script.path,
+                                                                    ITestflow::Status::Undefined));
     case rSelected: return m_selected.value(index.row(), true);
     }
     return QVariant();
@@ -96,7 +97,9 @@ QHash<int, QByteArray> TestflowScriptsModel::roleNames() const
 
 void TestflowScriptsModel::load()
 {
-    testflow()->statusChanged().onReceive(this, [this](const io::path_t& path, const ITestflow::Status& status) {
+    testflow()->statusChanged().onReceive(this,
+                                          [this](const io::path_t& path,
+                                                 const ITestflow::Status& status) {
         setStatus(path, status);
 
         if (status == ITestflow::Status::Error) {
@@ -174,7 +177,8 @@ bool TestflowScriptsModel::tryRunNextTC()
     //! NOTE Find next TC
     for (size_t i = currentIndex; i < m_scripts.size(); ++i) {
         currentIndex = i;
-        if (m_scripts.at(currentIndex).type == ScriptType::TestCase && m_selected.value(int(currentIndex), true)) {
+        if (m_scripts.at(currentIndex).type == ScriptType::TestCase
+            && m_selected.value(int(currentIndex), true)) {
             break;
         }
     }

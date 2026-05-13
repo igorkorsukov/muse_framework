@@ -34,7 +34,8 @@
 #include "../iaudiopluginmetareaderregister.h"
 
 namespace muse::audioplugins {
-class RegisterAudioPluginsScenario : public IRegisterAudioPluginsScenario, public Contextable, public async::Asyncable
+class RegisterAudioPluginsScenario : public IRegisterAudioPluginsScenario, public Contextable,
+    public async::Asyncable
 {
 public:
     GlobalInject<IGlobalConfiguration> globalConfiguration;

@@ -63,7 +63,8 @@ void DialogView::initView()
                 return;
             }
 
-            QString bgColorStr = uiConfiguration()->currentTheme().values.value(ui::BACKGROUND_PRIMARY_COLOR).toString();
+            QString bgColorStr = uiConfiguration()->currentTheme().values.value(
+                ui::BACKGROUND_PRIMARY_COLOR).toString();
             m_view->setColor(QColor(bgColorStr));
         };
 
@@ -131,7 +132,9 @@ void DialogView::updateGeometry()
 
     // position the dialog in the center of the main window
     dlgRect.moveLeft(referenceRect.x() + (referenceRect.width() - dlgRect.width()) / 2);
-    dlgRect.moveTop(referenceRect.y() + (referenceRect.height() - dlgRect.height()) / 2 + DIALOG_WINDOW_FRAME_HEIGHT);
+    dlgRect.moveTop(
+        referenceRect.y() + (referenceRect.height() - dlgRect.height()) / 2
+        + DIALOG_WINDOW_FRAME_HEIGHT);
 
     dlgRect.moveLeft(dlgRect.x());
     dlgRect.moveTop(dlgRect.y());
@@ -158,7 +161,8 @@ void DialogView::updateGeometry()
 
     // if after moving the dialog does not fit on the screen, then adjust the size of the dialog
     if (!anchorRect.contains(dlgRect)) {
-        anchorRect -= QMargins(DIALOG_WINDOW_FRAME_HEIGHT, DIALOG_WINDOW_FRAME_HEIGHT + titleBarHeight,
+        anchorRect -= QMargins(DIALOG_WINDOW_FRAME_HEIGHT,
+                               DIALOG_WINDOW_FRAME_HEIGHT + titleBarHeight,
                                DIALOG_WINDOW_FRAME_HEIGHT, DIALOG_WINDOW_FRAME_HEIGHT);
         dlgRect = anchorRect.intersected(dlgRect);
     }

@@ -31,7 +31,8 @@
 class QWidget;
 
 namespace muse::vst {
-class VstViewDialog : public uicomponents::TopLevelDialog, public Steinberg::IPlugFrame, public async::Asyncable
+class VstViewDialog : public uicomponents::TopLevelDialog, public Steinberg::IPlugFrame,
+    public async::Asyncable
 {
     muse::GlobalInject<IVstInstancesRegister> instancesRegister;
 
@@ -45,7 +46,8 @@ public:
     VstViewDialog(QWidget* parent = nullptr);
     ~VstViewDialog() override;
 
-    Steinberg::tresult resizeView(Steinberg::IPlugView* view, Steinberg::ViewRect* newSize) override;
+    Steinberg::tresult resizeView(Steinberg::IPlugView* view,
+                                  Steinberg::ViewRect* newSize) override;
 
     int instanceId() const;
     void setInstanceId(int newInstanceId);

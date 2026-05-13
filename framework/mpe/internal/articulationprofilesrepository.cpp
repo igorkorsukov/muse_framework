@@ -37,11 +37,16 @@ using namespace muse::async;
 
 static const std::map<ArticulationFamily, io::path_t> DEFAULT_ARTICULATION_PROFILES =
 {
-    { ArticulationFamily::Keyboards, io::path_t(":/mpe/resources/general_keyboard_articulations_profile.json") },
-    { ArticulationFamily::Strings, io::path_t(":/mpe/resources/general_strings_articulations_profile.json") },
-    { ArticulationFamily::Winds, io::path_t(":/mpe/resources/general_winds_articulations_profile.json") },
-    { ArticulationFamily::Percussions, io::path_t(":/mpe/resources/general_percussion_articulations_profile.json") },
-    { ArticulationFamily::Voices, io::path_t(":/mpe/resources/general_voice_articulations_profile.json") }
+    { ArticulationFamily::Keyboards, io::path_t(
+          ":/mpe/resources/general_keyboard_articulations_profile.json") },
+    { ArticulationFamily::Strings, io::path_t(
+          ":/mpe/resources/general_strings_articulations_profile.json") },
+    { ArticulationFamily::Winds, io::path_t(
+          ":/mpe/resources/general_winds_articulations_profile.json") },
+    { ArticulationFamily::Percussions, io::path_t(
+          ":/mpe/resources/general_percussion_articulations_profile.json") },
+    { ArticulationFamily::Voices, io::path_t(
+          ":/mpe/resources/general_voice_articulations_profile.json") }
 };
 
 static const QString SUPPORTED_FAMILIES = "supportedFamilies";
@@ -70,7 +75,8 @@ ArticulationsProfilePtr ArticulationProfilesRepository::createNew() const
     return std::make_shared<ArticulationsProfile>();
 }
 
-ArticulationsProfilePtr ArticulationProfilesRepository::defaultProfile(const ArticulationFamily family) const
+ArticulationsProfilePtr ArticulationProfilesRepository::defaultProfile(
+    const ArticulationFamily family) const
 {
     auto search = m_defaultProfiles.find(family);
 
@@ -112,7 +118,8 @@ ArticulationsProfilePtr ArticulationProfilesRepository::loadProfile(const io::pa
 
     QJsonObject rootObj = file.object();
 
-    result->supportedFamilies = supportedFamiliesFromJson(rootObj.value(SUPPORTED_FAMILIES).toArray());
+    result->supportedFamilies = supportedFamiliesFromJson(rootObj.value(
+                                                              SUPPORTED_FAMILIES).toArray());
 
     QJsonObject articulationPatterns = rootObj.value(PATTERNS_KEY).toObject();
 
@@ -124,7 +131,8 @@ ArticulationsProfilePtr ArticulationProfilesRepository::loadProfile(const io::pa
     return result;
 }
 
-void ArticulationProfilesRepository::saveProfile(const io::path_t& path, const ArticulationsProfilePtr profilePtr)
+void ArticulationProfilesRepository::saveProfile(const io::path_t& path,
+                                                 const ArticulationsProfilePtr profilePtr)
 {
     IF_ASSERT_FAILED(profilePtr) {
         return;
@@ -159,7 +167,8 @@ Channel<io::path_t> ArticulationProfilesRepository::profileChanged() const
     return m_profileChanged;
 }
 
-std::vector<ArticulationFamily> ArticulationProfilesRepository::supportedFamiliesFromJson(const QJsonArray& array) const
+std::vector<ArticulationFamily> ArticulationProfilesRepository::supportedFamiliesFromJson(
+    const QJsonArray& array) const
 {
     std::vector<ArticulationFamily> result;
     result.reserve(array.size());
@@ -171,7 +180,8 @@ std::vector<ArticulationFamily> ArticulationProfilesRepository::supportedFamilie
     return result;
 }
 
-QJsonArray ArticulationProfilesRepository::supportedFamiliesToJson(const std::vector<ArticulationFamily>& families) const
+QJsonArray ArticulationProfilesRepository::supportedFamiliesToJson(
+    const std::vector<ArticulationFamily>& families) const
 {
     QJsonArray result;
 
@@ -182,7 +192,8 @@ QJsonArray ArticulationProfilesRepository::supportedFamiliesToJson(const std::ve
     return result;
 }
 
-ArticulationPattern ArticulationProfilesRepository::patternsScopeFromJson(const QJsonArray& array) const
+ArticulationPattern ArticulationProfilesRepository::patternsScopeFromJson(const QJsonArray& array)
+const
 {
     ArticulationPattern result;
 
@@ -191,9 +202,12 @@ ArticulationPattern ArticulationProfilesRepository::patternsScopeFromJson(const 
 
         duration_percentage_t position = patternObj.value(PATTERN_POS_KEY).toInt();
 
-        ArrangementPattern arrangementPattern = arrangementPatternFromJson(patternObj.value(ARRANGEMENT_PATTERN_KEY).toObject());
-        PitchPattern pitchPattern = pitchPatternFromJson(patternObj.value(PITCH_PATTERN_KEY).toObject());
-        ExpressionPattern expressionPattern = expressionPatternFromJson(patternObj.value(EXPRESSION_PATTERN).toObject());
+        ArrangementPattern arrangementPattern
+            = arrangementPatternFromJson(patternObj.value(ARRANGEMENT_PATTERN_KEY).toObject());
+        PitchPattern pitchPattern = pitchPatternFromJson(patternObj.value(
+                                                             PITCH_PATTERN_KEY).toObject());
+        ExpressionPattern expressionPattern
+            = expressionPatternFromJson(patternObj.value(EXPRESSION_PATTERN).toObject());
 
         ArticulationPatternSegment articulation;
         articulation.arrangementPattern = std::move(arrangementPattern);
@@ -206,14 +220,16 @@ ArticulationPattern ArticulationProfilesRepository::patternsScopeFromJson(const 
     return result;
 }
 
-QJsonArray ArticulationProfilesRepository::patternsScopeToJson(const ArticulationPattern& scope) const
+QJsonArray ArticulationProfilesRepository::patternsScopeToJson(const ArticulationPattern& scope)
+const
 {
     QJsonArray result;
 
     for (const auto& pair : scope) {
         QJsonObject pattern;
         pattern.insert(PATTERN_POS_KEY, static_cast<int>(pair.first));
-        pattern.insert(ARRANGEMENT_PATTERN_KEY, arrangementPatternToJson(pair.second.arrangementPattern));
+        pattern.insert(ARRANGEMENT_PATTERN_KEY,
+                       arrangementPatternToJson(pair.second.arrangementPattern));
         pattern.insert(PITCH_PATTERN_KEY, pitchPatternToJson(pair.second.pitchPattern));
         pattern.insert(EXPRESSION_PATTERN, expressionPatternToJson(pair.second.expressionPattern));
 
@@ -223,7 +239,8 @@ QJsonArray ArticulationProfilesRepository::patternsScopeToJson(const Articulatio
     return result;
 }
 
-ArrangementPattern ArticulationProfilesRepository::arrangementPatternFromJson(const QJsonObject& obj) const
+ArrangementPattern ArticulationProfilesRepository::arrangementPatternFromJson(
+    const QJsonObject& obj) const
 {
     ArrangementPattern result;
 
@@ -233,7 +250,8 @@ ArrangementPattern ArticulationProfilesRepository::arrangementPatternFromJson(co
     return result;
 }
 
-QJsonObject ArticulationProfilesRepository::arrangementPatternToJson(const ArrangementPattern& pattern) const
+QJsonObject ArticulationProfilesRepository::arrangementPatternToJson(
+    const ArrangementPattern& pattern) const
 {
     QJsonObject result;
 
@@ -278,7 +296,8 @@ QJsonObject ArticulationProfilesRepository::pitchPatternToJson(const PitchPatter
     return result;
 }
 
-ExpressionPattern ArticulationProfilesRepository::expressionPatternFromJson(const QJsonObject& obj) const
+ExpressionPattern ArticulationProfilesRepository::expressionPatternFromJson(const QJsonObject& obj)
+const
 {
     ExpressionPattern result;
 
@@ -293,7 +312,8 @@ ExpressionPattern ArticulationProfilesRepository::expressionPatternFromJson(cons
     return result;
 }
 
-QJsonObject ArticulationProfilesRepository::expressionPatternToJson(const ExpressionPattern& pattern) const
+QJsonObject ArticulationProfilesRepository::expressionPatternToJson(
+    const ExpressionPattern& pattern) const
 {
     QJsonObject result;
 

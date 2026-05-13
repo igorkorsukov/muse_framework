@@ -129,7 +129,8 @@ static void s_bufferSwitch(long index, ASIOBool /*processNow*/)
     const IAudioDriver::Spec& active = s_adata.activeSpec;
 
     const size_t channels = active.output.audioChannelCount;
-    const size_t procSamplesTotal = active.output.audioChannelCount * active.output.samplesPerChannel;
+    const size_t procSamplesTotal = active.output.audioChannelCount
+                                    * active.output.samplesPerChannel;
 
     static std::vector<float> proc_buf;
     if (proc_buf.size() != procSamplesTotal) {
@@ -380,11 +381,14 @@ static ASIOError create_asio_buffers(long bufferSize, long outputChannels, long 
     for (long i = 0; i < inputChannels; i++) {
         s_adata.bufferInfos[outputChannels + i].isInput = ASIOTrue;
         s_adata.bufferInfos[outputChannels + i].channelNum = i;
-        s_adata.bufferInfos[outputChannels + i].buffers[0] = s_adata.bufferInfos[outputChannels + i].buffers[1] = nullptr;
+        s_adata.bufferInfos[outputChannels
+                            + i].buffers[0]
+            = s_adata.bufferInfos[outputChannels + i].buffers[1] = nullptr;
     }
 
     // Create buffers
-    ASIOError result = ASIOCreateBuffers(s_adata.bufferInfos, totalChannels, bufferSize, &s_adata.callbacks);
+    ASIOError result = ASIOCreateBuffers(s_adata.bufferInfos, totalChannels, bufferSize,
+                                         &s_adata.callbacks);
     if (result != ASE_OK) {
         LOGE() << "failed create buffers";
         delete[] s_adata.bufferInfos;
@@ -520,7 +524,9 @@ bool AsioAudioDriver::open(const Spec& spec, Spec* activeSpec)
     s_adata.callbacks.sampleRateDidChange = &s_sampleRateChanged;
     s_adata.callbacks.asioMessage = &s_asioMessages;
 
-    ok = create_asio_buffers((long)active.samplesPerChannel, (long)active.audioChannelCount) == ASE_OK;
+    ok
+        = create_asio_buffers((long)active.samplesPerChannel,
+                              (long)active.audioChannelCount) == ASE_OK;
     if (!ok) {
         LOGE() << "failed create asio buffers, driver: " << name;
         return ok;

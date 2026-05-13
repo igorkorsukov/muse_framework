@@ -33,7 +33,8 @@ using namespace muse::testflow;
 
 const std::shared_ptr<AbPaintProvider>& AbPaintProvider::instance()
 {
-    static std::shared_ptr<AbPaintProvider> p = std::shared_ptr<AbPaintProvider>(new AbPaintProvider());
+    static std::shared_ptr<AbPaintProvider> p = std::shared_ptr<AbPaintProvider>(
+        new AbPaintProvider());
     return p;
 }
 
@@ -63,7 +64,8 @@ void AbPaintProvider::beforeEndTargetHook(muse::draw::Painter* painter)
     }
 }
 
-void AbPaintProvider::paintData(muse::draw::IPaintProviderPtr provider, const muse::draw::DrawDataPtr& data, const QColor& overcolor)
+void AbPaintProvider::paintData(muse::draw::IPaintProviderPtr provider,
+                                const muse::draw::DrawDataPtr& data, const QColor& overcolor)
 {
     using namespace muse::draw;
 

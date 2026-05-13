@@ -108,7 +108,8 @@ public:
 private:
     friend class XmlDomElement;
 
-    explicit XmlDomAttribute(const std::shared_ptr<XmlDomImplData>& data, xml_attr_handle attribute);
+    explicit XmlDomAttribute(const std::shared_ptr<XmlDomImplData>& data,
+                             xml_attr_handle attribute);
 
     std::shared_ptr<XmlDomImplData> m_xml = nullptr;
     xml_attr_handle m_attribute{};

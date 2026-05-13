@@ -33,7 +33,8 @@ WorkspaceTestConfig& WorkspaceTestConfig::instance()
     return s;
 }
 
-bool WorkspaceTestConfig::load(const io::path_t& configPath, const std::string& builtinWorkspacesDir)
+bool WorkspaceTestConfig::load(const io::path_t& configPath,
+                               const std::string& builtinWorkspacesDir)
 {
     m_defaultWorkspaceName.clear();
     m_builtinFiles.clear();

@@ -251,7 +251,8 @@ void AllocatorsRegister::printStatistic(const std::string& title)
     stream << "\n\n";
     stream << title << "\n";
     stream << "allocators: " << m_allocators.size() << '\n';
-    stream << TITLE("Object") << TITLE("Total alloc") << TITLE("Total free") << TITLE("Used (leak?)") << TITLE("Object size") << "\n";
+    stream << TITLE("Object") << TITLE("Total alloc") << TITLE("Total free") <<
+    TITLE("Used (leak?)") << TITLE("Object size") << "\n";
 
     uint64_t totalBytes = 0;
     uint64_t totalAllocatedCount = 0;
@@ -272,8 +273,10 @@ void AllocatorsRegister::printStatistic(const std::string& title)
         totalBytes += info.allocatedBytes();
     }
 
-    stream << "--------------------------------------------------------------------------------------------\n";
-    stream << FORMAT("Total", 20) << VALUE(totalAllocatedCount) << VALUE(totalFreeCount) << VALUE(totalUsedCount) << "\n";
+    stream <<
+    "--------------------------------------------------------------------------------------------\n";
+    stream << FORMAT("Total", 20) << VALUE(totalAllocatedCount) << VALUE(totalFreeCount) << VALUE(
+        totalUsedCount) << "\n";
     stream << "Total allocated: " << totalBytes << " bytes\n";
 
     LOGD() << stream.str() << '\n';
@@ -285,7 +288,8 @@ void AllocatorsRegister::printState(const std::string& title)
     stream << "\n\n";
     stream << title << "\n";
     stream << "allocators: " << m_allocators.size() << '\n';
-    stream << TITLE("Object") << TITLE("blockCount") << TITLE("totalChunks") << TITLE("freeChunks") << TITLE("chunkSize")
+    stream << TITLE("Object") << TITLE("blockCount") << TITLE("totalChunks") <<
+    TITLE("freeChunks") << TITLE("chunkSize")
            << TITLE("allocatedBytes") << "\n";
 
     uint64_t totalBytes = 0;

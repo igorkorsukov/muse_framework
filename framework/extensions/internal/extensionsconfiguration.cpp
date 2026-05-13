@@ -39,7 +39,8 @@ static const std::string EXTENSIONS_RESOURCE_NAME("EXTENSIONS");
 
 void ExtensionsConfiguration::init()
 {
-    settings()->setDefaultValue(USER_PLUGINS_PATH, Val(globalConfiguration()->userDataPath() + "/Plugins"));
+    settings()->setDefaultValue(USER_PLUGINS_PATH,
+                                Val(globalConfiguration()->userDataPath() + "/Plugins"));
     settings()->valueChanged(USER_PLUGINS_PATH).onReceive(nullptr, [this](const Val& val) {
         m_pluginsUserPathChanged.send(val.toString());
     });
@@ -118,16 +119,19 @@ Ret ExtensionsConfiguration::setManifestConfigs(const std::map<Uri, Manifest::Co
 std::map<muse::Uri, Manifest::Config> ExtensionsConfiguration::manifestConfigs() const
 {
     const io::path_t configPath = userPath() + "/config.json";
-    const io::path_t oldPluginsConfigPath = globalConfiguration()->userAppDataPath() + "/plugins/plugins.json";
+    const io::path_t oldPluginsConfigPath = globalConfiguration()->userAppDataPath()
+                                            + "/plugins/plugins.json";
 
     //! NOTE Load current config
     if (io::File::exists(configPath)) {
         ByteArray data;
         {
-            mi::ReadResourceLockGuard lock_guard(multiwindowsProvider.get(), EXTENSIONS_RESOURCE_NAME);
+            mi::ReadResourceLockGuard lock_guard(multiwindowsProvider.get(),
+                                                 EXTENSIONS_RESOURCE_NAME);
             Ret ret = io::File::readFile(configPath, data);
             if (!ret) {
-                LOGE() << "failed read config data, err: " << ret.toString() << ", file: " << configPath;
+                LOGE() << "failed read config data, err: " << ret.toString() << ", file: " <<
+                configPath;
                 return {};
             }
         }
@@ -178,10 +182,12 @@ std::map<muse::Uri, Manifest::Config> ExtensionsConfiguration::manifestConfigs()
         ByteArray data;
 
         {
-            mi::ReadResourceLockGuard lock_guard(multiwindowsProvider.get(), EXTENSIONS_RESOURCE_NAME);
+            mi::ReadResourceLockGuard lock_guard(multiwindowsProvider.get(),
+                                                 EXTENSIONS_RESOURCE_NAME);
             Ret ret = io::File::readFile(oldPluginsConfigPath, data);
             if (!ret) {
-                LOGE() << "failed read config data, err: " << ret.toString() << ", file: " << oldPluginsConfigPath;
+                LOGE() << "failed read config data, err: " << ret.toString() << ", file: " <<
+                oldPluginsConfigPath;
                 return {};
             }
         }

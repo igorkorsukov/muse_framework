@@ -50,11 +50,14 @@ DiagnosticAccessibleModel::~DiagnosticAccessibleModel()
 void DiagnosticAccessibleModel::init()
 {
 #ifdef MUSE_MODULE_ACCESSIBILITY
-    AccessibilityController* accessController = dynamic_cast<AccessibilityController*>(accessibilityController().get());
+    AccessibilityController* accessController
+        = dynamic_cast<AccessibilityController*>(accessibilityController().get());
     AccessibilityController::Item rootItem = accessController->findItem(accessController);
     m_accessibleRootObject = rootItem.object;
 
-    accessController->eventSent().onReceive(this, [this](QAccessibleEvent* ev) { onAccessibleEvent(ev); });
+    accessController->eventSent().onReceive(this, [this](QAccessibleEvent* ev) {
+        onAccessibleEvent(ev);
+    });
 #endif
 }
 
@@ -106,7 +109,8 @@ static void debug_dumpTree(QAccessibleInterface* item)
 void DiagnosticAccessibleModel::dumpTree()
 {
 #ifdef MUSE_MODULE_ACCESSIBILITY
-    AccessibilityController* accessController = dynamic_cast<AccessibilityController*>(accessibilityController().get());
+    AccessibilityController* accessController
+        = dynamic_cast<AccessibilityController*>(accessibilityController().get());
     AccessibilityController::Item rootItem = accessController->findItem(accessController);
 
     debug_dumpTree(rootItem.iface);
@@ -251,7 +255,8 @@ void DiagnosticAccessibleModel::onItemChanged(QObject* accessibleObject)
     emit dataChanged(index, index, { rItemData });
 }
 
-DiagnosticAccessibleModel::Item* DiagnosticAccessibleModel::findItemForIface(const QAccessibleInterface* iface, Item* rootItem) const
+DiagnosticAccessibleModel::Item* DiagnosticAccessibleModel::findItemForIface(
+    const QAccessibleInterface* iface, Item* rootItem) const
 {
     if (!rootItem) {
         return nullptr;
@@ -278,7 +283,8 @@ DiagnosticAccessibleModel::Item* DiagnosticAccessibleModel::createItem(Item* par
     return item;
 }
 
-DiagnosticAccessibleModel::Item* DiagnosticAccessibleModel::itemByModelIndex(const QModelIndex& index) const
+DiagnosticAccessibleModel::Item* DiagnosticAccessibleModel::itemByModelIndex(
+    const QModelIndex& index) const
 {
     return m_allItems.value(index.internalId(), nullptr);
 }

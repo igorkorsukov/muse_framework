@@ -268,17 +268,29 @@ struct Event {
         return m_data < other.m_data;
     }
 
-    bool isChannelVoice() const { return messageType() == MessageType::ChannelVoice10 || messageType() == MessageType::ChannelVoice20; }
+    bool isChannelVoice() const
+    {
+        return messageType() == MessageType::ChannelVoice10
+               || messageType() == MessageType::ChannelVoice20;
+    }
     bool isChannelVoice20() const { return messageType() == MessageType::ChannelVoice20; }
-    bool isMessageTypeIn(const std::set<MessageType>& types) const { return types.find(messageType()) != types.end(); }
-    bool isOpcodeIn(const std::set<Opcode>& opcodes) const { return opcodes.find(opcode()) != opcodes.end(); }
+    bool isMessageTypeIn(const std::set<MessageType>& types) const
+    {
+        return types.find(messageType()) != types.end();
+    }
+    bool isOpcodeIn(const std::set<Opcode>& opcodes) const
+    {
+        return opcodes.find(opcode()) != opcodes.end();
+    }
 
     //! check UMP for correct structure
     bool isValid() const
     {
         switch (messageType()) {
         case MessageType::Utility: {
-            std::set<UtilityStatus> statuses = { UtilityStatus::NoOperation, UtilityStatus::JRClock, UtilityStatus::JRTimestamp };
+            std::set<UtilityStatus> statuses
+                = { UtilityStatus::NoOperation, UtilityStatus::JRClock,
+                    UtilityStatus::JRTimestamp };
             return statuses.find(static_cast<UtilityStatus>(status())) != statuses.end();
         }
 
@@ -288,7 +300,8 @@ struct Event {
             return true;
 
         case MessageType::ChannelVoice10:
-            return isOpcodeIn({ Opcode::NoteOff, Opcode::NoteOn, Opcode::PolyPressure, Opcode::ControlChange, Opcode::ProgramChange,
+            return isOpcodeIn({ Opcode::NoteOff, Opcode::NoteOn, Opcode::PolyPressure,
+                                Opcode::ControlChange, Opcode::ProgramChange,
                                 Opcode::ChannelPressure, Opcode::PitchBend });
 
         case MessageType::ChannelVoice20:
@@ -440,7 +453,8 @@ struct Event {
 
         switch (messageType()) {
         case MessageType::ChannelVoice10: return m_data[0] & 0x7F;
-        case MessageType::ChannelVoice20: return static_cast<uint8_t>(scaleDown(m_data[1] >> 16, 16, 7));
+        case MessageType::ChannelVoice20: return static_cast<uint8_t>(scaleDown(m_data[1] >> 16, 16,
+                                                                                7));
         default: assert(false);
         }
         return 0;
@@ -471,7 +485,8 @@ struct Event {
         assertOpcode({ Opcode::NoteOn, Opcode::NoteOff });
 
         switch (messageType()) {
-        case MessageType::ChannelVoice10: return static_cast<uint16_t>(scaleUp(m_data[0] & 0x7F, 7, 16));
+        case MessageType::ChannelVoice10: return static_cast<uint16_t>(scaleUp(m_data[0] & 0x7F, 7,
+                                                                               16));
         case MessageType::ChannelVoice20: return static_cast<uint16_t>(m_data[1] >> 16);
         default: assert(false);
         }
@@ -622,7 +637,8 @@ struct Event {
     {
         assertOpcode({ Opcode::PitchBend });
         switch (messageType()) {
-        case MessageType::ChannelVoice20: return (data() - 0x80000000) / static_cast<float>(0xFFFFFFFF);
+        case MessageType::ChannelVoice20: return (data() - 0x80000000)
+                   / static_cast<float>(0xFFFFFFFF);
         default: /* silence */ break;
         }
         return (data() - 8192) / static_cast<float>(0x3FFF);//MIDI1.0
@@ -630,8 +646,10 @@ struct Event {
 
     uint8_t index() const
     {
-        assertOpcode({ Opcode::ControlChange, Opcode::RegisteredPerNoteController, Opcode::AssignablePerNoteController,
-                       Opcode::RegisteredController, Opcode::AssignableController, Opcode::RelativeRegisteredController,
+        assertOpcode({ Opcode::ControlChange, Opcode::RegisteredPerNoteController,
+                       Opcode::AssignablePerNoteController,
+                       Opcode::RegisteredController, Opcode::AssignableController,
+                       Opcode::RelativeRegisteredController,
                        Opcode::RelativeAssignableController });
         switch (opcode()) {
         case Opcode::ControlChange:
@@ -652,8 +670,10 @@ struct Event {
 
     void setIndex(uint8_t value)
     {
-        assertOpcode({ Opcode::ControlChange, Opcode::RegisteredPerNoteController, Opcode::AssignablePerNoteController,
-                       Opcode::RegisteredController, Opcode::AssignableController, Opcode::RelativeRegisteredController,
+        assertOpcode({ Opcode::ControlChange, Opcode::RegisteredPerNoteController,
+                       Opcode::AssignablePerNoteController,
+                       Opcode::RegisteredController, Opcode::AssignableController,
+                       Opcode::RelativeRegisteredController,
                        Opcode::RelativeAssignableController });
 
         switch (opcode()) {
@@ -714,8 +734,10 @@ struct Event {
 
     uint16_t bank() const
     {
-        assertOpcode({ Opcode::ProgramChange, Opcode::RegisteredController, Opcode::AssignableController,
-                       Opcode::RelativeRegisteredController, Opcode::RelativeAssignableController });
+        assertOpcode({ Opcode::ProgramChange, Opcode::RegisteredController,
+                       Opcode::AssignableController,
+                       Opcode::RelativeRegisteredController,
+                       Opcode::RelativeAssignableController });
         assertMessageType({ MessageType::ChannelVoice20 });
         if (opcode() == Opcode::ProgramChange) {
             return ((m_data[1] & 0x7F00) >> 1) | (m_data[1] & 0x7F);
@@ -725,8 +747,10 @@ struct Event {
 
     void setBank(uint16_t bank)
     {
-        assertOpcode({ Opcode::ProgramChange, Opcode::RegisteredController, Opcode::AssignableController,
-                       Opcode::RelativeRegisteredController, Opcode::RelativeAssignableController });
+        assertOpcode({ Opcode::ProgramChange, Opcode::RegisteredController,
+                       Opcode::AssignableController,
+                       Opcode::RelativeRegisteredController,
+                       Opcode::RelativeAssignableController });
         assertMessageType({ MessageType::ChannelVoice20 });
         if (opcode() == Opcode::ProgramChange) {
             m_data[0] |= 0x01; //set BankValid bit
@@ -1055,7 +1079,8 @@ struct Event {
                        + " attr type: " + std::to_string(static_cast<uint32_t>(attributeType()))
                        + " attr value: " + std::to_string(attribute());
                 if (attributeType() == AttributeType::Pitch) {
-                    str += "pitch: note:" + std::to_string(pitchNote()) + " " + std::to_string(pitchTuning()) + " semitone";
+                    str += "pitch: note:" + std::to_string(pitchNote()) + " " + std::to_string(
+                        pitchTuning()) + " semitone";
                 }
                 break;
             case Opcode::PolyPressure:

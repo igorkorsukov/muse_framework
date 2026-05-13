@@ -132,7 +132,8 @@ const UiAction& UiActionsRegister::action(const ActionCode& code) const
     return info(code).action;
 }
 
-const actions::ActionCode& UiActionsRegister::parentActionCode(const actions::ActionCode& code) const
+const actions::ActionCode& UiActionsRegister::parentActionCode(const actions::ActionCode& code)
+const
 {
     for (auto it = m_actions.begin(); it != m_actions.end(); it++) {
         if (muse::contains(it->second.action.children, code)) {

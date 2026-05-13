@@ -19,7 +19,8 @@ std::shared_ptr<Pixmap> QImageProvider::createPixmap(const ByteArray& data) cons
     return std::make_shared<Pixmap>(Pixmap::fromQPixmap(QPixmap::fromImage(image)));
 }
 
-std::shared_ptr<Pixmap> QImageProvider::createPixmap(int w, int h, int dpm, const Color& color) const
+std::shared_ptr<Pixmap> QImageProvider::createPixmap(int w, int h, int dpm,
+                                                     const Color& color) const
 {
     QImage image(w, h, QImage::Format_ARGB32_Premultiplied);
     image.setDotsPerMeterX(dpm);

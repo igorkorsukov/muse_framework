@@ -56,7 +56,9 @@ void VstFxProcessor::init(const audio::OutputSpec& spec)
         m_pluginPtr->loadingCompleted().onNotify(this, onPluginLoaded);
     }
 
-    m_pluginPtr->pluginSettingsChanged().onReceive(this, [this](const muse::audio::AudioUnitConfig& newConfig) {
+    m_pluginPtr->pluginSettingsChanged().onReceive(this,
+                                                   [this](const muse::audio::AudioUnitConfig&
+                                                          newConfig) {
         if (m_params.configuration == newConfig) {
             return;
         }
@@ -120,7 +122,8 @@ bool VstFxProcessor::shouldProcessDuringSilence() const
     return m_params.active && muse::contains(m_params.categories, AudioFxCategory::FxGenerator);
 }
 
-void VstFxProcessor::process(float* buffer, samples_t sampleCount, samples_t playbackPositionSamples)
+void VstFxProcessor::process(float* buffer, samples_t sampleCount,
+                             samples_t playbackPositionSamples)
 {
     if (!buffer || !m_inited) {
         return;

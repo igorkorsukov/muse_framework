@@ -31,7 +31,8 @@
 #include "async/asyncable.h"
 
 namespace muse::workspace {
-class WorkspacesDataProvider : public IWorkspacesDataProvider, public Contextable, public async::Asyncable
+class WorkspacesDataProvider : public IWorkspacesDataProvider, public Contextable,
+    public async::Asyncable
 {
     ContextInject<IWorkspaceManager> manager = { this };
 

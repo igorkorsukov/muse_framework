@@ -211,8 +211,10 @@ public:
     }
 
 protected:
-    virtual void updateOffStreamEvents(const mpe::PlaybackEventsMap& events, const mpe::DynamicLevelLayers& dynamics) = 0;
-    virtual void updateMainStreamEvents(const mpe::PlaybackEventsMap& events, const mpe::DynamicLevelLayers& dynamics) = 0;
+    virtual void updateOffStreamEvents(const mpe::PlaybackEventsMap& events,
+                                       const mpe::DynamicLevelLayers& dynamics) = 0;
+    virtual void updateMainStreamEvents(const mpe::PlaybackEventsMap& events,
+                                        const mpe::DynamicLevelLayers& dynamics) = 0;
 
     void resetAllIterators()
     {
@@ -251,7 +253,8 @@ protected:
         while (m_currentOffSequenceIt != m_offStreamEvents.end()
                && m_currentOffSequenceIt->first <= m_offstreamPosition) {
             EventSequence& sequence = result[m_currentOffSequenceIt->first];
-            sequence.insert(sequence.end(), std::make_move_iterator(m_currentOffSequenceIt->second.begin()),
+            sequence.insert(sequence.end(),
+                            std::make_move_iterator(m_currentOffSequenceIt->second.begin()),
                             std::make_move_iterator(m_currentOffSequenceIt->second.end()));
             m_currentOffSequenceIt = m_offStreamEvents.erase(m_currentOffSequenceIt);
         }

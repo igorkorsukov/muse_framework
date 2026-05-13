@@ -58,7 +58,8 @@ void Player::init()
             }
 
             if (ret) {
-                channel()->addReceiveStream(StreamName::PlaybackStatusStream, streamId, m_playbackStatusChanged);
+                channel()->addReceiveStream(StreamName::PlaybackStatusStream, streamId,
+                                            m_playbackStatusChanged);
                 //! NOTE Send initial state
                 m_playbackStatusChanged.send(status);
             } else {
@@ -83,7 +84,8 @@ void Player::init()
             }
 
             if (ret) {
-                channel()->addReceiveStream(StreamName::PlaybackPositionStream, streamId, m_playbackPositionChanged);
+                channel()->addReceiveStream(StreamName::PlaybackPositionStream, streamId,
+                                            m_playbackPositionChanged);
                 //! NOTE Send initial state
                 m_playbackPositionChanged.send(pos);
             } else {

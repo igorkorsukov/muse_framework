@@ -75,7 +75,8 @@ bool IODevice::isReadable() const
 
 bool IODevice::isOpenModeWriteable() const
 {
-    return m_mode == OpenMode::WriteOnly || m_mode == OpenMode::ReadWrite || m_mode == OpenMode::Append;
+    return m_mode == OpenMode::WriteOnly || m_mode == OpenMode::ReadWrite
+           || m_mode == OpenMode::Append;
 }
 
 void IODevice::setError(int error, const std::string& errorString)

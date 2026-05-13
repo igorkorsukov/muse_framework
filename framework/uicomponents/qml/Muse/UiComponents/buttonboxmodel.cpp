@@ -69,7 +69,8 @@ QList<int> ButtonBoxModel::load()
 
     const std::vector<ButtonRole>& currentLayout = chooseButtonLayoutType();
 
-    auto buttonsByRole = [&sortedButtons, maxCustomRole](ButtonRole buttonRole) -> std::vector<LayoutButton*> {
+    auto buttonsByRole = [&sortedButtons,
+                          maxCustomRole](ButtonRole buttonRole) -> std::vector<LayoutButton*> {
         bool isCustom = buttonRole == ButtonRole::CustomRole;
         if (!isCustom) {
             if (muse::contains(sortedButtons, static_cast<int>(buttonRole))) {
@@ -104,7 +105,8 @@ void ButtonBoxModel::setButtons(const QVariantList& buttons)
 {
     for (const QVariant& buttonTypeVar : buttons) {
         LayoutButton* button = m_layoutButtons[ButtonType(buttonTypeVar.toInt())];
-        emit addButton(button->text, button->buttonType, button->buttonRole, button->isAccent, button->isLeftSide);
+        emit addButton(button->text, button->buttonType, button->buttonRole, button->isAccent,
+                       button->isLeftSide);
     }
 }
 

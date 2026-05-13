@@ -32,7 +32,8 @@ void ExtensionInstaller::installExtension(const io::path_t& srcPath)
         LOGE() << "not found manifest.json in: " << srcPath;
 
         interactive()->error(trc("extensions", "Failed to install extension"),
-                             trc("extensions", "The extension does not contain a valid manifest file."),
+                             trc("extensions",
+                                 "The extension does not contain a valid manifest file."),
                              { interactive()->buttonData(IInteractive::Button::Ok) });
 
         return;
@@ -64,7 +65,8 @@ void ExtensionInstaller::installExtension(const io::path_t& srcPath)
 
     if (!existingManifest.isRemovable) {
         interactive()->error(trc("extensions", "This extension cannot be updated."),
-                             trc("extensions", "The currently installed version cannot be uninstalled."),
+                             trc("extensions",
+                                 "The currently installed version cannot be uninstalled."),
                              { interactive()->buttonData(IInteractive::Button::Ok) });
 
         return;
@@ -72,7 +74,8 @@ void ExtensionInstaller::installExtension(const io::path_t& srcPath)
 
     const std::string text = qtrc("extensions", "Another version of the extension “%1” is already installed (version %2). "
                                                 "Do you want to replace it with version %3?")
-                             .arg(existingManifest.title, existingManifest.version, m.val.version).toStdString();
+                             .arg(existingManifest.title, existingManifest.version,
+                                  m.val.version).toStdString();
 
     interactive()->question(trc("extensions", "Update extension"),
                             text,
@@ -95,13 +98,16 @@ void ExtensionInstaller::doInstallExtension(const io::path_t& srcPath)
     ZipUnpack zip;
     Ret ret = zip.unpack(srcPath, dstPath);
     if (!ret) {
-        LOGE() << "failed unpack from: " << srcPath << ", to: " << dstPath << ", err: " << ret.toString();
+        LOGE() << "failed unpack from: " << srcPath << ", to: " << dstPath << ", err: " <<
+            ret.toString();
 
         interactive()->error(trc("extensions", "Failed to install extension"),
 #if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
                              qtrc("extensions", "Error code: %1").arg(ret.toString()).toStdString(),
 #else
-                             qtrc("extensions", "Error code: %1").arg(QString::fromStdString(ret.toString())).toStdString(),
+                             qtrc("extensions",
+                                  "Error code: %1").arg(QString::fromStdString(
+                                                            ret.toString())).toStdString(),
 #endif
                              { interactive()->buttonData(IInteractive::Button::Ok) });
 
@@ -132,7 +138,8 @@ void ExtensionInstaller::uninstallExtension(const Uri& uri)
         if (ret) {
             LOGI() << "Success removed the legacy qml plugin file: " << manifest.path;
         } else {
-            LOGE() << "Failed to remove the legacy qml plugin file: " << manifest.path << ", err: " << ret.toString();
+            LOGE() << "Failed to remove the legacy qml plugin file: " << manifest.path <<
+                ", err: " << ret.toString();
         }
     } else {
         ret = fileSystem()->remove(io::dirpath(manifest.path));

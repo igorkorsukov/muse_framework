@@ -43,7 +43,8 @@ void ShortcutOverrideModel::init()
     loadDisallowedOverrides();
 }
 
-bool ShortcutOverrideModel::isShortcutOverrideAllowed(Qt::Key key, Qt::KeyboardModifiers modifiers) const
+bool ShortcutOverrideModel::isShortcutOverrideAllowed(Qt::Key key,
+                                                      Qt::KeyboardModifiers modifiers) const
 {
     auto [newKey, newModifiers] = correctKeyInput(key, modifiers);
 
@@ -77,7 +78,8 @@ ShortcutOverrideModel::DirectionKeys ShortcutOverrideModel::directionKeysForOver
     return m_directionKeysForOverride;
 }
 
-void ShortcutOverrideModel::setDirectionKeysForOverride(const ShortcutOverrideModel::DirectionKeys& keys)
+void ShortcutOverrideModel::setDirectionKeysForOverride(
+    const ShortcutOverrideModel::DirectionKeys& keys)
 {
     if (m_directionKeysForOverride == keys) {
         return;
@@ -122,7 +124,8 @@ void ShortcutOverrideModel::loadDisallowedOverrides()
     }
 }
 
-Shortcut ShortcutOverrideModel::disallowedOverride(Qt::Key key, Qt::KeyboardModifiers modifiers) const
+Shortcut ShortcutOverrideModel::disallowedOverride(Qt::Key key,
+                                                   Qt::KeyboardModifiers modifiers) const
 {
     QKeySequence keySequence(modifiers | key);
     for (const Shortcut& shortcut : m_notAllowedForOverrideShortcuts) {

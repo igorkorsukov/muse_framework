@@ -43,7 +43,8 @@ Workspace::Workspace(const io::path_t& filePath, const modularity::ContextPtr& i
     });
 }
 
-Workspace::Workspace(const io::path_t& filePath, const Workspace* other, const modularity::ContextPtr& iocCtx)
+Workspace::Workspace(const io::path_t& filePath, const Workspace* other,
+                     const modularity::ContextPtr& iocCtx)
     : Workspace(filePath, iocCtx)
 {
     m_file = std::make_shared<WorkspaceFile>(filePath, other->m_file.get());
@@ -210,7 +211,8 @@ io::path_t Workspace::builtinWorkspacePath() const
 
 void Workspace::copyBuiltinWorkspaceToUserDir()
 {
-    io::path_t userFilePath = configuration()->userWorkspacesPath() + "/" + io::filename(filePath());
+    io::path_t userFilePath = configuration()->userWorkspacesPath() + "/"
+                              + io::filename(filePath());
 
     fileSystem()->copy(m_file->filePath(), userFilePath);
     m_file->redirect(userFilePath);

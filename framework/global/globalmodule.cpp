@@ -126,7 +126,8 @@ void GlobalModule::onPreInit(const IApplication::RunMode& mode)
 
     //! Console
     if (mode == IApplication::RunMode::GuiApp || muse::runtime::isDebug()) {
-        logger->addDest(new ConsoleLogDest(LogLayout("${time} | ${type|5} | ${thread|15} | ${tag|15} | ${message}")));
+        logger->addDest(new ConsoleLogDest(LogLayout(
+                                               "${time} | ${type|5} | ${thread|15} | ${tag|15} | ${message}")));
     }
 
     //! Log file
@@ -158,7 +159,8 @@ void GlobalModule::onPreInit(const IApplication::RunMode& mode)
     LogRemover::removeLogs(logPath, 7, logFileNamePattern);
 
     FileLogDest* logFile = new FileLogDest(logFilePath.toStdString(),
-                                           LogLayout("${datetime} | ${type|5} | ${thread|15} | ${tag|15} | ${message}"));
+                                           LogLayout(
+                                               "${datetime} | ${type|5} | ${thread|15} | ${tag|15} | ${message}"));
 
     logger->addDest(logFile);
     LOGI() << "log path: " << logFilePath;
@@ -185,8 +187,14 @@ void GlobalModule::onPreInit(const IApplication::RunMode& mode)
     using namespace muse::profiler;
     struct MyPrinter : public Profiler::Printer
     {
-        void printDebug(const std::string& str) override { LOG_STREAM(Logger::DEBG, "Profiler", logger::Color::Magenta)() << str; }
-        void printInfo(const std::string& str) override { LOG_STREAM(Logger::INFO, "Profiler", logger::Color::Magenta)() << str; }
+        void printDebug(const std::string& str) override
+        {
+            LOG_STREAM(Logger::DEBG, "Profiler", logger::Color::Magenta)() << str;
+        }
+        void printInfo(const std::string& str) override
+        {
+            LOG_STREAM(Logger::INFO, "Profiler", logger::Color::Magenta)() << str;
+        }
     };
 
     Profiler::Options profOpt;

@@ -28,7 +28,8 @@
 #include "../iaccessibilityconfiguration.h"
 
 namespace muse::accessibility {
-class AccessibilityContextConfiguration : public IAccessibilityContextConfiguration, public muse::Contextable
+class AccessibilityContextConfiguration : public IAccessibilityContextConfiguration,
+    public muse::Contextable
 {
     GlobalInject<IAccessibilityConfiguration> configuration;
     ContextInject<ui::INavigationController> navigationController = { this };

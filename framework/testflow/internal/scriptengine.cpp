@@ -51,7 +51,8 @@ ScriptEngine::ScriptEngine(const modularity::ContextPtr& iocContext)
 }
 
 ScriptEngine::ScriptEngine(ScriptEngine* engine)
-    : m_iocContext(engine->m_iocContext), m_engine(engine->m_engine), m_apiengine(engine->m_apiengine), m_api(engine->m_api),
+    : m_iocContext(engine->m_iocContext), m_engine(engine->m_engine), m_apiengine(
+        engine->m_apiengine), m_api(engine->m_api),
     m_moduleLoader(engine->m_moduleLoader),
     m_isRequireMode(true)
 {
@@ -89,7 +90,8 @@ QJSValue ScriptEngine::requireModule(const QString& module)
         return QJSValue();
     }
     bool isNeedDelete = obj.second;
-    QJSEngine::setObjectOwnership(obj.first, isNeedDelete ? QJSEngine::JavaScriptOwnership : QJSEngine::CppOwnership);
+    QJSEngine::setObjectOwnership(obj.first,
+                                  isNeedDelete ? QJSEngine::JavaScriptOwnership : QJSEngine::CppOwnership);
     return m_engine->newQObject(obj.first);
 }
 
@@ -103,7 +105,8 @@ QJSValue ScriptEngine::requireFile(const QString& filePath)
         return QJSValue();
     }
 
-    QByteArray content = QByteArray("(function() { \n") + data.val.toQByteArrayNoCopy() + QByteArray("}());");
+    QByteArray content = QByteArray("(function() { \n") + data.val.toQByteArrayNoCopy()
+                         + QByteArray("}());");
 
     ScriptEngine requireEngine(this);
     requireEngine.setScriptPath(filePath);
@@ -244,7 +247,8 @@ RetVal<ByteArray> ScriptEngine::readScriptContent(const io::path_t& scriptPath) 
     return fileSystem()->readFile(scriptPath);
 }
 
-RetVal<QJSValue> ScriptEngine::evaluateContent(const QByteArray& fileContent, const io::path_t& filePath)
+RetVal<QJSValue> ScriptEngine::evaluateContent(const QByteArray& fileContent,
+                                               const io::path_t& filePath)
 {
     TRACEFUNC;
     RetVal<QJSValue> rv;

@@ -57,7 +57,8 @@ void VstSynthesiser::init(const OutputSpec& spec)
 
     m_outputSpec = spec;
 
-    m_pluginPtr = instancesRegister()->makeAndRegisterInstrPlugin(m_params.resourceMeta.id, m_trackId);
+    m_pluginPtr = instancesRegister()->makeAndRegisterInstrPlugin(m_params.resourceMeta.id,
+                                                                  m_trackId);
 
     m_vstAudioClient->init(AudioPluginType::Instrument, m_pluginPtr);
 
@@ -65,7 +66,8 @@ void VstSynthesiser::init(const OutputSpec& spec)
         m_pluginPtr->updatePluginConfig(m_params.configuration);
         m_vstAudioClient->setOutputSpec(m_outputSpec);
         m_vstAudioClient->loadSupportedParams();
-        m_sequencer.init(m_vstAudioClient->paramsMapping(SUPPORTED_CONTROLLERS), m_useDynamicEvents);
+        m_sequencer.init(m_vstAudioClient->paramsMapping(SUPPORTED_CONTROLLERS),
+                         m_useDynamicEvents);
         m_inited = true;
     };
 
@@ -75,7 +77,9 @@ void VstSynthesiser::init(const OutputSpec& spec)
         m_pluginPtr->loadingCompleted().onNotify(this, onPluginLoaded);
     }
 
-    m_pluginPtr->pluginSettingsChanged().onReceive(this, [this](const muse::audio::AudioUnitConfig& newConfig) {
+    m_pluginPtr->pluginSettingsChanged().onReceive(this,
+                                                   [this](const muse::audio::AudioUnitConfig&
+                                                          newConfig) {
         if (m_params.configuration == newConfig) {
             return;
         }
@@ -222,7 +226,8 @@ samples_t VstSynthesiser::process(float* buffer, samples_t samplesPerChannel)
             break;
         }
 
-        processedSamples += processSequence(it->second, durationInSamples, buffer + sampleOffset * m_outputSpec.audioChannelCount);
+        processedSamples += processSequence(it->second, durationInSamples,
+                                            buffer + sampleOffset * m_outputSpec.audioChannelCount);
         sampleOffset += durationInSamples;
 
         if (active) {
@@ -233,7 +238,8 @@ samples_t VstSynthesiser::process(float* buffer, samples_t samplesPerChannel)
     return processedSamples;
 }
 
-samples_t VstSynthesiser::processSequence(const VstSequencer::EventSequence& sequence, const samples_t samples, float* buffer)
+samples_t VstSynthesiser::processSequence(const VstSequencer::EventSequence& sequence,
+                                          const samples_t samples, float* buffer)
 {
     for (const VstSequencer::EventType& event : sequence) {
         if (std::holds_alternative<VstEvent>(event)) {

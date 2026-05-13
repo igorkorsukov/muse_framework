@@ -52,16 +52,21 @@ public:
 
     // Resources
     async::Promise<AudioResourceMetaList> availableInputResources() const override;
-    async::Promise<SoundPresetList> availableSoundPresets(const AudioResourceMeta& resourceMeta) const override;
+    async::Promise<SoundPresetList> availableSoundPresets(const AudioResourceMeta& resourceMeta)
+    const override;
     async::Promise<AudioResourceMetaList> availableOutputResources() const override;
 
     // Setup tracks
     async::Promise<TrackIdList> trackIdList() const override;
     async::Promise<RetVal<TrackName> > trackName(const TrackId trackId) const override;
 
-    async::Promise<TrackId, TrackParams> addTrack(const TrackName& name, io::IODevice* data, const TrackParams& params) override;
-    async::Promise<TrackId, TrackParams> addTrack(const TrackName& name, const mpe::PlaybackData& data, const TrackParams& params) override;
-    async::Promise<TrackId, TrackParams> addAuxTrack(const TrackName& name, const TrackParams& params) override;
+    async::Promise<TrackId, TrackParams> addTrack(const TrackName& name, io::IODevice* data,
+                                                  const TrackParams& params) override;
+    async::Promise<TrackId, TrackParams> addTrack(const TrackName& name,
+                                                  const mpe::PlaybackData& data,
+                                                  const TrackParams& params) override;
+    async::Promise<TrackId, TrackParams> addAuxTrack(const TrackName& name,
+                                                     const TrackParams& params) override;
 
     void removeTrack(const TrackId trackId) override;
     void removeAllTracks() override;
@@ -92,7 +97,8 @@ public:
 
     // Input processing
     void processInput(const TrackId trackId) const override;
-    async::Promise<InputProcessingProgress> inputProcessingProgress(const TrackId trackId) const override;
+    async::Promise<InputProcessingProgress> inputProcessingProgress(const TrackId trackId) const
+    override;
 
     // Clear cache
     void clearCache(const TrackId trackId) const override;
@@ -108,7 +114,8 @@ public:
     async::Promise<AudioSignalChanges> masterSignalChanges() const override;
 
     // Export
-    async::Promise<bool> saveSoundTrack(const SoundTrackFormat& format, io::IODevice& dstDevice) override;
+    async::Promise<bool> saveSoundTrack(const SoundTrackFormat& format,
+                                        io::IODevice& dstDevice) override;
     void abortSavingAllSoundTracks() override;
     SaveSoundTrackProgress saveSoundTrackProgressChanged() const override;
 

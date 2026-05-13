@@ -45,7 +45,8 @@ public:
     virtual ValNt<QByteArray> pageState(const QString& pageName) const = 0;
     virtual void setPageState(const QString& pageName, const QByteArray& state) = 0;
 
-    virtual ToolConfig toolConfig(const QString& toolName, const ToolConfig& defaultConfig) const = 0;
+    virtual ToolConfig toolConfig(const QString& toolName,
+                                  const ToolConfig& defaultConfig) const = 0;
     virtual void setToolConfig(const QString& toolName, const ToolConfig& config) = 0;
     virtual async::Notification toolConfigChanged(const QString& toolName) const = 0;
 

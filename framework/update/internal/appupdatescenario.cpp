@@ -138,12 +138,14 @@ Promise<IInteractive::Result> AppUpdateScenario::showNoUpdateMsg()
     QUrl url(QString::fromStdString(webSiteUrl));
     const QString str = muse::qtrc("update", "You already have the latest version of %1. "
                                              "Please visit <a href=\"%2\">%3</a> for news on what’s coming next.")
-                        .arg(application()->title().toQString(), QString::fromStdString(webSiteUrl), url.host());
+                        .arg(application()->title().toQString(), QString::fromStdString(
+                                 webSiteUrl), url.host());
 
     const IInteractive::Text text(str.toStdString(), IInteractive::TextFormat::RichText);
     const IInteractive::ButtonData okBtn = interactive()->buttonData(IInteractive::Button::Ok);
 
-    return interactive()->info(muse::trc("update", "You’re up to date!"), text, { okBtn }, okBtn.btn,
+    return interactive()->info(muse::trc("update",
+                                         "You’re up to date!"), text, { okBtn }, okBtn.btn,
                                IInteractive::Option::WithIcon);
 }
 
@@ -152,7 +154,8 @@ Promise<Ret> AppUpdateScenario::showReleaseInfo(const ReleaseInfo& info)
     UriQuery query("muse://update/appreleaseinfo");
     query.addParam("appName", Val(application()->title().toStdString()));
     query.addParam("notes", Val(info.notes));
-    query.addParam("previousReleasesNotes", Val(releasesNotesToValList(info.previousReleasesNotes)));
+    query.addParam("previousReleasesNotes",
+                   Val(releasesNotesToValList(info.previousReleasesNotes)));
 
     return interactive()->open(query).then<Ret>(this, [this, info](const Val& val, auto resolve) {
         const QString actionCode = val.toQString();
@@ -167,7 +170,8 @@ Promise<Ret> AppUpdateScenario::showReleaseInfo(const ReleaseInfo& info)
 
         //! NOTE: In test mode we skip the progress dialog and jump straight to the "needs to close" dialog...
         const bool testMode = configuration()->checkForUpdateTestMode();
-        auto promise = testMode ? askToCloseAppAndCompleteInstall(/*installerPath*/ String()) : downloadRelease();
+        auto promise = testMode ? askToCloseAppAndCompleteInstall(
+            /*installerPath*/ String()) : downloadRelease();
         promise.onResolve(this, [resolve](const Ret& ret) {
             (void)resolve(ret);
         });
@@ -212,12 +216,15 @@ Promise<Ret> AppUpdateScenario::askToCloseAppAndCompleteInstall(const io::path_t
             multiwindowsProvider()->quitAllAndRunInstallation(installerPath);
         }
 
-        dispatcher()->dispatch("quit", ActionData::make_arg2<bool, std::string>(false, installerPath.toStdString()));
+        dispatcher()->dispatch("quit",
+                               ActionData::make_arg2<bool, std::string>(false,
+                                                                        installerPath.toStdString()));
         return resolve(muse::make_ok());
     });
 }
 
 bool AppUpdateScenario::shouldIgnoreUpdate(const ReleaseInfo& info) const
 {
-    return info.version == configuration()->skippedReleaseVersion() && !configuration()->checkForUpdateTestMode();
+    return info.version == configuration()->skippedReleaseVersion()
+           && !configuration()->checkForUpdateTestMode();
 }

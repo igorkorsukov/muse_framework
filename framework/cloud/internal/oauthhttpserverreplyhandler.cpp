@@ -99,7 +99,8 @@ private:
     OAuthHttpServerReplyHandler* m_public = nullptr;
 };
 
-OAuthHttpServerReplyHandler::Impl::Impl(OAuthHttpServerReplyHandler* p, const modularity::ContextPtr& iocCtx)
+OAuthHttpServerReplyHandler::Impl::Impl(OAuthHttpServerReplyHandler* p,
+                                        const modularity::ContextPtr& iocCtx)
     : Contextable(iocCtx), m_public(p)
 {
     QObject::connect(&m_httpServer, &QTcpServer::newConnection, [this]() { onClientConnected(); });
@@ -181,7 +182,8 @@ void OAuthHttpServerReplyHandler::Impl::answerClient(QTcpSocket* socket, const Q
     Q_EMIT m_public->callbackReceived(receivedData);
 
     // Fallback text, shown while redirecting
-    const QString text = muse::qtrc("cloud", "Sign in successful! You’re good to go back to MuseScore Studio.");
+    const QString text = muse::qtrc("cloud",
+                                    "Sign in successful! You’re good to go back to MuseScore Studio.");
 
     const QByteArray html = QByteArrayLiteral("<html><head><title>")
                             + qApp->applicationName().toUtf8()
@@ -191,7 +193,8 @@ void OAuthHttpServerReplyHandler::Impl::answerClient(QTcpSocket* socket, const Q
 
     const QByteArray htmlSize = QByteArray::number(html.size());
     const QByteArray replyMessage = QByteArrayLiteral("HTTP/1.0 301 Moved Permanently \r\n"
-                                                      "Location: ") + m_redirectUrl.toString().toUtf8()
+                                                      "Location: ")
+                                    + m_redirectUrl.toString().toUtf8()
                                     + QByteArrayLiteral("\r\nContent-Type: text/html; "
                                                         "charset=\"utf-8\"\r\n"
                                                         "Content-Length: ") + htmlSize
@@ -320,15 +323,19 @@ bool OAuthHttpServerReplyHandler::Impl::HttpRequest::readHeader(QTcpSocket* sock
     return false;
 }
 
-OAuthHttpServerReplyHandler::OAuthHttpServerReplyHandler(const modularity::ContextPtr& iocCtx, QObject* parent)
+OAuthHttpServerReplyHandler::OAuthHttpServerReplyHandler(const modularity::ContextPtr& iocCtx,
+                                                         QObject* parent)
     : OAuthHttpServerReplyHandler(QHostAddress::Any, 0, iocCtx, parent)
 {}
 
-OAuthHttpServerReplyHandler::OAuthHttpServerReplyHandler(quint16 port, const modularity::ContextPtr& iocCtx, QObject* parent)
+OAuthHttpServerReplyHandler::OAuthHttpServerReplyHandler(quint16 port,
+                                                         const modularity::ContextPtr& iocCtx,
+                                                         QObject* parent)
     : OAuthHttpServerReplyHandler(QHostAddress::Any, port, iocCtx, parent)
 {}
 
-OAuthHttpServerReplyHandler::OAuthHttpServerReplyHandler(const QHostAddress& address, quint16 port, const modularity::ContextPtr& iocCtx,
+OAuthHttpServerReplyHandler::OAuthHttpServerReplyHandler(const QHostAddress& address, quint16 port,
+                                                         const modularity::ContextPtr& iocCtx,
                                                          QObject* parent)
     : QOAuthOobReplyHandler(parent), m_impl(std::make_unique<Impl>(this, iocCtx))
 {

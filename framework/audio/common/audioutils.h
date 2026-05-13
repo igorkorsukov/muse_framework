@@ -60,7 +60,8 @@ inline String audioSourceName(const AudioInputParams& params)
             return presetName;
         }
 
-        const String& soundFontName = params.resourceMeta.attributeVal(synth::SOUNDFONT_NAME_ATTRIBUTE);
+        const String& soundFontName = params.resourceMeta.attributeVal(
+            synth::SOUNDFONT_NAME_ATTRIBUTE);
         if (!soundFontName.empty()) {
             return soundFontName;
         }

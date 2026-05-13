@@ -69,14 +69,18 @@ class TableViewHeader : public QObject
 
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
 
-    Q_PROPERTY(muse::uicomponents::TableViewCellType::Type cellType READ cellType NOTIFY cellTypeChanged FINAL)
-    Q_PROPERTY(muse::uicomponents::TableViewCellEditMode::Mode cellEditMode READ cellEditMode NOTIFY cellEditModeChanged FINAL)
+    Q_PROPERTY(
+        muse::uicomponents::TableViewCellType::Type cellType READ cellType NOTIFY cellTypeChanged FINAL)
+    Q_PROPERTY(
+        muse::uicomponents::TableViewCellEditMode::Mode cellEditMode READ cellEditMode NOTIFY cellEditModeChanged FINAL)
 
-    Q_PROPERTY(int preferredWidth READ preferredWidth WRITE setPreferredWidth NOTIFY preferredWidthChanged FINAL)
+    Q_PROPERTY(
+        int preferredWidth READ preferredWidth WRITE setPreferredWidth NOTIFY preferredWidthChanged FINAL)
 
     Q_PROPERTY(
         muse::uicomponents::MenuItemList availableFormats READ availableFormats WRITE setAvailableFormats NOTIFY availableFormatsChanged FINAL)
-    Q_PROPERTY(QString currentFormatId READ currentFormatId WRITE setCurrentFormatId NOTIFY currentFormatIdChanged FINAL)
+    Q_PROPERTY(
+        QString currentFormatId READ currentFormatId WRITE setCurrentFormatId NOTIFY currentFormatIdChanged FINAL)
 
 public:
     explicit TableViewHeader(QObject* parent = nullptr);

@@ -101,28 +101,62 @@ public:
     inline bool operator>(T n) const { return m_val > n; }
     inline bool operator<(T n) const { return m_val < n; }
 
-    inline bool operator>=(const number_t<T>& n) const { return m_val > n.m_val || muse::is_equal(m_val, n.m_val); }
-    inline bool operator<=(const number_t<T>& n) const { return m_val < n.m_val || muse::is_equal(m_val, n.m_val); }
+    inline bool operator>=(const number_t<T>& n) const
+    {
+        return m_val > n.m_val || muse::is_equal(m_val, n.m_val);
+    }
+    inline bool operator<=(const number_t<T>& n) const
+    {
+        return m_val < n.m_val || muse::is_equal(m_val, n.m_val);
+    }
     inline bool operator>=(T n) const { return m_val > n || muse::is_equal(m_val, n); }
     inline bool operator<=(T n) const { return m_val < n || muse::is_equal(m_val, n); }
 
-    inline number_t<T> operator+(const number_t<T>& n) const { return number_t<T>(m_val + n.m_val); }
-    inline number_t<T> operator-(const number_t<T>& n) const { return number_t<T>(m_val - n.m_val); }
+    inline number_t<T> operator+(const number_t<T>& n) const
+    {
+        return number_t<T>(m_val + n.m_val);
+    }
+    inline number_t<T> operator-(const number_t<T>& n) const
+    {
+        return number_t<T>(m_val - n.m_val);
+    }
     inline number_t<T> operator+(T n) const { return number_t<T>(m_val + n); }
     inline number_t<T> operator-(T n) const { return number_t<T>(m_val - n); }
 
-    inline number_t<T>& operator+=(const number_t<T>& n) { m_val += muse::check_valid(n.m_val); return *this; }
-    inline number_t<T>& operator-=(const number_t<T>& n) { m_val -= muse::check_valid(n.m_val); return *this; }
+    inline number_t<T>& operator+=(const number_t<T>& n)
+    {
+        m_val += muse::check_valid(n.m_val);
+        return *this;
+    }
+    inline number_t<T>& operator-=(const number_t<T>& n)
+    {
+        m_val -= muse::check_valid(n.m_val);
+        return *this;
+    }
     inline number_t<T>& operator+=(T n) { m_val += muse::check_valid(n); return *this; }
     inline number_t<T>& operator-=(T n) { m_val -= muse::check_valid(n); return *this; }
 
-    inline number_t<T> operator/(const number_t<T>& n) const { return number_t<T>(m_val / n.m_val); }
-    inline number_t<T> operator*(const number_t<T>& n) const { return number_t<T>(m_val * n.m_val); }
+    inline number_t<T> operator/(const number_t<T>& n) const
+    {
+        return number_t<T>(m_val / n.m_val);
+    }
+    inline number_t<T> operator*(const number_t<T>& n) const
+    {
+        return number_t<T>(m_val * n.m_val);
+    }
     inline number_t<T> operator/(T n) const { return number_t<T>(m_val / n); }
     inline number_t<T> operator*(T n) const { return number_t<T>(m_val * n); }
 
-    inline number_t<T>& operator/=(const number_t<T>& n) { m_val /= muse::check_valid(n.m_val, T(1)); return *this; }
-    inline number_t<T>& operator*=(const number_t<T>& n) { m_val *= muse::check_valid(n.m_val); return *this; }
+    inline number_t<T>& operator/=(const number_t<T>& n)
+    {
+        m_val /= muse::check_valid(n.m_val, T(1));
+        return *this;
+    }
+    inline number_t<T>& operator*=(const number_t<T>& n)
+    {
+        m_val *= muse::check_valid(n.m_val);
+        return *this;
+    }
     inline number_t<T>& operator/=(T n) { m_val /= muse::check_valid(n, T(1)); return *this; }
     inline number_t<T>& operator*=(T n) { m_val *= muse::check_valid(n); return *this; }
 
@@ -179,7 +213,8 @@ inline T divide(const T& dividend, const T& divisor, const T& def)
 #endif
 
 template<typename T>
-inline number_t<T> divide(const number_t<T>& dividend, const number_t<T>& divisor, const number_t<T>& def)
+inline number_t<T> divide(const number_t<T>& dividend, const number_t<T>& divisor,
+                          const number_t<T>& def)
 {
     if (divisor.is_zero()) {
         return def;

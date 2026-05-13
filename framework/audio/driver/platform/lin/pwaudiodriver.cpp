@@ -126,8 +126,8 @@ public:
 private:
 
     // C-style callbacks and their corresponding C++ methods
-    static void c_register_global(void* data, uint32_t id, uint32_t /* perms*/, const char* type, uint32_t /*version*/,
-                                  const struct spa_dict* props);
+    static void c_register_global(void* data, uint32_t id, uint32_t /* perms*/, const char* type,
+                                  uint32_t /*version*/, const struct spa_dict* props);
     void registerGlobal(uint32_t id, const char* type, const struct spa_dict* props);
 
     static void c_unregister_global(void* data, uint32_t id);
@@ -292,7 +292,8 @@ void PwRegistry::roundtripDone(uint32_t id, int seq)
     }
 }
 
-void PwRegistry::c_register_global(void* data, uint32_t id, uint32_t /* permissions*/, const char* type, uint32_t /*version*/,
+void PwRegistry::c_register_global(void* data, uint32_t id, uint32_t /* permissions*/,
+                                   const char* type, uint32_t /*version*/,
                                    const struct spa_dict* props)
 {
     auto registry = static_cast<PwRegistry*>(data);
@@ -329,7 +330,8 @@ void PwRegistry::registerGlobal(uint32_t id, const char* type, const struct spa_
             auto nick = spa_dict_lookup(props, PW_KEY_NODE_NICK);
             auto desc = spa_dict_lookup(props, PW_KEY_NODE_DESCRIPTION);
             auto deviceIdStr = spa_dict_lookup(props, PW_KEY_DEVICE_ID);
-            auto deviceId = static_cast<uint32_t>(deviceIdStr ? std::strtoul(deviceIdStr, nullptr, 10) : 0);
+            auto deviceId
+                = static_cast<uint32_t>(deviceIdStr ? std::strtoul(deviceIdStr, nullptr, 10) : 0);
 
             LOGD() << "Registering sink node: " << name << " (device " << deviceId << ")";
 
@@ -433,8 +435,10 @@ PwStream::PwStream(pw_core* core, const IAudioDriver::Spec& spec, const std::str
         m_spec.output.samplesPerChannel = MINIMUM_BUFFER_SIZE * 4;
     }
 
-    m_spec.output.samplesPerChannel = std::max(MINIMUM_BUFFER_SIZE, m_spec.output.samplesPerChannel);
-    m_spec.output.samplesPerChannel = std::min(MAXIMUM_BUFFER_SIZE, m_spec.output.samplesPerChannel);
+    m_spec.output.samplesPerChannel
+        = std::max(MINIMUM_BUFFER_SIZE, m_spec.output.samplesPerChannel);
+    m_spec.output.samplesPerChannel
+        = std::min(MAXIMUM_BUFFER_SIZE, m_spec.output.samplesPerChannel);
     // Request for a specific number of samples.
     // This is done through the "node.latency" property.
     // Note: user system configuration can override this. e.g.:
@@ -643,7 +647,10 @@ bool PwAudioDriver::isOpened() const { return m_stream != nullptr; }
 
 const IAudioDriver::Spec& PwAudioDriver::activeSpec() const { return m_formatSpec; }
 
-async::Channel<IAudioDriver::Spec> PwAudioDriver::activeSpecChanged() const { return m_activeSpecChanged; }
+async::Channel<IAudioDriver::Spec> PwAudioDriver::activeSpecChanged() const
+{
+    return m_activeSpecChanged;
+}
 
 AudioDeviceList PwAudioDriver::availableOutputDevices() const
 {

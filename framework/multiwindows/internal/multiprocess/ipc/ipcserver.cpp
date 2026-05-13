@@ -69,7 +69,8 @@ bool IpcServer::listen(const QString& serverName)
             return;
         }
 
-        QObject::connect(socket, &QLocalSocket::errorOccurred, [](QLocalSocket::LocalSocketError err) {
+        QObject::connect(socket, &QLocalSocket::errorOccurred,
+                         [](QLocalSocket::LocalSocketError err) {
             LOGE() << "socket error: " << socketErrorToString(err);
         });
 

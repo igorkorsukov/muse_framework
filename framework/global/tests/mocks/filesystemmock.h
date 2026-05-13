@@ -33,8 +33,10 @@ public:
     MOCK_METHOD(Ret, exists, (const io::path_t&), (const, override));
     MOCK_METHOD(Ret, remove, (const io::path_t&, bool onlyIfEmpty), (override));
     MOCK_METHOD(Ret, clear, (const io::path_t&), (override));
-    MOCK_METHOD(Ret, copy, (const io::path_t& src, const io::path_t& dst, bool replace), (override));
-    MOCK_METHOD(Ret, move, (const io::path_t& src, const io::path_t& dst, bool replace), (override));
+    MOCK_METHOD(Ret, copy, (const io::path_t& src, const io::path_t& dst, bool replace),
+                (override));
+    MOCK_METHOD(Ret, move, (const io::path_t& src, const io::path_t& dst, bool replace),
+                (override));
 
     MOCK_METHOD(EntryType, entryType, (const io::path_t& path), (const, override));
 
@@ -44,16 +46,21 @@ public:
     MOCK_METHOD(Ret, readFile, (const io::path_t& filePath, ByteArray & data), (const, override));
     MOCK_METHOD(Ret, writeFile, (const io::path_t& filePath, const ByteArray& data), (override));
 
-    MOCK_METHOD(RetVal<StreamId>, openStream, (const io::path_t& filePath, OpenMode mode), (override));
-    MOCK_METHOD(Ret, writeToStream, (StreamId fileId, const ByteArray& data, uint64_t offset), (override));
+    MOCK_METHOD(RetVal<StreamId>, openStream, (const io::path_t& filePath, OpenMode mode),
+                (override));
+    MOCK_METHOD(Ret, writeToStream, (StreamId fileId, const ByteArray& data, uint64_t offset),
+                (override));
     MOCK_METHOD(Ret, closeStream, (StreamId fileId), (override));
 
     MOCK_METHOD(Ret, makePath, (const io::path_t&), (const, override));
-    MOCK_METHOD(Ret, makeLink, (const io::path_t& targetPath, const io::path_t& linkPath), (const, override));
+    MOCK_METHOD(Ret, makeLink, (const io::path_t& targetPath, const io::path_t& linkPath),
+                (const, override));
 
-    MOCK_METHOD(RetVal<io::paths_t>, scanFiles, (const io::path_t&, const std::vector<std::string>&, ScanMode), (const, override));
+    MOCK_METHOD(RetVal<io::paths_t>, scanFiles,
+                (const io::path_t&, const std::vector<std::string>&, ScanMode), (const, override));
 
-    MOCK_METHOD(void, setAttribute, (const io::path_t& path, Attribute attribute), (const, override));
+    MOCK_METHOD(void, setAttribute, (const io::path_t& path, Attribute attribute),
+                (const, override));
     MOCK_METHOD(bool, setPermissionsAllowedForAll, (const io::path_t& path), (const, override));
 
     MOCK_METHOD(io::path_t, canonicalFilePath, (const io::path_t& filePath), (const, override));

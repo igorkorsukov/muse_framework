@@ -125,7 +125,8 @@ async::Notification WinMidiInPort::availableDevicesChanged() const
     return m_availableDevicesChanged;
 }
 
-static void CALLBACK process(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
+static void CALLBACK process(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1,
+                             DWORD_PTR dwParam2)
 {
     WinMidiInPort* self = reinterpret_cast<WinMidiInPort*>(dwInstance);
 
@@ -190,7 +191,8 @@ Ret WinMidiInPort::connect(const MidiDeviceID& deviceID)
                                       CALLBACK_FUNCTION | MIDI_IO_STATUS);
 
         if (openRes != MMSYSERR_NOERROR) {
-            return make_ret(Err::MidiFailedConnect, "failed open port, error: " + wmidi_prv::errorString(ret));
+            return make_ret(Err::MidiFailedConnect, "failed open port, error: " + wmidi_prv::errorString(
+                                ret));
         }
 
         m_deviceID = deviceID;

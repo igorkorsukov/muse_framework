@@ -58,7 +58,8 @@ static const std::unordered_map<String, StaffType> STAFF_NAME_LOWER_CASE_TO_TYPE
     { u"grand", StaffType::Grand },
 };
 
-InstrumentInfo findInstrument(MuseSamplerLibHandlerPtr libHandler, const AudioResourceMeta& resourceMeta)
+InstrumentInfo findInstrument(MuseSamplerLibHandlerPtr libHandler,
+                              const AudioResourceMeta& resourceMeta)
 {
     if (!libHandler) {
         return InstrumentInfo();
@@ -95,11 +96,13 @@ void MuseSamplerResolver::init()
         return;
     }
 
-    if (!m_libHandler->loadApi(configuration()->minSupportedVersion(), configuration()->useLegacyAudition())) {
+    if (!m_libHandler->loadApi(configuration()->minSupportedVersion(),
+                               configuration()->useLegacyAudition())) {
         m_samplerVersion = m_libHandler->version();
         m_samplerBuildNumber = m_libHandler->buildNumber();
         m_libHandler.reset();
-        LOGE() << "Incompatible MuseSampler library: " << libraryPath << ", version: " << m_samplerVersion.toString();
+        LOGE() << "Incompatible MuseSampler library: " << libraryPath << ", version: " <<
+            m_samplerVersion.toString();
         return;
     }
 
@@ -107,7 +110,8 @@ void MuseSamplerResolver::init()
     m_samplerBuildNumber = m_libHandler->buildNumber();
 
     if (!m_libHandler->init()) {
-        LOGE() << "Could not init MuseSampler: " << libraryPath << ", version: " << m_samplerVersion.toString();
+        LOGE() << "Could not init MuseSampler: " << libraryPath << ", version: " <<
+            m_samplerVersion.toString();
         m_libHandler.reset();
         return;
     }
@@ -129,7 +133,8 @@ void MuseSamplerResolver::init()
         }
     });
 
-    LOGI() << "MuseSampler successfully inited: " << libraryPath << ", version: " << m_samplerVersion.toString();
+    LOGI() << "MuseSampler successfully inited: " << libraryPath << ", version: " <<
+        m_samplerVersion.toString();
 }
 
 void MuseSamplerResolver::deinit()
@@ -155,7 +160,8 @@ int MuseSamplerResolver::buildNumber() const
     return m_samplerBuildNumber;
 }
 
-ISynthesizerPtr MuseSamplerResolver::resolveSynth(const TrackId /*trackId*/, const AudioInputParams& params,
+ISynthesizerPtr MuseSamplerResolver::resolveSynth(const TrackId /*trackId*/,
+                                                  const AudioInputParams& params,
                                                   const audio::OutputSpec&) const
 {
     const InstrumentInfo instrument = findInstrument(m_libHandler, params.resourceMeta);
@@ -189,12 +195,15 @@ AudioResourceMetaList MuseSamplerResolver::resolveResources() const
     while (auto instrument = m_libHandler->getNextInstrument(instrumentList)) {
         const int instrumentId = m_libHandler->getInstrumentId(instrument);
         const String internalName = String::fromUtf8(m_libHandler->getInstrumentName(instrument));
-        const String internalCategory = String::fromUtf8(m_libHandler->getInstrumentCategory(instrument));
+        const String internalCategory
+            = String::fromUtf8(m_libHandler->getInstrumentCategory(instrument));
         const String instrumentSoundId = String::fromUtf8(m_libHandler->getMpeSoundId(instrument));
-        const String vendorName = String::fromUtf8(m_libHandler->getInstrumentVendorName(instrument));
+        const String vendorName
+            = String::fromUtf8(m_libHandler->getInstrumentVendorName(instrument));
         const bool isOnline = m_libHandler->isOnlineInstrument(instrument);
 
-        String instrumentPackName = String::fromUtf8(m_libHandler->getInstrumentPackName(instrument));
+        String instrumentPackName
+            = String::fromUtf8(m_libHandler->getInstrumentPackName(instrument));
         if (instrumentPackName.empty()) {
             instrumentPackName = internalCategory;
         }
@@ -222,7 +231,8 @@ AudioResourceMetaList MuseSamplerResolver::resolveResources() const
     return result;
 }
 
-SoundPresetList MuseSamplerResolver::resolveSoundPresets(const AudioResourceMeta& resourceMeta) const
+SoundPresetList MuseSamplerResolver::resolveSoundPresets(const AudioResourceMeta& resourceMeta)
+const
 {
     InstrumentInfo instrument = findInstrument(m_libHandler, resourceMeta);
     if (!instrument.msInstrument) {
@@ -348,8 +358,11 @@ std::vector<Instrument> MuseSamplerResolver::instruments() const
         instrument.vendor = obj.value("Vendor").toString();
         instrument.staffLines = obj.value("StaffLines", "5").toString().toInt();
         instrument.staffType = muse::value(STAFF_NAME_LOWER_CASE_TO_TYPE, obj.value(
-                                               "DefaultStaffType").toString().toLower(), StaffType::Standard);
-        instrument.clefType = muse::value(CLEF_NAME_LOWER_CASE_TO_TYPE, obj.value("DefaultClef").toString().toLower(), ClefType::Treble);
+                                               "DefaultStaffType").toString().toLower(),
+                                           StaffType::Standard);
+        instrument.clefType = muse::value(CLEF_NAME_LOWER_CASE_TO_TYPE, obj.value(
+                                              "DefaultClef").toString().toLower(),
+                                          ClefType::Treble);
 
         result.emplace_back(std::move(instrument));
     }
@@ -357,7 +370,8 @@ std::vector<Instrument> MuseSamplerResolver::instruments() const
     return result;
 }
 
-void MuseSamplerResolver::loadSoundPresetAttributes(SoundPresetAttributes& attributes, int instrumentId, const char* presetCode) const
+void MuseSamplerResolver::loadSoundPresetAttributes(SoundPresetAttributes& attributes,
+                                                    int instrumentId, const char* presetCode) const
 {
     const char* articulations_cstr = m_libHandler->getTextArticulations(instrumentId, presetCode);
     if (articulations_cstr) {

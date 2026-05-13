@@ -28,9 +28,11 @@
 using namespace muse::uicomponents;
 
 SelectMultipleDirectoriesModel::SelectMultipleDirectoriesModel(QObject* parent)
-    : QAbstractListModel(parent), muse::Contextable(muse::iocCtxForQmlObject(this)), m_selectionModel(new ItemMultiSelectionModel(this))
+    : QAbstractListModel(parent), muse::Contextable(muse::iocCtxForQmlObject(this)),
+    m_selectionModel(new ItemMultiSelectionModel(this))
 {
-    connect(m_selectionModel, &ItemMultiSelectionModel::selectionChanged, this, &SelectMultipleDirectoriesModel::selectionChanged);
+    connect(m_selectionModel, &ItemMultiSelectionModel::selectionChanged, this,
+            &SelectMultipleDirectoriesModel::selectionChanged);
 }
 
 QVariant SelectMultipleDirectoriesModel::data(const QModelIndex& index, int role) const
@@ -48,7 +50,8 @@ QVariant SelectMultipleDirectoriesModel::data(const QModelIndex& index, int role
     return QVariant();
 }
 
-bool SelectMultipleDirectoriesModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool SelectMultipleDirectoriesModel::setData(const QModelIndex& index, const QVariant& value,
+                                             int role)
 {
     if (!index.isValid()) {
         return false;
@@ -124,7 +127,9 @@ void SelectMultipleDirectoriesModel::removeSelectedDirectories()
 
 void SelectMultipleDirectoriesModel::addDirectory()
 {
-    io::path_t path = interactive()->selectDirectory(muse::trc("ui", "Choose directory"), m_dir.toStdString());
+    io::path_t path = interactive()->selectDirectory(muse::trc("ui",
+                                                               "Choose directory"),
+                                                     m_dir.toStdString());
     if (path.empty()) {
         return;
     }

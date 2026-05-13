@@ -28,15 +28,20 @@
 #include "internal/libhandler.h"
 
 namespace muse::musesampler {
-class MuseSamplerSequencer : public audio::engine::AbstractEventSequencer<mpe::NoteEvent, AuditionStartNoteEvent, AuditionStopNoteEvent,
+class MuseSamplerSequencer : public audio::engine::AbstractEventSequencer<mpe::NoteEvent,
+                                                                          AuditionStartNoteEvent,
+                                                                          AuditionStopNoteEvent,
                                                                           AuditionCCEvent>
 {
 public:
-    void init(MuseSamplerLibHandlerPtr samplerLib, ms_MuseSampler sampler, IMuseSamplerTracks* tracks, std::string&& defaultPresetCode);
+    void init(MuseSamplerLibHandlerPtr samplerLib, ms_MuseSampler sampler,
+              IMuseSamplerTracks* tracks, std::string&& defaultPresetCode);
 
 private:
-    void updateOffStreamEvents(const mpe::PlaybackEventsMap& events, const mpe::DynamicLevelLayers& dynamics) override;
-    void updateMainStreamEvents(const mpe::PlaybackEventsMap& events, const mpe::DynamicLevelLayers& dynamics) override;
+    void updateOffStreamEvents(const mpe::PlaybackEventsMap& events,
+                               const mpe::DynamicLevelLayers& dynamics) override;
+    void updateMainStreamEvents(const mpe::PlaybackEventsMap& events,
+                                const mpe::DynamicLevelLayers& dynamics) override;
 
     void clearAllTracks();
     void finalizeAllTracks();
@@ -65,7 +70,8 @@ private:
     int pitchLevelToCents(const mpe::pitch_level_t pitchLevel) const;
     double dynamicLevelRatio(const mpe::dynamic_level_t level) const;
 
-    void parseArticulations(const mpe::ArticulationMap& articulations, ms_NoteArticulation& articulations1,
+    void parseArticulations(const mpe::ArticulationMap& articulations,
+                            ms_NoteArticulation& articulations1,
                             ms_NoteArticulation2& articulations2, ms_NoteHead& notehead) const;
 
     struct AuditionParams {
@@ -88,7 +94,8 @@ private:
     IMuseSamplerTracks* m_tracks = nullptr;
 
     std::unordered_map<mpe::layer_idx_t, track_idx_t> m_layerIdxToTrackIdx;
-    std::unordered_map<ms_Track, std::map<long long /*startUs*/, ms_PresetChange> > m_presetChangesByTrack;
+    std::unordered_map<ms_Track,
+                       std::map<long long /*startUs*/, ms_PresetChange> > m_presetChangesByTrack;
 
     std::string m_defaultPresetCode;
     AuditionParams m_auditionParamsCache;

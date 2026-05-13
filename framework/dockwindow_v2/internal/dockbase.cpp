@@ -733,7 +733,8 @@ void DockBase::applySizeConstraints()
         window->view()->setMinimumSize(minimumSize);
         window->view()->setMaximumSize(maximumSize);
 
-        const QSize winSize = adjustSizeByConstraints(window->view()->geometry().size(), minimumSize, maximumSize);
+        const QSize winSize = adjustSizeByConstraints(
+            window->view()->geometry().size(), minimumSize, maximumSize);
         const QRect winRect(window->dragRect().topLeft(), winSize);
         window->view()->setGeometry(winRect);
     }
@@ -808,9 +809,10 @@ void DockBase::setUpFrameConnections()
             *floatingChangedConnection = connect(groupView, &QQuickItem::parentChanged,
                                                  this, &DockBase::onIsInMainWindowChanged,
                                                  Qt::UniqueConnection);
-            *widgetChangedConnection = connect(groupView, &KDDockWidgets::QtQuick::Group::currentDockWidgetChanged,
-                                               this, &DockBase::frameCurrentWidgetChanged,
-                                               Qt::UniqueConnection);
+            *widgetChangedConnection
+                = connect(groupView, &KDDockWidgets::QtQuick::Group::currentDockWidgetChanged,
+                          this, &DockBase::frameCurrentWidgetChanged,
+                          Qt::UniqueConnection);
         }
     });
 
@@ -864,7 +866,8 @@ void DockBase::setInited(bool inited)
 
 bool DropDestination::operator==(const DropDestination& dest) const
 {
-    return dock == dest.dock && dropLocation == dest.dropLocation && dropDistance == dest.dropDistance;
+    return dock == dest.dock && dropLocation == dest.dropLocation
+           && dropDistance == dest.dropDistance;
 }
 
 bool DropDestination::isValid() const

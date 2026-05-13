@@ -35,7 +35,8 @@ ToursProvider::ToursProvider(const modularity::ContextPtr& iocCtx)
 {
     connect(&m_openTimer, &QTimer::timeout, this, &ToursProvider::doShow);
 
-    connect(qApp, &QApplication::applicationStateChanged, this, &ToursProvider::onApplicationStateChanged);
+    connect(qApp, &QApplication::applicationStateChanged, this,
+            &ToursProvider::onApplicationStateChanged);
 }
 
 void ToursProvider::showTour(const Tour& tour)
@@ -104,7 +105,8 @@ void ToursProvider::doShow()
     //! NOTE: Avoid showing tooltip for control when tour for that control is shown
     setBlockShowingTooltipForItem(parentControlItem, true);
 
-    emit openTourStep(parentControlItem, step.title, step.description, step.previewImageOrGifUrl, step.videoExplanationUrl, index,
+    emit openTourStep(parentControlItem, step.title, step.description, step.previewImageOrGifUrl,
+                      step.videoExplanationUrl, index,
                       m_totalSteps);
 }
 

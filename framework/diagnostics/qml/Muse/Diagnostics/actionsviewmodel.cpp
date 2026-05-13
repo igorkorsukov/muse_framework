@@ -88,7 +88,8 @@ void ActionsViewModel::load()
 
     for (Item& item : m_allItems) {
         item.formatted = QString("action: %1, isreg: %2, title: %3, ishasui: %4")
-                         .arg(item.actionCode).arg(item.isReg).arg(item.actionTitle).arg(item.isHasUi);
+                         .arg(item.actionCode).arg(item.isReg).arg(item.actionTitle).arg(
+            item.isHasUi);
     }
 
     std::sort(m_allItems.begin(), m_allItems.end(), [](const Item& f, const Item& s) {

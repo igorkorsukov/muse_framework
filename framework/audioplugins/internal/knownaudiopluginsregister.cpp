@@ -138,8 +138,11 @@ Ret KnownAudioPluginsRegister::load()
 
         AudioPluginInfo info;
         info.meta = metaFromJson(object.value("meta").toObject());
-        info.meta.attributes.emplace(audio::PLAYBACK_SETUP_DATA_ATTRIBUTE, mpe::GENERIC_SETUP_DATA_STRING);
-        info.type = audioPluginTypeFromCategoriesString(info.meta.attributeVal(audio::CATEGORIES_ATTRIBUTE));
+        info.meta.attributes.emplace(audio::PLAYBACK_SETUP_DATA_ATTRIBUTE,
+                                     mpe::GENERIC_SETUP_DATA_STRING);
+        info.type
+            = audioPluginTypeFromCategoriesString(info.meta.attributeVal(
+                                                      audio::CATEGORIES_ATTRIBUTE));
         info.path = object.value("path").toString();
         info.enabled = object.value("enabled").toBool();
         info.errorCode = object.value("errorCode").toInt();

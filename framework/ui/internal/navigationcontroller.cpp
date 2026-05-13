@@ -56,7 +56,8 @@ using ActivationType = INavigation::ActivationType;
 
 // algorithms
 template<class T>
-static T* findNearestEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex, MoveDirection direction)
+static T* findNearestEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex,
+                             MoveDirection direction)
 {
     TRACEFUNC;
     T* ret = nullptr;
@@ -163,7 +164,8 @@ static T* findNearestEnabled(const std::set<T*>& set, const INavigation::Index& 
 }
 
 template<class T>
-static T* firstEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex, MoveDirection direction)
+static T* firstEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex,
+                       MoveDirection direction)
 {
     if (set.empty()) {
         return nullptr;
@@ -187,7 +189,8 @@ static T* firstEnabled(const std::set<T*>& set)
 }
 
 template<class T>
-static T* lastEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex, MoveDirection direction)
+static T* lastEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex,
+                      MoveDirection direction)
 {
     if (set.empty()) {
         return nullptr;
@@ -222,7 +225,8 @@ static T* nextEnabled(const std::set<T*>& set, const INavigation::Index& current
 }
 
 template<class T>
-static T* prevEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex, MoveDirection direction = MoveDirection::Left)
+static T* prevEnabled(const std::set<T*>& set, const INavigation::Index& currentIndex,
+                      MoveDirection direction = MoveDirection::Left)
 {
     if (set.empty()) {
         return nullptr;
@@ -275,8 +279,12 @@ static T* findByIndex(const std::set<T*>& set, const INavigation::Index& idx)
 
 void NavigationController::init()
 {
-    dispatcher()->reg(this, "nav-next-section", [this]() { navigateTo(NavigationType::NextSection); });
-    dispatcher()->reg(this, "nav-prev-section", [this]() { navigateTo(NavigationType::PrevSection); });
+    dispatcher()->reg(this, "nav-next-section", [this]() {
+        navigateTo(NavigationType::NextSection);
+    });
+    dispatcher()->reg(this, "nav-prev-section", [this]() {
+        navigateTo(NavigationType::PrevSection);
+    });
     dispatcher()->reg(this, "nav-next-panel", [this]() { navigateTo(NavigationType::NextPanel); });
     dispatcher()->reg(this, "nav-prev-panel", [this]() { navigateTo(NavigationType::PrevPanel); });
     //! NOTE Same as panel at the moment
@@ -291,10 +299,18 @@ void NavigationController::init()
     dispatcher()->reg(this, "nav-down", [this]() { navigateTo(NavigationType::Down); });
     dispatcher()->reg(this, "nav-escape", [this]() { onEscape(); });
 
-    dispatcher()->reg(this, "nav-first-control", [this]() { navigateTo(NavigationType::FirstControl); });         // typically Home key
-    dispatcher()->reg(this, "nav-last-control", [this]() { navigateTo(NavigationType::LastControl); });           // typically End key
-    dispatcher()->reg(this, "nav-nextrow-control", [this]() { navigateTo(NavigationType::NextRowControl); });     // typically PageDown key
-    dispatcher()->reg(this, "nav-prevrow-control", [this]() { navigateTo(NavigationType::PrevRowControl); });     // typically PageUp key
+    dispatcher()->reg(this, "nav-first-control", [this]() {
+        navigateTo(NavigationType::FirstControl);
+    });                                                                                                           // typically Home key
+    dispatcher()->reg(this, "nav-last-control", [this]() {
+        navigateTo(NavigationType::LastControl);
+    });                                                                                                           // typically End key
+    dispatcher()->reg(this, "nav-nextrow-control", [this]() {
+        navigateTo(NavigationType::NextRowControl);
+    });                                                                                                           // typically PageDown key
+    dispatcher()->reg(this, "nav-prevrow-control", [this]() {
+        navigateTo(NavigationType::PrevRowControl);
+    });                                                                                                           // typically PageUp key
 
     qApp->installEventFilter(this);
 }
@@ -304,7 +320,8 @@ void NavigationController::reg(INavigationSection* section)
     //! TODO add check on valid state
     TRACEFUNC;
     m_sections.insert(section);
-    section->setOnActiveRequested([this](INavigationSection* section, INavigationPanel* panel, INavigationControl* control,
+    section->setOnActiveRequested([this](INavigationSection* section, INavigationPanel* panel,
+                                         INavigationControl* control,
                                          bool enableHighlight, ActivationType activationType) {
         if (control && activationType == ActivationType::ByMouse) {
             if (section->type() != INavigationSection::Type::Exclusive) {
@@ -580,7 +597,8 @@ void NavigationController::doActivateControl(INavigationControl* ctrl)
     }
 
     ctrl->setActive(true);
-    MYLOG() << "activated control: " << ctrl->name() << ", row: " << ctrl->index().row << ", column: " << ctrl->index().column;
+    MYLOG() << "activated control: " << ctrl->name() << ", row: " << ctrl->index().row <<
+    ", column: " << ctrl->index().column;
 }
 
 void NavigationController::doDeactivateControl(INavigationControl* ctrl)
@@ -654,19 +672,24 @@ const INavigationSection* NavigationController::findSection(const std::string& s
     return sec;
 }
 
-const INavigationPanel* NavigationController::findPanel(const std::string& sectionName, const std::string& panelName) const
+const INavigationPanel* NavigationController::findPanel(const std::string& sectionName,
+                                                        const std::string& panelName) const
 {
     const INavigationSection* sec = findByName(m_sections, QString::fromStdString(sectionName));
-    const INavigationPanel* pnl = sec ? findByName(sec->panels(), QString::fromStdString(panelName)) : nullptr;
+    const INavigationPanel* pnl
+        = sec ? findByName(sec->panels(), QString::fromStdString(panelName)) : nullptr;
     return pnl;
 }
 
-const INavigationControl* NavigationController::findControl(const std::string& sectionName, const std::string& panelName,
+const INavigationControl* NavigationController::findControl(const std::string& sectionName,
+                                                            const std::string& panelName,
                                                             const std::string& controlName) const
 {
     const INavigationSection* sec = findByName(m_sections, QString::fromStdString(sectionName));
-    const INavigationPanel* pnl = sec ? findByName(sec->panels(), QString::fromStdString(panelName)) : nullptr;
-    const INavigationControl* ctrl = pnl ? findByName(pnl->controls(), QString::fromStdString(controlName)) : nullptr;
+    const INavigationPanel* pnl
+        = sec ? findByName(sec->panels(), QString::fromStdString(panelName)) : nullptr;
+    const INavigationControl* ctrl
+        = pnl ? findByName(pnl->controls(), QString::fromStdString(controlName)) : nullptr;
 
     return ctrl;
 }
@@ -1102,11 +1125,14 @@ void NavigationController::goToControl(MoveDirection direction, INavigationPanel
     } break;
     case MoveDirection::Right: {
         if (!activeControl) { // no any active
-            toControl = firstEnabled(activePanel->controls(), INavigation::Index(), MoveDirection::Right);
+            toControl = firstEnabled(activePanel->controls(),
+                                     INavigation::Index(), MoveDirection::Right);
         } else {
-            toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Right);
+            toControl = nextEnabled(activePanel->controls(),
+                                    activeControl->index(), MoveDirection::Right);
             if (!toControl && tryOtherOrientation) {
-                toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Down);
+                toControl = nextEnabled(activePanel->controls(),
+                                        activeControl->index(), MoveDirection::Down);
             }
             if (!toControl) { // active is last
                 if (activePanel->direction() == INavigationPanel::Direction::Horizontal) {
@@ -1128,11 +1154,14 @@ void NavigationController::goToControl(MoveDirection direction, INavigationPanel
     } break;
     case MoveDirection::Down: {
         if (!activeControl) { // no any active
-            toControl = firstEnabled(activePanel->controls(), INavigation::Index(), MoveDirection::Down);
+            toControl = firstEnabled(activePanel->controls(),
+                                     INavigation::Index(), MoveDirection::Down);
         } else {
-            toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Down);
+            toControl = nextEnabled(activePanel->controls(),
+                                    activeControl->index(), MoveDirection::Down);
             if (!toControl && tryOtherOrientation) {
-                toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Right);
+                toControl = nextEnabled(activePanel->controls(),
+                                        activeControl->index(), MoveDirection::Right);
             }
             if (!toControl) { // active is last
                 if (activePanel->direction() == INavigationPanel::Direction::Vertical) {
@@ -1154,11 +1183,14 @@ void NavigationController::goToControl(MoveDirection direction, INavigationPanel
     } break;
     case MoveDirection::Left: {
         if (!activeControl) { // no any active
-            toControl = lastEnabled(activePanel->controls(), INavigation::Index(), MoveDirection::Left);
+            toControl = lastEnabled(activePanel->controls(),
+                                    INavigation::Index(), MoveDirection::Left);
         } else {
-            toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Left);
+            toControl = nextEnabled(activePanel->controls(),
+                                    activeControl->index(), MoveDirection::Left);
             if (!toControl && tryOtherOrientation) {
-                toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Up);
+                toControl = nextEnabled(activePanel->controls(),
+                                        activeControl->index(), MoveDirection::Up);
             }
             if (!toControl) { // active is first
                 if (activePanel->direction() == INavigationPanel::Direction::Horizontal) {
@@ -1180,11 +1212,14 @@ void NavigationController::goToControl(MoveDirection direction, INavigationPanel
     } break;
     case MoveDirection::Up: {
         if (!activeControl) { // no any active
-            toControl = lastEnabled(activePanel->controls(), INavigation::Index(), MoveDirection::Up);
+            toControl
+                = lastEnabled(activePanel->controls(), INavigation::Index(), MoveDirection::Up);
         } else {
-            toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Up);
+            toControl = nextEnabled(activePanel->controls(),
+                                    activeControl->index(), MoveDirection::Up);
             if (!toControl && tryOtherOrientation) {
-                toControl = nextEnabled(activePanel->controls(), activeControl->index(), MoveDirection::Left);
+                toControl = nextEnabled(activePanel->controls(),
+                                        activeControl->index(), MoveDirection::Left);
             }
             if (!toControl) { // active is first
                 if (activePanel->direction() == INavigationPanel::Direction::Vertical) {
@@ -1257,7 +1292,9 @@ void NavigationController::doTriggerControl()
     activeCtrl->trigger();
 }
 
-bool NavigationController::requestActivateByName(const std::string& sectName, const std::string& panelName, const std::string& controlName)
+bool NavigationController::requestActivateByName(const std::string& sectName,
+                                                 const std::string& panelName,
+                                                 const std::string& controlName)
 {
     INavigationSection* section = findByName(m_sections, QString::fromStdString(sectName));
     if (!section) {
@@ -1271,9 +1308,11 @@ bool NavigationController::requestActivateByName(const std::string& sectName, co
         return false;
     }
 
-    INavigationControl* control = findByName(panel->controls(), QString::fromStdString(controlName));
+    INavigationControl* control
+        = findByName(panel->controls(), QString::fromStdString(controlName));
     if (!control) {
-        LOGE() << "not found control with name: " << controlName << ", panel: " << panelName << ", section: " << sectName;
+        LOGE() << "not found control with name: " << controlName << ", panel: " << panelName <<
+        ", section: " << sectName;
         QString has = "has:\n";
         for (const INavigationControl* c : panel->controls()) {
             has += c->name() + "\n";
@@ -1286,7 +1325,8 @@ bool NavigationController::requestActivateByName(const std::string& sectName, co
     return true;
 }
 
-bool NavigationController::requestActivateByIndex(const std::string& sectName, const std::string& panelName,
+bool NavigationController::requestActivateByIndex(const std::string& sectName,
+                                                  const std::string& panelName,
                                                   const INavigation::Index& controlIndex)
 {
     INavigationSection* section = findByName(m_sections, QString::fromStdString(sectName));
@@ -1303,7 +1343,8 @@ bool NavigationController::requestActivateByIndex(const std::string& sectName, c
 
     INavigationControl* control = findByIndex(panel->controls(), controlIndex);
     if (!control) {
-        LOGE() << "not found control with index: " << controlIndex.to_string() << ", panel: " << panelName << ", section: " << sectName;
+        LOGE() << "not found control with index: " << controlIndex.to_string() << ", panel: " <<
+        panelName << ", section: " << sectName;
         std::string has = "has:\n";
         for (const INavigationControl* c : panel->controls()) {
             has += c->index().to_string() + "\n";
@@ -1316,7 +1357,8 @@ bool NavigationController::requestActivateByIndex(const std::string& sectName, c
     return true;
 }
 
-void NavigationController::onActiveRequested(INavigationSection* sect, INavigationPanel* panel, INavigationControl* ctrl, bool force)
+void NavigationController::onActiveRequested(INavigationSection* sect, INavigationPanel* panel,
+                                             INavigationControl* ctrl, bool force)
 {
     TRACEFUNC;
     UNUSED(force);
@@ -1379,7 +1421,8 @@ void NavigationController::onActiveRequested(INavigationSection* sect, INavigati
     if (!ctrl->active()) {
         ctrl->setActive(true);
         isChanged = true;
-        MYLOG() << "activated control: " << ctrl->name() << ", row: " << ctrl->index().row << ", column: " << ctrl->index().column;
+        MYLOG() << "activated control: " << ctrl->name() << ", row: " << ctrl->index().row <<
+        ", column: " << ctrl->index().column;
     }
 }
 

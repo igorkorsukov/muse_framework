@@ -29,9 +29,11 @@ namespace muse::draw {
 static constexpr double pi = 3.14159265358979323846;
 static constexpr double pathKappa = 0.5522847498;
 
-static void findEllipseCoords(const RectF& r, double angle, double length, PointF* startPoint, PointF* endPoint);
+static void findEllipseCoords(const RectF& r, double angle, double length, PointF* startPoint,
+                              PointF* endPoint);
 
-static PointF curvesForArc(const RectF& rect, double startAngle, double sweepLength, PointF* curves, int* point_count);
+static PointF curvesForArc(const RectF& rect, double startAngle, double sweepLength, PointF* curves,
+                           int* point_count);
 
 static double angleForArc(double angle);
 
@@ -141,7 +143,8 @@ RectF PainterPath::boundingRect() const
 
 bool PainterPath::isEmpty() const
 {
-    return m_elements.empty() || (m_elements.size() == 1 && m_elements.front().type == ElementType::MoveToElement);
+    return m_elements.empty()
+           || (m_elements.size() == 1 && m_elements.front().type == ElementType::MoveToElement);
 }
 
 size_t PainterPath::elementCount() const
@@ -335,7 +338,8 @@ QPainterPath PainterPath::toQPainterPath(const PainterPath& path)
                 continue;
             }
 
-            qpath.cubicTo(curveEls.at(0).x, curveEls.at(0).y, curveEls.at(1).x, curveEls.at(1).y, x, y);
+            qpath.cubicTo(curveEls.at(0).x, curveEls.at(0).y, curveEls.at(1).x, curveEls.at(
+                              1).y, x, y);
             curveEls.clear();
         } break;
         }
@@ -394,7 +398,8 @@ bool PainterPath::hasValidCoords(const PointF& p)
 
 bool PainterPath::hasValidCoords(const RectF& r)
 {
-    return isValidCoord(r.x()) && isValidCoord(r.y()) && isValidCoord(r.width()) && isValidCoord(r.height());
+    return isValidCoord(r.x()) && isValidCoord(r.y()) && isValidCoord(r.width()) && isValidCoord(
+        r.height());
 }
 
 void PainterPath::computeBoundingRect() const
@@ -502,7 +507,8 @@ static PointF curvesForArc(const RectF& rect, double startAngle, double sweepLen
     assert(point_count);
     assert(curves);
     *point_count = 0;
-    if (std::isnan(rect.x()) || std::isnan(rect.y()) || std::isnan(rect.width()) || std::isnan(rect.height())
+    if (std::isnan(rect.x()) || std::isnan(rect.y()) || std::isnan(rect.width())
+        || std::isnan(rect.height())
         || std::isnan(startAngle) || std::isnan(sweepLength)) {
         LOGW("PainterPath::arcTo: Adding arc where a parameter is NaN, results are undefined");
         return PointF();

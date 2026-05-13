@@ -91,7 +91,8 @@ public:
 
     QByteArray toQByteArrayNoCopy() const
     {
-        return QByteArray::fromRawData(reinterpret_cast<const char*>(constData()), static_cast<int>(size()));
+        return QByteArray::fromRawData(reinterpret_cast<const char*>(constData()),
+                                       static_cast<int>(size()));
     }
 
 #endif

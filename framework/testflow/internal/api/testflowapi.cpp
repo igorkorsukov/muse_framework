@@ -57,7 +57,8 @@ bool TestflowApi::pause(bool immediately)
 {
     if (immediately) {
         IInteractive::Result res = interactive()->questionSync("Pause", "Continue?",
-                                                               { IInteractive::Button::Continue, IInteractive::Button::Abort });
+                                                               { IInteractive::Button::Continue,
+                                                                 IInteractive::Button::Abort });
 
         if (res.standardButton() == IInteractive::Button::Abort) {
             abort();
@@ -128,7 +129,8 @@ bool TestflowApi::openProject(const QString& name)
         return false;
     }
 
-    dispatcher()->dispatch("file-open", ActionData::make_arg1<QUrl>(QUrl::fromLocalFile(filePath.toQString())));
+    dispatcher()->dispatch("file-open",
+                           ActionData::make_arg1<QUrl>(QUrl::fromLocalFile(filePath.toQString())));
 
     return true;
 }
@@ -141,7 +143,8 @@ void TestflowApi::saveProject(const QString& name)
         QDir().mkpath(dir.toQString());
     }
 
-    io::path_t filePath = dir + "/" + QDateTime::currentDateTime().toString("yyMMddhhmmss") + "_" + name;
+    io::path_t filePath = dir + "/" + QDateTime::currentDateTime().toString("yyMMddhhmmss") + "_"
+                          + name;
 
     dispatcher()->dispatch("file-save-at", ActionData::make_arg1<io::path_t>(filePath));
 }

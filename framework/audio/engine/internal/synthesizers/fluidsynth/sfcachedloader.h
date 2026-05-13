@@ -47,7 +47,8 @@ private:
     ~SoundFontCache()
     {
         for (const auto& pair : *this) {
-            fluid_defsfont_t* defsFont = static_cast<fluid_defsfont_t*>(fluid_sfont_get_data(pair.second.soundFontPtr));
+            fluid_defsfont_t* defsFont
+                = static_cast<fluid_defsfont_t*>(fluid_sfont_get_data(pair.second.soundFontPtr));
 
             if (delete_fluid_defsfont(defsFont) != FLUID_OK) {
                 continue;

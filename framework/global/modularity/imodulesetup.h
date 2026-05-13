@@ -79,7 +79,11 @@ public:
     virtual void onStartApp() {}
 
     // Context
-    virtual IContextSetup* newContext(const muse::modularity::ContextPtr& ctx) const { (void)ctx; return nullptr; }
+    virtual IContextSetup* newContext(const muse::modularity::ContextPtr& ctx) const
+    {
+        (void)ctx;
+        return nullptr;
+    }
 };
 }
 

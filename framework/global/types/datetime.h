@@ -46,7 +46,10 @@ public:
     int month() const;
     int day() const;
 
-    inline bool operator ==(const Date& d) const { return m_year == d.m_year && m_month == d.m_month && m_day == d.m_day; }
+    inline bool operator ==(const Date& d) const
+    {
+        return m_year == d.m_year && m_month == d.m_month && m_day == d.m_day;
+    }
     inline bool operator !=(const Date& d) const { return !this->operator ==(d); }
 
     int64_t daysTo(const Date& d) const;
@@ -78,7 +81,10 @@ public:
     int minute() const;
     int second() const;
 
-    inline bool operator ==(const Time& t) const { return m_hour == t.m_hour && m_minute == t.m_minute && m_second == t.m_second; }
+    inline bool operator ==(const Time& t) const
+    {
+        return m_hour == t.m_hour && m_minute == t.m_minute && m_second == t.m_second;
+    }
     inline bool operator !=(const Time& t) const { return !this->operator ==(t); }
 
     static Time currentTime();
@@ -106,7 +112,10 @@ public:
     const Date& date() const;
     const Time& time() const;
 
-    inline bool operator ==(const DateTime& dt) const { return dt.date() == date() && dt.time() == time(); }
+    inline bool operator ==(const DateTime& dt) const
+    {
+        return dt.date() == date() && dt.time() == time();
+    }
     inline bool operator !=(const DateTime& dt) const { return !this->operator ==(dt); }
 
     static DateTime currentDateTime();
@@ -116,7 +125,10 @@ public:
 
 #ifndef NO_QT_SUPPORT
     QDateTime toQDateTime() const { return QDateTime(m_date.toQDate(), m_time.toQTime()); }
-    static DateTime fromQDateTime(const QDateTime& dt) { return DateTime(Date::fromQDate(dt.date()), Time::fromQTime(dt.time())); }
+    static DateTime fromQDateTime(const QDateTime& dt)
+    {
+        return DateTime(Date::fromQDate(dt.date()), Time::fromQTime(dt.time()));
+    }
 #endif
 
 private:

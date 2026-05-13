@@ -39,7 +39,8 @@ struct QmlLaunchDataForeign {
     QML_UNCREATABLE("Must be created in C++ only")
 };
 
-class InteractiveProviderModel : public QObject, public QQmlParserStatus, public Injectable, public async::Asyncable
+class InteractiveProviderModel : public QObject, public QQmlParserStatus, public Injectable,
+    public async::Asyncable
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -55,7 +56,8 @@ public:
 
     Q_INVOKABLE QString objectId(const QVariant& val) const;
 
-    Q_INVOKABLE void onOpen(const QVariant& type, const QVariant& objectId, QObject* window = nullptr);
+    Q_INVOKABLE void onOpen(const QVariant& type, const QVariant& objectId,
+                            QObject* window = nullptr);
     Q_INVOKABLE void onClose(const QString& objectId, const QVariant& rv);
 
 signals:

@@ -48,7 +48,10 @@ public:
     const std::string& path() const;
     void setPath(const std::string& path);
 
-    inline bool operator==(const Uri& uri) const { return m_path == uri.m_path && m_scheme == uri.m_scheme; }
+    inline bool operator==(const Uri& uri) const
+    {
+        return m_path == uri.m_path && m_scheme == uri.m_scheme;
+    }
     inline bool operator!=(const Uri& uri) const { return !(*this == uri); }
     inline bool operator <(const Uri& uri) const
     {

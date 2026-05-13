@@ -28,14 +28,17 @@ namespace muse::audio::synth {
 class SynthResolverStub : public ISynthResolver
 {
 public:
-    void init(const AudioInputParams& defaultInputParams, const audio::OutputSpec& defaultOutputSpec) override;
+    void init(const AudioInputParams& defaultInputParams,
+              const audio::OutputSpec& defaultOutputSpec) override;
 
-    ISynthesizerPtr resolveSynth(const TrackId trackId, const AudioInputParams& params, const audio::OutputSpec& outputSpec,
+    ISynthesizerPtr resolveSynth(const TrackId trackId, const AudioInputParams& params,
+                                 const audio::OutputSpec& outputSpec,
                                  const PlaybackSetupData& setupData) const override;
     ISynthesizerPtr resolveDefaultSynth(const TrackId trackId) const override;
     AudioInputParams resolveDefaultInputParams() const override;
     audio::AudioResourceMetaList resolveAvailableResources() const override;
-    SoundPresetList resolveAvailableSoundPresets(const AudioResourceMeta& resourceMeta) const override;
+    SoundPresetList resolveAvailableSoundPresets(const AudioResourceMeta& resourceMeta) const
+    override;
     void registerResolver(const AudioSourceType type, IResolverPtr resolver) override;
     void clearSources() override;
 

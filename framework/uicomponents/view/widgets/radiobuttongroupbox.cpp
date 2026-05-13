@@ -51,7 +51,8 @@ void RadioButtonGroupBox::paintEvent(QPaintEvent*)
     QColor bgColor = styleOption.palette.window().color();
 
     // Adjust the style options to use the checkbox's rectangle.
-    styleOption.rect = style()->subControlRect(QStyle::CC_GroupBox, &styleOption, QStyle::SC_GroupBoxCheckBox, this);
+    styleOption.rect = style()->subControlRect(QStyle::CC_GroupBox, &styleOption,
+                                               QStyle::SC_GroupBoxCheckBox, this);
 
     // Cover up the checkbox, making sure to enlarge the rectangle a bit to cover up any anti-aliasing around the edges.
     painter.fillRect(styleOption.rect.adjusted(-2, -2, 2, 2), bgColor);

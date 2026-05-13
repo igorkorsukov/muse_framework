@@ -31,7 +31,8 @@ namespace muse::diagnostics {
 inline bool isDiagnosticObject(const QObject* obj, bool print = false)
 {
     if (print) {
-        LOGI() << "objectName: " << obj->objectName() << ", className: " << obj->metaObject()->className();
+        LOGI() << "objectName: " << obj->objectName() << ", className: " <<
+            obj->metaObject()->className();
     }
     if (obj->objectName().toLower().contains("diagnostic")) {
         return true;

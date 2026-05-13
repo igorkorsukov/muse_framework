@@ -62,7 +62,8 @@ void ExtensionsUiEngine::setup()
     m_api = new api::ExtApi(m_apiEngine, m_engine);
     globalObject.setProperty("api", m_engine->newQObject(m_api));
 
-    const std::vector<muse::api::IApiRegister::GlobalEnum>& globalEnums = apiRegister()->globalEnums();
+    const std::vector<muse::api::IApiRegister::GlobalEnum>& globalEnums
+        = apiRegister()->globalEnums();
     for (const muse::api::IApiRegister::GlobalEnum& e : globalEnums) {
         QString name = QString::fromStdString(e.name);
         QJSValue enumObj = muse::api::enumToJsValue(m_apiEngine, e.meta, e.type);

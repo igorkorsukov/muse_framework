@@ -121,7 +121,8 @@ private:
 };
 }
 
-inline muse::logger::Stream& operator<<(muse::logger::Stream& s, const muse::actions::ActionCodeList& list)
+inline muse::logger::Stream& operator<<(muse::logger::Stream& s,
+                                        const muse::actions::ActionCodeList& list)
 {
     s << "[";
     for (size_t i = 0; i < list.size(); ++i) {

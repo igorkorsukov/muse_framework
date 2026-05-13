@@ -128,7 +128,8 @@ void MuseSamplerWrapper::setOutputSpec(const audio::OutputSpec& spec)
     const bool isOffline = m_mode == ProcessMode::PlayingOffline;
     const bool shouldReinitSampler = !m_sampler
                                      || (m_outputSpec.sampleRate != spec.sampleRate && !isOffline)
-                                     || (m_outputSpec.samplesPerChannel != spec.samplesPerChannel && !isOffline);
+                                     || (m_outputSpec.samplesPerChannel != spec.samplesPerChannel
+                                         && !isOffline);
 
     if (shouldReinitSampler) {
         if (!initSampler(spec.sampleRate, spec.samplesPerChannel)) {
@@ -158,7 +159,8 @@ samples_t MuseSamplerWrapper::process(float* buffer, samples_t samplesPerChannel
 
     if (!active) {
         msecs_t nextMicros = samplesToMsecs(samplesPerChannel, m_outputSpec.sampleRate);
-        MuseSamplerSequencer::EventSequenceMap sequences = m_sequencer.movePlaybackForward(nextMicros);
+        MuseSamplerSequencer::EventSequenceMap sequences = m_sequencer.movePlaybackForward(
+            nextMicros);
 
         for (const auto& pair : sequences) {
             for (const MuseSamplerSequencer::EventType& event : pair.second) {
@@ -222,7 +224,8 @@ void MuseSamplerWrapper::setupSound(const mpe::PlaybackSetupData& setupData)
 
     ms_Track track = addTrack();
     if (!track) {
-        LOGE() << "Could not add track for instrument: " << m_instrument.instrumentId << "; falling back to MPE info";
+        LOGE() << "Could not add track for instrument: " << m_instrument.instrumentId <<
+            "; falling back to MPE info";
         m_instrument = resolveInstrument(setupData);
 
         track = addTrack();
@@ -349,10 +352,12 @@ bool MuseSamplerWrapper::initSampler(const sample_rate_t sampleRate, const sampl
     }
 
     if (!m_samplerLib->initSampler(m_sampler, sampleRate, blockSize, AUDIO_CHANNELS_COUNT)) {
-        LOGE() << "Unable to init MuseSampler, sampleRate: " << sampleRate << ", blockSize: " << blockSize;
+        LOGE() << "Unable to init MuseSampler, sampleRate: " << sampleRate << ", blockSize: " <<
+            blockSize;
         return false;
     } else {
-        LOGI() << "Successfully initialized sampler, sampleRate: " << sampleRate << ", blockSize: " << blockSize;
+        LOGI() << "Successfully initialized sampler, sampleRate: " << sampleRate <<
+            ", blockSize: " << blockSize;
     }
 
     prepareOutputBuffer(blockSize);
@@ -369,23 +374,28 @@ void MuseSamplerWrapper::setupOnlineSound()
 
     m_samplerLib->setLazyRender(m_sampler, lazyProcess);
     m_sequencer.setUpdateMainStreamWhenInactive(autoProcess);
-    m_samplerLib->setAutoRenderInterval(m_sampler, autoProcess ? AUTO_PROCESS_INTERVAL : NO_AUTO_PROCESS);
+    m_samplerLib->setAutoRenderInterval(m_sampler,
+                                        autoProcess ? AUTO_PROCESS_INTERVAL : NO_AUTO_PROCESS);
 
     //! NOTE: update progress on the worker thread
     m_renderingStateChanged.onReceive(this, [this](ms_RenderingRangeList list, int size) {
         updateRenderingProgress(list, size);
     });
 
-    m_samplerLib->setRenderingStateChangedCallback(m_sampler, [](void* data, ms_RenderingRangeList list, int size) {
+    m_samplerLib->setRenderingStateChangedCallback(m_sampler,
+                                                   [](void* data, ms_RenderingRangeList list,
+                                                      int size) {
         //! NOTE: move call to the worker thread
         RenderingStateChangedChannel* channel = reinterpret_cast<RenderingStateChangedChannel*>(data);
-        channel->send(list, size);
+        channel->send(list,
+                      size);
     }, &m_renderingStateChanged);
 
     config()->autoProcessOnlineSoundsInBackgroundChanged().onReceive(this, [this](bool on) {
         m_sequencer.setUpdateMainStreamWhenInactive(on);
         m_sequencer.updateMainStream();
-        m_samplerLib->setAutoRenderInterval(m_sampler, on ? AUTO_PROCESS_INTERVAL : NO_AUTO_PROCESS);
+        m_samplerLib->setAutoRenderInterval(m_sampler,
+                                            on ? AUTO_PROCESS_INTERVAL : NO_AUTO_PROCESS);
     });
 
     config()->isLazyProcessingOfOnlineSoundsEnabledChanged().onReceive(this, [this](bool on) {
@@ -455,7 +465,8 @@ void MuseSamplerWrapper::updateRenderingProgress(ms_RenderingRangeList list, int
         }
 
         chunksDurationUs += info._end_us - info._start_us;
-        chunks.push_back({ muse::usecs_to_secs(info._start_us), muse::usecs_to_secs(info._end_us) });
+        chunks.push_back({ muse::usecs_to_secs(info._start_us),
+                           muse::usecs_to_secs(info._end_us) });
     }
 
     // Start progress
@@ -468,7 +479,8 @@ void MuseSamplerWrapper::updateRenderingProgress(ms_RenderingRangeList list, int
         m_inputProcessingProgress.start();
     }
 
-    m_renderingInfo.maxChunksDurationUs = std::max(m_renderingInfo.maxChunksDurationUs, chunksDurationUs);
+    m_renderingInfo.maxChunksDurationUs = std::max(m_renderingInfo.maxChunksDurationUs,
+                                                   chunksDurationUs);
 
     bool isChanged = false;
     if (m_renderingInfo.lastReceivedChunks != chunks) {
@@ -479,7 +491,8 @@ void MuseSamplerWrapper::updateRenderingProgress(ms_RenderingRangeList list, int
     // Update percentage
     int64_t percentage = 0;
     if (m_renderingInfo.maxChunksDurationUs != 0) {
-        percentage = std::lround(100.f - (float)chunksDurationUs / (float)m_renderingInfo.maxChunksDurationUs * 100.f);
+        percentage = std::lround(
+            100.f - (float)chunksDurationUs / (float)m_renderingInfo.maxChunksDurationUs * 100.f);
     }
 
     if (percentage != m_renderingInfo.percentage) {
@@ -516,8 +529,9 @@ InstrumentInfo MuseSamplerWrapper::resolveInstrument(const mpe::PlaybackSetupDat
 
     String soundId = setupData.toString();
 
-    auto matchingInstrumentList = m_samplerLib->getMatchingInstrumentList(soundId.toAscii().constChar(),
-                                                                          setupData.musicXmlSoundId->c_str());
+    auto matchingInstrumentList = m_samplerLib->getMatchingInstrumentList(
+        soundId.toAscii().constChar(),
+        setupData.musicXmlSoundId->c_str());
 
     if (matchingInstrumentList == nullptr) {
         LOGE() << "Unable to get instrument list";
@@ -625,7 +639,8 @@ void MuseSamplerWrapper::extractOutputSamples(samples_t samples, float* output)
     for (samples_t sampleIndex = 0; sampleIndex < samples; ++sampleIndex) {
         size_t offset = sampleIndex * m_bus._num_channels;
 
-        for (audioch_t audioChannelIndex = 0; audioChannelIndex < m_bus._num_channels; ++audioChannelIndex) {
+        for (audioch_t audioChannelIndex = 0; audioChannelIndex < m_bus._num_channels;
+             ++audioChannelIndex) {
             float sample = m_bus._channels[audioChannelIndex][sampleIndex];
             output[offset + audioChannelIndex] += sample;
         }

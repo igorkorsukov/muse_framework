@@ -74,7 +74,8 @@ enum Role {
 Q_ENUM_NS(Role)
 }
 
-class AccessibleItem : public QObject, public QQmlParserStatus, public accessibility::IAccessible, public Contextable
+class AccessibleItem : public QObject, public QQmlParserStatus, public accessibility::IAccessible,
+    public Contextable
 {
     Q_OBJECT
     QML_ELEMENT;
@@ -86,15 +87,20 @@ class AccessibleItem : public QObject, public QQmlParserStatus, public accessibi
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
 
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged)
-    Q_PROPERTY(QVariant maximumValue READ maximumValue WRITE setMaximumValue NOTIFY maximumValueChanged)
-    Q_PROPERTY(QVariant minimumValue READ minimumValue WRITE setMinimumValue NOTIFY minimumValueChanged)
+    Q_PROPERTY(
+        QVariant maximumValue READ maximumValue WRITE setMaximumValue NOTIFY maximumValueChanged)
+    Q_PROPERTY(
+        QVariant minimumValue READ minimumValue WRITE setMinimumValue NOTIFY minimumValueChanged)
     Q_PROPERTY(QVariant stepSize READ stepSize WRITE setStepSize NOTIFY stepSizeChanged)
 
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
-    Q_PROPERTY(QString selectedText READ selectedText WRITE setSelectedText NOTIFY selectedTextChanged)
-    Q_PROPERTY(int selectionStart READ selectionStart WRITE setSelectionStart NOTIFY selectionStartChanged)
+    Q_PROPERTY(
+        QString selectedText READ selectedText WRITE setSelectedText NOTIFY selectedTextChanged)
+    Q_PROPERTY(
+        int selectionStart READ selectionStart WRITE setSelectionStart NOTIFY selectionStartChanged)
     Q_PROPERTY(int selectionEnd READ selectionEnd WRITE setSelectionEnd NOTIFY selectionEndChanged)
-    Q_PROPERTY(int cursorPosition READ cursorPosition WRITE setCursorPosition NOTIFY cursorPositionChanged)
+    Q_PROPERTY(
+        int cursorPosition READ cursorPosition WRITE setCursorPosition NOTIFY cursorPositionChanged)
 
     Q_PROPERTY(int row READ row WRITE setRow NOTIFY rowChanged)
 
@@ -144,9 +150,12 @@ public:
     int accessibleCursorPosition() const override;
 
     QString accessibleText(int startOffset, int endOffset) const override;
-    QString accessibleTextBeforeOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const override;
-    QString accessibleTextAfterOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const override;
-    QString accessibleTextAtOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const override;
+    QString accessibleTextBeforeOffset(int offset, TextBoundaryType boundaryType, int* startOffset,
+                                       int* endOffset) const override;
+    QString accessibleTextAfterOffset(int offset, TextBoundaryType boundaryType, int* startOffset,
+                                      int* endOffset) const override;
+    QString accessibleTextAtOffset(int offset, TextBoundaryType boundaryType, int* startOffset,
+                                   int* endOffset) const override;
     int accessibleCharacterCount() const override;
 
     // ListView item Interface

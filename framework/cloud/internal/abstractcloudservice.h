@@ -52,7 +52,8 @@ static constexpr int CONFLICT_STATUS_CODE = 409;
 
 class OAuthHttpServerReplyHandler;
 
-class AbstractCloudService : public QObject, public IAuthorizationService, public Contextable, public async::Asyncable
+class AbstractCloudService : public QObject, public IAuthorizationService, public Contextable,
+    public async::Asyncable
 {
     Q_OBJECT
 

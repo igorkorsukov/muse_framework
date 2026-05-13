@@ -62,12 +62,18 @@ void ExtensionsModule::resolveImports()
 {
     auto ir = globalIoc()->resolve<interactive::IInteractiveUriRegister>(mname);
     if (ir) {
-        ir->registerQmlUri(Uri("muse://extensions/viewer"), "Muse.Extensions", "ExtensionViewerDialog");
-        ir->registerQmlUri(Uri("muse://extensions/apidump"), "Muse.Extensions", "ExtensionsApiDumpDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://extensions/viewer"), "Muse.Extensions",
+                           "ExtensionViewerDialog");
+        ir->registerQmlUri(Uri(
+                               "muse://extensions/apidump"), "Muse.Extensions",
+                           "ExtensionsApiDumpDialog");
     }
 
-    m_execPointsRegister->reg(mname, { EXEC_DISABLED, TranslatableString("extensions", "Disabled") });
-    m_execPointsRegister->reg(mname, { EXEC_MANUALLY, TranslatableString("extensions", "Manually") });
+    m_execPointsRegister->reg(mname,
+                              { EXEC_DISABLED, TranslatableString("extensions", "Disabled") });
+    m_execPointsRegister->reg(mname,
+                              { EXEC_MANUALLY, TranslatableString("extensions", "Manually") });
 }
 
 void ExtensionsModule::registerApi()

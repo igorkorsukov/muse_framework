@@ -66,7 +66,8 @@ TEST_F(Global_IO_IODeviceTests, Open_ReadOnly)
         EXPECT_EQ(size, 0);
     }, ".*isOpenModeWriteable\\(\\).*");
 #else
-    LOGW() << "Cannot check for assertion failure in Release mode; please build in Debug mode instead";
+    LOGW() <<
+    "Cannot check for assertion failure in Release mode; please build in Debug mode instead";
 #endif
 }
 
@@ -106,7 +107,8 @@ TEST_F(Global_IO_IODeviceTests, Open_WriteOnly)
         EXPECT_EQ(s, 0);
     }, ".*isOpenModeReadable\\(\\).*");
 #else
-    LOGW() << "Cannot check for assertion failure in Release mode; please build in Debug mode instead";
+    LOGW() <<
+    "Cannot check for assertion failure in Release mode; please build in Debug mode instead";
 #endif
 }
 

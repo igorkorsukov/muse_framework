@@ -38,12 +38,14 @@ namespace muse::musesampler {
 class MuseSamplerWrapper : public audio::synth::AbstractSynthesizer, public IMuseSamplerTracks
 {
 public:
-    MuseSamplerWrapper(MuseSamplerLibHandlerPtr samplerLib, const InstrumentInfo& instrument, const muse::audio::AudioSourceParams& params);
+    MuseSamplerWrapper(MuseSamplerLibHandlerPtr samplerLib, const InstrumentInfo& instrument,
+                       const muse::audio::AudioSourceParams& params);
     ~MuseSamplerWrapper() override;
 
     void setMode(const muse::audio::ProcessMode mode) override;
     void setOutputSpec(const audio::OutputSpec& spec) override;
-    muse::audio::samples_t process(float* buffer, muse::audio::samples_t samplesPerChannel) override;
+    muse::audio::samples_t process(float* buffer,
+                                   muse::audio::samples_t samplesPerChannel) override;
 
     std::string name() const override;
     muse::audio::AudioSourceType type() const override;
@@ -70,7 +72,8 @@ private:
     bool isActive() const;
     void setIsActive(bool active);
 
-    bool initSampler(const muse::audio::sample_rate_t sampleRate, const muse::audio::samples_t blockSize);
+    bool initSampler(const muse::audio::sample_rate_t sampleRate,
+                     const muse::audio::samples_t blockSize);
 
     void setupOnlineSound();
     void updateRenderingProgress(ms_RenderingRangeList list, int size);

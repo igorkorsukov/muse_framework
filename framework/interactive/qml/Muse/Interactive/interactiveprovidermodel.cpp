@@ -54,7 +54,8 @@ QString InteractiveProviderModel::objectId(const QVariant& val) const
     return provider()->objectId(val);
 }
 
-void InteractiveProviderModel::onOpen(const QVariant& type, const QVariant& objectId, QObject* window)
+void InteractiveProviderModel::onOpen(const QVariant& type, const QVariant& objectId,
+                                      QObject* window)
 {
     provider()->onOpen(type, objectId, window);
 }

@@ -35,7 +35,8 @@
 
 using namespace muse::audio::codec;
 
-int VorbisDecoder::decode_memory(const unsigned char* mem, unsigned int len, short** output, unsigned int* channels,
+int VorbisDecoder::decode_memory(const unsigned char* mem, unsigned int len, short** output,
+                                 unsigned int* channels,
                                  unsigned int* sample_rate)
 {
     int channels_ = 0;
@@ -52,7 +53,8 @@ int VorbisDecoder::decode_memory(const unsigned char* mem, unsigned int len, sho
     return samples;
 }
 
-int VorbisDecoder::decode_file(const std::string& filepath, std::vector<float>& output, unsigned int* channels, unsigned int* sample_rate)
+int VorbisDecoder::decode_file(const std::string& filepath, std::vector<float>& output,
+                               unsigned int* channels, unsigned int* sample_rate)
 {
     int vorbis_error;
     stb_vorbis* decoder = stb_vorbis_open_filename(filepath.c_str(), &vorbis_error, NULL);
@@ -72,7 +74,9 @@ int VorbisDecoder::decode_file(const std::string& filepath, std::vector<float>& 
     float predata[1000];
     int total = 0;
 
-    while (auto readed = stb_vorbis_get_samples_float_interleaved(decoder, decoder->channels, predata, 1000)) {
+    while (auto readed
+               = stb_vorbis_get_samples_float_interleaved(decoder, decoder->channels, predata,
+                                                          1000)) {
         output.resize(total + readed, 0.f);
         auto start = output.begin() + total;
         std::copy_n(predata, readed, start);

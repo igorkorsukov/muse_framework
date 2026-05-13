@@ -90,7 +90,10 @@ struct TestCase
     TestCase(const QJSValue& jsval = QJSValue())
         : val(jsval) {}
 
-    bool isValid() const { return !val.isUndefined() && val.hasProperty("name") && val.hasProperty("steps"); }
+    bool isValid() const
+    {
+        return !val.isUndefined() && val.hasProperty("name") && val.hasProperty("steps");
+    }
 
     QString name() const { return val.property("name").toString(); }
     QString description() const { return val.property("description").toString(); }

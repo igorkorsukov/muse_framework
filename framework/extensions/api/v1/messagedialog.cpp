@@ -26,7 +26,8 @@ using namespace muse::extensions::apiv1;
 MessageDialog::MessageDialog(QObject* parent)
     : QObject(parent), Contextable(muse::iocCtxForQmlObject(this)) {}
 
-void MessageDialog::doOpen(const QString& contentTitle, const QString& text, const QString& detailed, const QVariantList& buttons)
+void MessageDialog::doOpen(const QString& contentTitle, const QString& text,
+                           const QString& detailed, const QVariantList& buttons)
 {
     //! NOTE Minimum compatibility for the current ones to work.
     //! It would be nice to change a lot of things.
@@ -41,7 +42,9 @@ void MessageDialog::doOpen(const QString& contentTitle, const QString& text, con
         IInteractive::Text t;
         t.text = text.toStdString();
         t.detailedText = detailed.toStdString();
-        interactive()->error(contentTitle.toStdString(), t).onResolve(this, [this](const IInteractive::Result&) {
+        interactive()->error(contentTitle.toStdString(), t).onResolve(this,
+                                                                      [this](const IInteractive::
+                                                                             Result&) {
             emit accepted();
         });
     }

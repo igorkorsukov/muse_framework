@@ -122,7 +122,8 @@ void ShortcutsModel::load()
         load();
     }, async::Asyncable::Mode::SetReplace);
 
-    std::sort(m_shortcuts.begin(), m_shortcuts.end(), [this](const Shortcut& s1, const Shortcut& s2) {
+    std::sort(m_shortcuts.begin(),
+              m_shortcuts.end(), [this](const Shortcut& s1, const Shortcut& s2) {
         return actionText(s1.action) < actionText(s2.action);
     });
 
@@ -215,7 +216,8 @@ void ShortcutsModel::exportShortcutsToFile()
     }
 }
 
-void ShortcutsModel::applySequenceToCurrentShortcut(const QString& newSequence, int conflictShortcutIndex)
+void ShortcutsModel::applySequenceToCurrentShortcut(const QString& newSequence,
+                                                    int conflictShortcutIndex)
 {
     QModelIndex currIndex = currentShortcutIndex();
     if (!currIndex.isValid()) {

@@ -43,7 +43,8 @@ class DialogView : public WindowView
     Q_PROPERTY(bool modal READ modal WRITE setModal NOTIFY modalChanged)
     Q_PROPERTY(bool frameless READ frameless WRITE setFrameless NOTIFY framelessChanged)
     Q_PROPERTY(bool resizable READ resizable WRITE setResizable NOTIFY resizableChanged)
-    Q_PROPERTY(bool alwaysAboveApp READ alwaysAboveApp WRITE setAlwaysAboveApp NOTIFY alwaysAboveAppChanged)
+    Q_PROPERTY(
+        bool alwaysAboveApp READ alwaysAboveApp WRITE setAlwaysAboveApp NOTIFY alwaysAboveAppChanged)
     Q_PROPERTY(QVariantMap ret READ ret WRITE setRet NOTIFY retChanged)
 
     GlobalInject<IApplication> application;

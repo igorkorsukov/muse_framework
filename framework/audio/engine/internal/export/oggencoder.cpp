@@ -77,7 +77,8 @@ bool OggEncoder::begin(const samples_t)
         [] (void*) -> int { return 0; }
     };
 
-    m_opusEncoder = ope_encoder_create_callbacks(&callbacks, m_dstDevice, comments, m_format.outputSpec.sampleRate,
+    m_opusEncoder = ope_encoder_create_callbacks(&callbacks, m_dstDevice, comments,
+                                                 m_format.outputSpec.sampleRate,
                                                  m_format.outputSpec.audioChannelCount, 0, &error);
     ope_comments_destroy(comments);
 

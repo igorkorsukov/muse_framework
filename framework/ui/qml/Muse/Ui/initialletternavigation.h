@@ -36,7 +36,8 @@ class InitialLetterNavigation : public QObject, public muse::Contextable
     Q_OBJECT
     Q_PROPERTY(QStringList stringList READ stringList WRITE setStringList NOTIFY stringListChanged)
     Q_PROPERTY(muse::ui::NavigationPanel * panel READ panel WRITE setPanel NOTIFY panelChanged)
-    Q_PROPERTY(int controlColumn READ controlColumn WRITE setControlColumn NOTIFY controlColumnChanged)
+    Q_PROPERTY(
+        int controlColumn READ controlColumn WRITE setControlColumn NOTIFY controlColumnChanged)
     QML_ELEMENT
 
     ContextInject<INavigationController> navigationController = { this };

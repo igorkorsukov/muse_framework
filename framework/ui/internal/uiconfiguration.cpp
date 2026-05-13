@@ -176,7 +176,8 @@ void UiConfiguration::correctUserFontIfNeeded()
     QString userFontFamily = QString::fromStdString(fontFamily());
     if (!QFontDatabase::hasFamily(userFontFamily)) {
         std::string fallbackFontFamily = defaultFontFamily();
-        LOGI() << "The user font " << userFontFamily << " is missing, we will use the fallback font " << fallbackFontFamily;
+        LOGI() << "The user font " << userFontFamily <<
+            " is missing, we will use the fallback font " << fallbackFontFamily;
 
         setFontFamily(fallbackFontFamily);
     }
@@ -210,7 +211,9 @@ void UiConfiguration::updateThemes()
     }
 
     for (ThemeInfo& theme: m_themes) {
-        auto it = std::find_if(modifiedThemes.begin(), modifiedThemes.end(), [theme](const ThemeInfo& modifiedTheme) {
+        auto it
+            = std::find_if(modifiedThemes.begin(), modifiedThemes.end(),
+                           [theme](const ThemeInfo& modifiedTheme) {
             return modifiedTheme.codeKey == theme.codeKey;
         });
 
@@ -299,16 +302,22 @@ ThemeInfo UiConfiguration::makeStandardTheme(const ThemeCode& codeKey) const
     Config config = ConfigReader::read(themeFilePath);
 
     theme.values = {
-        { BACKGROUND_PRIMARY_COLOR, colorFromHex(config.value("background_primary_color").toQString()) },
-        { BACKGROUND_SECONDARY_COLOR, colorFromHex(config.value("background_secondary_color").toQString()) },
-        { BACKGROUND_TERTIARY_COLOR, colorFromHex(config.value("background_tertiary_color").toQString()) },
-        { BACKGROUND_QUARTERNARY_COLOR, colorFromHex(config.value("background_quarternary_color").toQString()) },
-        { POPUP_BACKGROUND_COLOR, colorFromHex(config.value("popup_background_color").toQString()) },
+        { BACKGROUND_PRIMARY_COLOR, colorFromHex(config.value(
+                                                     "background_primary_color").toQString()) },
+        { BACKGROUND_SECONDARY_COLOR, colorFromHex(config.value(
+                                                       "background_secondary_color").toQString()) },
+        { BACKGROUND_TERTIARY_COLOR, colorFromHex(config.value(
+                                                      "background_tertiary_color").toQString()) },
+        { BACKGROUND_QUARTERNARY_COLOR, colorFromHex(config.value(
+                                                         "background_quarternary_color").toQString()) },
+        { POPUP_BACKGROUND_COLOR,
+          colorFromHex(config.value("popup_background_color").toQString()) },
         { PROJECT_TAB_COLOR, colorFromHex(config.value("project_tab_color").toQString()) },
         { TEXT_FIELD_COLOR, colorFromHex(config.value("text_field_color").toQString()) },
         { ACCENT_COLOR, colorFromHex(config.value("accent_color").toQString()) },
         { STROKE_COLOR, colorFromHex(config.value("stroke_color").toQString()) },
-        { STROKE_SECONDARY_COLOR, colorFromHex(config.value("stroke_secondary_color").toQString()) },
+        { STROKE_SECONDARY_COLOR,
+          colorFromHex(config.value("stroke_secondary_color").toQString()) },
         { BUTTON_COLOR, colorFromHex(config.value("button_color").toQString()) },
         { FONT_PRIMARY_COLOR, colorFromHex(config.value("font_primary_color").toQString()) },
         { FONT_SECONDARY_COLOR, colorFromHex(config.value("font_secondary_color").toQString()) },
@@ -320,7 +329,8 @@ ThemeInfo UiConfiguration::makeStandardTheme(const ThemeCode& codeKey) const
         { RECORD_COLOR, colorFromHex(config.value("record_color").toQString()) },
 
         { BORDER_WIDTH, config.value("border_width").toDouble() },
-        { NAVIGATION_CONTROL_BORDER_WIDTH, config.value("navigation_control_border_width").toDouble() },
+        { NAVIGATION_CONTROL_BORDER_WIDTH,
+          config.value("navigation_control_border_width").toDouble() },
 
         { ACCENT_OPACITY_NORMAL, config.value("accent_opacity_normal").toDouble() },
         { ACCENT_OPACITY_HOVER, config.value("accent_opacity_hover").toDouble() },
@@ -526,7 +536,9 @@ void UiConfiguration::setCurrentThemeStyleValue(ThemeStyleKey key, const Val& va
 
     ThemeList modifiedThemes = readThemes();
 
-    auto it = std::find_if(modifiedThemes.begin(), modifiedThemes.end(), [currentTheme](const ThemeInfo& theme) {
+    auto it
+        = std::find_if(modifiedThemes.begin(), modifiedThemes.end(),
+                       [currentTheme](const ThemeInfo& theme) {
         return theme.codeKey == currentTheme.codeKey;
     });
 
@@ -657,9 +669,12 @@ void UiConfiguration::resetFonts()
 {
     settings()->setSharedValue(UI_FONT_FAMILY_KEY, settings()->defaultValue(UI_FONT_FAMILY_KEY));
     settings()->setSharedValue(UI_FONT_SIZE_KEY, settings()->defaultValue(UI_FONT_SIZE_KEY));
-    settings()->setSharedValue(UI_ICONS_FONT_FAMILY_KEY, settings()->defaultValue(UI_ICONS_FONT_FAMILY_KEY));
-    settings()->setSharedValue(UI_MUSICAL_FONT_FAMILY_KEY, settings()->defaultValue(UI_MUSICAL_FONT_FAMILY_KEY));
-    settings()->setSharedValue(UI_MUSICAL_FONT_SIZE_KEY, settings()->defaultValue(UI_MUSICAL_FONT_SIZE_KEY));
+    settings()->setSharedValue(UI_ICONS_FONT_FAMILY_KEY,
+                               settings()->defaultValue(UI_ICONS_FONT_FAMILY_KEY));
+    settings()->setSharedValue(UI_MUSICAL_FONT_FAMILY_KEY,
+                               settings()->defaultValue(UI_MUSICAL_FONT_FAMILY_KEY));
+    settings()->setSharedValue(UI_MUSICAL_FONT_SIZE_KEY,
+                               settings()->defaultValue(UI_MUSICAL_FONT_SIZE_KEY));
 }
 
 void UiConfiguration::setCustomPhysicalDotsPerInch(std::optional<double> dpi)

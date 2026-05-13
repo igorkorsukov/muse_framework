@@ -61,11 +61,13 @@ public:
             items << makeSeparator();
         }
 
-        MenuItem* closeDockItem = makeMenuItem(SET_DOCK_OPEN_ACTION_CODE, TranslatableString("appshell/dock", "Close"));
+        MenuItem* closeDockItem
+            = makeMenuItem(SET_DOCK_OPEN_ACTION_CODE, TranslatableString("appshell/dock", "Close"));
         closeDockItem->setArgs(ActionData::make_arg2<QString, bool>(m_panel->objectName(), false));
         items << closeDockItem;
 
-        MenuItem* toggleFloatingItem = makeMenuItem(TOGGLE_FLOATING_ACTION_CODE, toggleFloatingActionTitle());
+        MenuItem* toggleFloatingItem = makeMenuItem(TOGGLE_FLOATING_ACTION_CODE,
+                                                    toggleFloatingActionTitle());
         toggleFloatingItem->setArgs(ActionData::make_arg1<QString>(m_panel->objectName()));
         items << toggleFloatingItem;
 
@@ -114,7 +116,9 @@ private:
 
     TranslatableString toggleFloatingActionTitle() const
     {
-        return m_panel->floating() ? TranslatableString("appshell/dock", "Dock") : TranslatableString("appshell/dock", "Undock");
+        return m_panel->floating() ? TranslatableString("appshell/dock",
+                                                        "Dock") : TranslatableString(
+            "appshell/dock", "Undock");
     }
 
     void listenFloatingChanged()
@@ -207,7 +211,8 @@ void DockPanelView::componentComplete()
 
     connect(this, &DockPanelView::toolbarComponentChanged, this, [this, dockWidget]() {
         if (dockWidget) {
-            dockWidget->setProperty(TOOLBAR_COMPONENT_PROPERTY, QVariant::fromValue(m_toolbarComponent));
+            dockWidget->setProperty(TOOLBAR_COMPONENT_PROPERTY,
+                                    QVariant::fromValue(m_toolbarComponent));
         }
     });
 

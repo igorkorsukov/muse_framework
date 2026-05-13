@@ -62,7 +62,8 @@ const muse::ui::UiActionList& ExtensionsUiActions::actionsList() const
                                  //: %1 is replaced with the name of the plugin
                                  ? TranslatableString("extensions", "Run plugin %1").arg(m.title)
                                  //: %1 is replaced with the name of the plugin; %2 is replaced with the name of the action
-                                 : TranslatableString("extensions", "Run plugin %1: %2").arg(m.title, a.title);
+                                 : TranslatableString("extensions", "Run plugin %1: %2").arg(
+                m.title, a.title);
             action.title = action.description;
             action.iconCode = a.icon;
 

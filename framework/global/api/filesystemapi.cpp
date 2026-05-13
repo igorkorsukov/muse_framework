@@ -64,7 +64,8 @@ JSRet FileSystemApi::copy(const QString& src, const QString& dst, bool replace)
     return retToJs(ret);
 }
 
-JSRetVal FileSystemApi::scanFiles(const QString& rootDir, const QStringList& filters,  const QString& mode) const
+JSRetVal FileSystemApi::scanFiles(const QString& rootDir, const QStringList& filters,
+                                  const QString& mode) const
 {
     auto toIoScanMode = [](const QString& m)
     {
@@ -81,7 +82,8 @@ JSRetVal FileSystemApi::scanFiles(const QString& rootDir, const QStringList& fil
         return io::ScanMode::FilesInCurrentDirAndSubdirs;
     };
 
-    RetVal<io::paths_t> rv = fileSystem()->scanFiles(rootDir, toStdVector(filters), toIoScanMode(mode));
+    RetVal<io::paths_t> rv
+        = fileSystem()->scanFiles(rootDir, toStdVector(filters), toIoScanMode(mode));
     return retValToJs(rv);
 }
 

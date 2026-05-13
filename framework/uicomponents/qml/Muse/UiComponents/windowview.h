@@ -46,7 +46,8 @@ class INavigationControl;
 }
 
 namespace muse::uicomponents {
-class WindowView : public QObject, public QQmlParserStatus, public Contextable, public async::Asyncable
+class WindowView : public QObject, public QQmlParserStatus, public Contextable,
+    public async::Asyncable
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -56,22 +57,30 @@ class WindowView : public QObject, public QQmlParserStatus, public Contextable, 
 
     Q_PROPERTY(QQuickItem * parent READ parentItem WRITE setParentItem NOTIFY parentItemChanged)
 
-    Q_PROPERTY(QQuickItem * contentItem READ contentItem WRITE setContentItem NOTIFY contentItemChanged)
+    Q_PROPERTY(
+        QQuickItem
+        * contentItem READ contentItem WRITE setContentItem NOTIFY contentItemChanged)
     Q_PROPERTY(int contentWidth READ contentWidth WRITE setContentWidth NOTIFY contentWidthChanged)
-    Q_PROPERTY(int contentHeight READ contentHeight WRITE setContentHeight NOTIFY contentHeightChanged)
+    Q_PROPERTY(
+        int contentHeight READ contentHeight WRITE setContentHeight NOTIFY contentHeightChanged)
 
     Q_PROPERTY(QWindow * window READ window NOTIFY windowChanged)
-    Q_PROPERTY(QWindow * parentWindow READ parentWindow WRITE setParentWindow NOTIFY parentWindowChanged FINAL)
+    Q_PROPERTY(
+        QWindow
+        * parentWindow READ parentWindow WRITE setParentWindow NOTIFY parentWindowChanged FINAL)
 
     Q_PROPERTY(bool isOpened READ isOpened NOTIFY isOpenedChanged)
-    Q_PROPERTY(OpenPolicies openPolicies READ openPolicies WRITE setOpenPolicies NOTIFY openPoliciesChanged)
+    Q_PROPERTY(
+        OpenPolicies openPolicies READ openPolicies WRITE setOpenPolicies NOTIFY openPoliciesChanged)
 
-    Q_PROPERTY(bool isContentReady READ isContentReady WRITE setIsContentReady NOTIFY isContentReadyChanged)
+    Q_PROPERTY(
+        bool isContentReady READ isContentReady WRITE setIsContentReady NOTIFY isContentReadyChanged)
 
     Q_PROPERTY(
         bool activateParentOnClose READ activateParentOnClose WRITE setActivateParentOnClose NOTIFY activateParentOnCloseChanged)
 
-    Q_PROPERTY(FocusPolicies focusPolicies READ focusPolicies WRITE setFocusPolicies NOTIFY focusPoliciesChanged)
+    Q_PROPERTY(
+        FocusPolicies focusPolicies READ focusPolicies WRITE setFocusPolicies NOTIFY focusPoliciesChanged)
 
 protected:
     GlobalInject<ui::IUiConfiguration> uiConfiguration;

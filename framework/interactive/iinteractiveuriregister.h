@@ -57,7 +57,8 @@ public:
     template<typename T>
     void registerWidgetUri(const Uri& uri)
     {
-        static_assert(std::is_base_of<muse::ui::WidgetDialog, T>::value, "T must derive from muse::ui::WidgetDialog");
+        static_assert(std::is_base_of<muse::ui::WidgetDialog, T>::value,
+                      "T must derive from muse::ui::WidgetDialog");
         registerUri(uri, ContainerMeta(ContainerMeta::Type::QWidgetDialog, qRegisterMetaType<T>()));
     }
 

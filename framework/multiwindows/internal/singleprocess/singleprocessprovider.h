@@ -82,6 +82,7 @@ public:
 private:
     std::shared_ptr<IProjectProvider> projectProvider(const modularity::ContextPtr& ctx) const;
     std::shared_ptr<ui::IMainWindow> mainWindow(const modularity::ContextPtr& ctx) const;
-    std::shared_ptr<actions::IActionsDispatcher> dispatcher(const modularity::ContextPtr& ctx) const;
+    std::shared_ptr<actions::IActionsDispatcher> dispatcher(
+        const modularity::ContextPtr& ctx) const;
 };
 }

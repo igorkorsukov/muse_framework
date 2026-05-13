@@ -67,7 +67,8 @@ struct AacEncoderHandler
             return false;
         }
 
-        if (aacEncoder_SetParam(handle, AACENC_SAMPLERATE, format.outputSpec.sampleRate) != AACENC_OK) {
+        if (aacEncoder_SetParam(handle, AACENC_SAMPLERATE,
+                                format.outputSpec.sampleRate) != AACENC_OK) {
             LOGE() << "Failed to set sample rate";
             return false;
         }
@@ -136,7 +137,8 @@ struct AacEncoderHandler
 }
 
 AacEncoder::AacEncoder(const SoundTrackFormat& format, io::IODevice& dstDevice)
-    : AbstractAudioEncoder(format), m_handler{std::make_unique<AacEncoderHandler>()}, m_dstDevice{&dstDevice}
+    : AbstractAudioEncoder(format), m_handler{std::make_unique<AacEncoderHandler>()},
+    m_dstDevice{&dstDevice}
 {
     DO_ASSERT(m_dstDevice);
 }
@@ -169,7 +171,8 @@ size_t AacEncoder::encode(samples_t samplesPerChannel, const float* input)
         const size_t samplesToProcess = std::min(samplesPerFrame, totalSamples - inputOffset);
 
         for (size_t i = 0; i < samplesToProcess; ++i) {
-            m_handler->inputBuffer[i] = dsp::convertFloatSamples<INT_PCM>(input[inputOffset + i], 16);
+            m_handler->inputBuffer[i]
+                = dsp::convertFloatSamples<INT_PCM>(input[inputOffset + i], 16);
         }
 
         AACENC_BufDesc inBufDesc = {};
@@ -201,7 +204,8 @@ size_t AacEncoder::encode(samples_t samplesPerChannel, const float* input)
 
         inArgs.numInSamples = static_cast<int>(samplesToProcess);
 
-        const AACENC_ERROR err = aacEncEncode(m_handler->handle, &inBufDesc, &outBufDesc, &inArgs, &outArgs);
+        const AACENC_ERROR err = aacEncEncode(m_handler->handle, &inBufDesc, &outBufDesc, &inArgs,
+                                              &outArgs);
 
         if (err == AACENC_ENCODE_EOF) {
             LOGE() << "AAC encoding unexpected EOF";
@@ -213,7 +217,9 @@ size_t AacEncoder::encode(samples_t samplesPerChannel, const float* input)
         }
 
         if (outArgs.numOutBytes > 0) {
-            const size_t written = m_dstDevice->write(m_handler->outputBuffer.data(), static_cast<size_t>(outArgs.numOutBytes));
+            const size_t written
+                = m_dstDevice->write(m_handler->outputBuffer.data(),
+                                     static_cast<size_t>(outArgs.numOutBytes));
             if (written != static_cast<size_t>(outArgs.numOutBytes)) {
                 return 0;
             }
@@ -271,7 +277,8 @@ size_t AacEncoder::end()
     inArgs.numInSamples = -1;
 
     while (true) {
-        AACENC_ERROR err = aacEncEncode(m_handler->handle, &inBufDesc, &outBufDesc, &inArgs, &outArgs);
+        AACENC_ERROR err = aacEncEncode(m_handler->handle, &inBufDesc, &outBufDesc, &inArgs,
+                                        &outArgs);
 
         if (err == AACENC_ENCODE_EOF) {
             break;
@@ -281,7 +288,9 @@ size_t AacEncoder::end()
         }
 
         if (outArgs.numOutBytes > 0) {
-            const size_t written = m_dstDevice->write(m_handler->outputBuffer.data(), static_cast<size_t>(outArgs.numOutBytes));
+            const size_t written
+                = m_dstDevice->write(m_handler->outputBuffer.data(),
+                                     static_cast<size_t>(outArgs.numOutBytes));
             totalBytesWritten += written;
         }
     }

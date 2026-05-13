@@ -32,7 +32,8 @@
 #include "../iworkspaceconfiguration.h"
 
 namespace muse::workspace {
-class WorkspaceConfiguration : public IWorkspaceConfiguration, public Contextable, public async::Asyncable
+class WorkspaceConfiguration : public IWorkspaceConfiguration, public Contextable,
+    public async::Asyncable
 {
     GlobalInject<IGlobalConfiguration> globalConfiguration;
     GlobalInject<io::IFileSystem> fileSystem;

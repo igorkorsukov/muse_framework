@@ -81,17 +81,21 @@ void ApiRegister::regApiCreator(const std::string& module, const std::string& ap
         return;
     }
 
-    qmlRegisterSingletonType(api.c_str(), 1, 0, name.c_str(), [this, api](QQmlEngine*, QJSEngine* jsengine) -> QJSValue {
+    qmlRegisterSingletonType(api.c_str(), 1, 0, name.c_str(),
+                             [this, api](QQmlEngine*, QJSEngine* jsengine) -> QJSValue {
         auto obj = createApi(api, makeApiEngine(jsengine));
         bool isNeedDelete = obj.second;
-        QJSEngine::setObjectOwnership(obj.first, isNeedDelete ? QJSEngine::JavaScriptOwnership : QJSEngine::CppOwnership);
+        QJSEngine::setObjectOwnership(obj.first,
+                                      isNeedDelete ? QJSEngine::JavaScriptOwnership : QJSEngine::
+                                      CppOwnership);
         return jsengine->newQObject(obj.first);
     });
 }
 
 JsApiEngine* ApiRegister::makeApiEngine(QJSEngine* jsengine)
 {
-    auto it = std::find_if(m_apiengines.begin(), m_apiengines.end(), [jsengine](const ApiEngine& e) {
+    auto it = std::find_if(m_apiengines.begin(),
+                           m_apiengines.end(), [jsengine](const ApiEngine& e) {
         return e.jsengine == jsengine;
     });
 
@@ -110,7 +114,9 @@ JsApiEngine* ApiRegister::makeApiEngine(QJSEngine* jsengine)
     m_apiengines.push_back(e);
 
     QObject::connect(jsengine, &QJSEngine::destroyed, [this, jsengine]() {
-        auto it = std::find_if(m_apiengines.begin(), m_apiengines.end(), [jsengine](const ApiEngine& e) {
+        auto it
+            = std::find_if(m_apiengines.begin(), m_apiengines.end(),
+                           [jsengine](const ApiEngine& e) {
             return e.jsengine == jsengine;
         });
 
@@ -128,7 +134,8 @@ void ApiRegister::regApiSingltone(const std::string& module, const std::string& 
     regApiCreator(module, api, new SingletonApiCreator(o));
 }
 
-std::pair<ApiObject*, bool /*is need delete*/> ApiRegister::createApi(const std::string& api, IApiEngine* e) const
+std::pair<ApiObject*, bool /*is need delete*/> ApiRegister::createApi(const std::string& api,
+                                                                      IApiEngine* e) const
 {
     auto it = m_creators.find(api);
     if (it == m_creators.end()) {

@@ -34,17 +34,20 @@ RetVal<Progress> NetworkManagerStub::head(const QUrl&, const RequestHeaders&)
     return make_ret(Ret::Code::NotSupported);
 }
 
-RetVal<Progress> NetworkManagerStub::post(const QUrl&, OutgoingDeviceVar, IncomingDevicePtr, const RequestHeaders&)
+RetVal<Progress> NetworkManagerStub::post(const QUrl&, OutgoingDeviceVar, IncomingDevicePtr,
+                                          const RequestHeaders&)
 {
     return make_ret(Ret::Code::NotSupported);
 }
 
-RetVal<Progress> NetworkManagerStub::put(const QUrl&, OutgoingDeviceVar, IncomingDevicePtr, const RequestHeaders&)
+RetVal<Progress> NetworkManagerStub::put(const QUrl&, OutgoingDeviceVar, IncomingDevicePtr,
+                                         const RequestHeaders&)
 {
     return make_ret(Ret::Code::NotSupported);
 }
 
-RetVal<Progress> NetworkManagerStub::patch(const QUrl&, OutgoingDeviceVar, IncomingDevicePtr, const RequestHeaders&)
+RetVal<Progress> NetworkManagerStub::patch(const QUrl&, OutgoingDeviceVar, IncomingDevicePtr,
+                                           const RequestHeaders&)
 {
     return make_ret(Ret::Code::NotSupported);
 }

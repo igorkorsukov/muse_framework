@@ -47,7 +47,8 @@ public:
 
     virtual bool shouldProcessDuringSilence() const = 0;
 
-    virtual void process(float* buffer, samples_t sampleCount, samples_t playbackPositionSamples = 0) = 0;
+    virtual void process(float* buffer, samples_t sampleCount,
+                         samples_t playbackPositionSamples = 0) = 0;
 };
 
 using IFxProcessorPtr = std::shared_ptr<IFxProcessor>;

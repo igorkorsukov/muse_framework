@@ -146,15 +146,19 @@ public:
     virtual QVariant accessibleValueStepSize() const = 0;
 
     // Text Interface
-    virtual void accessibleSelection(int selectionIndex, int* startOffset, int* endOffset) const = 0;
+    virtual void accessibleSelection(int selectionIndex, int* startOffset,
+                                     int* endOffset) const = 0;
     virtual int accessibleSelectionCount() const = 0;
 
     virtual int accessibleCursorPosition() const = 0;
 
     virtual QString accessibleText(int startOffset, int endOffset) const = 0;
-    virtual QString accessibleTextBeforeOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const = 0;
-    virtual QString accessibleTextAfterOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const = 0;
-    virtual QString accessibleTextAtOffset(int offset, TextBoundaryType boundaryType, int* startOffset, int* endOffset) const = 0;
+    virtual QString accessibleTextBeforeOffset(int offset, TextBoundaryType boundaryType,
+                                               int* startOffset, int* endOffset) const = 0;
+    virtual QString accessibleTextAfterOffset(int offset, TextBoundaryType boundaryType,
+                                              int* startOffset, int* endOffset) const = 0;
+    virtual QString accessibleTextAtOffset(int offset, TextBoundaryType boundaryType,
+                                           int* startOffset, int* endOffset) const = 0;
     virtual int accessibleCharacterCount() const = 0;
 
     // ListView item Interface

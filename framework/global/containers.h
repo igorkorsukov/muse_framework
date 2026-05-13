@@ -318,7 +318,8 @@ inline auto value(const Map& m, const typename Map::key_type& k) -> typename Map
 }
 
 template<typename Map>
-inline auto value(const Map& m, const typename Map::key_type& k, const typename Map::mapped_type& def) -> typename Map::mapped_type
+inline auto value(const Map& m, const typename Map::key_type& k,
+                  const typename Map::mapped_type& def) -> typename Map::mapped_type
 {
     auto it = m.find(k);
     if (it != m.end()) {
@@ -376,7 +377,8 @@ inline std::set<K> uniqueKeys(const std::multimap<K, V>& mm)
 }
 
 template<typename K, typename V>
-inline auto values(const std::multimap<K, V>& mm, const K& key) -> std::vector<typename std::multimap<K, V>::mapped_type>
+inline auto values(const std::multimap<K, V>& mm,
+                   const K& key) -> std::vector<typename std::multimap<K, V>::mapped_type>
 {
     std::vector<typename std::multimap<K, V>::mapped_type> result;
     const auto range = mm.equal_range(key);
@@ -387,7 +389,8 @@ inline auto values(const std::multimap<K, V>& mm, const K& key) -> std::vector<t
 }
 
 template<typename Container>
-inline typename Container::const_iterator findLessOrEqual(const Container& c, const typename Container::key_type& k)
+inline typename Container::const_iterator findLessOrEqual(const Container& c,
+                                                          const typename Container::key_type& k)
 {
     if (c.empty()) {
         return c.cend();
@@ -402,7 +405,8 @@ inline typename Container::const_iterator findLessOrEqual(const Container& c, co
 }
 
 template<typename Container>
-inline typename Container::iterator findLessOrEqual(Container& c, const typename Container::key_type& k)
+inline typename Container::iterator findLessOrEqual(Container& c,
+                                                    const typename Container::key_type& k)
 {
     if (c.empty()) {
         return c.end();
@@ -417,7 +421,8 @@ inline typename Container::iterator findLessOrEqual(Container& c, const typename
 }
 
 template<typename Container>
-inline typename Container::const_iterator findLess(const Container& c, const typename Container::key_type& k)
+inline typename Container::const_iterator findLess(const Container& c,
+                                                   const typename Container::key_type& k)
 {
     if (c.empty()) {
         return c.cend();

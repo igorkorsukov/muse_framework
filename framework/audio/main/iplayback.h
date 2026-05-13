@@ -53,18 +53,22 @@ public:
 
     // Resources
     virtual async::Promise<AudioResourceMetaList> availableInputResources() const = 0;
-    virtual async::Promise<SoundPresetList> availableSoundPresets(const AudioResourceMeta& resourceMeta) const = 0;
+    virtual async::Promise<SoundPresetList> availableSoundPresets(
+        const AudioResourceMeta& resourceMeta) const = 0;
     virtual async::Promise<AudioResourceMetaList> availableOutputResources() const = 0;
 
     // Setup tracks
     virtual async::Promise<TrackIdList> trackIdList() const = 0;
     virtual async::Promise<RetVal<TrackName> > trackName(const TrackId trackId) const = 0;
 
-    virtual async::Promise<TrackId, TrackParams> addTrack(const TrackName& name, io::IODevice* data, const TrackParams& params) = 0;
-    virtual async::Promise<TrackId, TrackParams> addTrack(const TrackName& name, const mpe::PlaybackData& data,
+    virtual async::Promise<TrackId, TrackParams> addTrack(const TrackName& name, io::IODevice* data,
+                                                          const TrackParams& params) = 0;
+    virtual async::Promise<TrackId, TrackParams> addTrack(const TrackName& name,
+                                                          const mpe::PlaybackData& data,
                                                           const TrackParams& params) = 0;
 
-    virtual async::Promise<TrackId, TrackParams> addAuxTrack(const TrackName& trackName, const TrackParams& params) = 0;
+    virtual async::Promise<TrackId, TrackParams> addAuxTrack(const TrackName& trackName,
+                                                             const TrackParams& params) = 0;
 
     virtual void removeTrack(const TrackId trackId) = 0;
     virtual void removeAllTracks() = 0;
@@ -95,7 +99,8 @@ public:
 
     // Input processing
     virtual void processInput(const TrackId trackId) const = 0;
-    virtual async::Promise<InputProcessingProgress> inputProcessingProgress(const TrackId trackId) const = 0;
+    virtual async::Promise<InputProcessingProgress> inputProcessingProgress(const TrackId trackId)
+    const = 0;
 
     virtual void clearCache(const TrackId trackId) const = 0;
     virtual void clearSources() = 0;
@@ -110,7 +115,8 @@ public:
     virtual async::Promise<AudioSignalChanges> masterSignalChanges() const = 0;
 
     // Export
-    virtual async::Promise<bool> saveSoundTrack(const SoundTrackFormat& format, io::IODevice& dstDevice) = 0;
+    virtual async::Promise<bool> saveSoundTrack(const SoundTrackFormat& format,
+                                                io::IODevice& dstDevice) = 0;
     virtual void abortSavingAllSoundTracks() = 0;
     virtual SaveSoundTrackProgress saveSoundTrackProgressChanged() const = 0;
 };

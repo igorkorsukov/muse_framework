@@ -640,7 +640,8 @@ TEST_F(Audio_RpcPackerTests, MPE_PlaybackEvent)
         muse::mpe::ArrangementContext arrCtx = makeArrangementContext();
         muse::mpe::PitchContext pitchCtx = makePitchContext();
         muse::mpe::ExpressionContext exprCtx = makeExpressionContext();
-        mpe::NoteEvent event = muse::mpe::NoteEvent(std::move(arrCtx), std::move(pitchCtx), std::move(exprCtx));
+        mpe::NoteEvent event = muse::mpe::NoteEvent(std::move(arrCtx), std::move(
+                                                        pitchCtx), std::move(exprCtx));
 
         KNOWN_FIELDS(event,
                      event.arrangementCtx(),

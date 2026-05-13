@@ -83,7 +83,10 @@ public:
         size_t accessibleChildCount() const override { return 0; }
         IAccessible* accessibleChild(size_t) const override { return nullptr; }
         QWindow* accessibleWindow() const override { return nullptr; }
-        muse::modularity::ContextPtr iocContext() const override { return muse::modularity::globalCtx(); }
+        muse::modularity::ContextPtr iocContext() const override
+        {
+            return muse::modularity::globalCtx();
+        }
         IAccessible::Role accessibleRole() const override { return IAccessible::NoRole; }
         QString accessibleName() const override { return QString(); }
         QString accessibleDescription() const override { return QString(); }
@@ -103,9 +106,18 @@ public:
 
         QString accessibleText(int, int) const override { return QString(); }
 
-        QString accessibleTextBeforeOffset(int, TextBoundaryType, int*, int*) const override { return QString(); }
-        QString accessibleTextAfterOffset(int, TextBoundaryType, int*, int*) const override { return QString(); }
-        QString accessibleTextAtOffset(int, TextBoundaryType, int*, int*) const override { return QString(); }
+        QString accessibleTextBeforeOffset(int, TextBoundaryType, int*, int*) const override
+        {
+            return QString();
+        }
+        QString accessibleTextAfterOffset(int, TextBoundaryType, int*, int*) const override
+        {
+            return QString();
+        }
+        QString accessibleTextAtOffset(int, TextBoundaryType, int*, int*) const override
+        {
+            return QString();
+        }
         int accessibleCharacterCount() const override { return 0; }
 
         int accessibleRowIndex() const override { return 0; }
@@ -146,7 +158,8 @@ public:
         //! For Linux it needs to send spontaneous event for canceling reading the name of previous control on accessibility
         QWindow* window = new QWindow();
         EXPECT_CALL(*m_mainWindow, qWindow()).WillOnce(Return(window));
-        EXPECT_CALL(*m_application, notify(window, _)).WillOnce(DoAll(SaveArg<1>(event), Return(true)));
+        EXPECT_CALL(*m_application,
+                    notify(window, _)).WillOnce(DoAll(SaveArg<1>(event), Return(true)));
     }
 
     void notExpectDispatchEventOnFocus()

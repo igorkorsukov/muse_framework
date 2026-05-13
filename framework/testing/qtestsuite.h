@@ -73,7 +73,8 @@ public:
             return true;
         }
         const QMetaObject* moTest = qObj->metaObject();
-        for (int methodIdx = moTest->methodOffset(); methodIdx < moTest->methodCount(); ++methodIdx) {
+        for (int methodIdx = moTest->methodOffset(); methodIdx < moTest->methodCount();
+             ++methodIdx) {
             QMetaMethod mmTest = moTest->method(methodIdx);
             if (mmTest.methodType() == QMetaMethod::Slot) {
                 if (QString(mmTest.methodSignature()).contains(argv[1])) {

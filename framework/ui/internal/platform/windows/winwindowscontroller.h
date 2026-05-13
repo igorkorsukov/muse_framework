@@ -37,7 +37,8 @@
 #include "internal/windowscontroller.h"
 
 namespace muse::ui {
-class WinWindowsController : public QObject, public WindowsController, public async::Asyncable, public Contextable
+class WinWindowsController : public QObject, public WindowsController, public async::Asyncable,
+    public Contextable
 {
     GlobalInject<muse::ui::IUiConfiguration> uiConfiguration;
     ContextInject<muse::ui::IUiContextConfiguration> uiContextConfiguration = { this };
@@ -52,7 +53,8 @@ private:
     bool eventFilter(QObject* watched, QEvent* event) override;
 
     bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) override;
-    bool nativeEventFilterForMainWindow(UINT messageType, HWND hWnd, LPARAM lParam, qintptr* result);
+    bool nativeEventFilterForMainWindow(UINT messageType, HWND hWnd, LPARAM lParam,
+                                        qintptr* result);
     bool nativeEventFilterForNonMainWindow(UINT messageType, HWND hWnd);
 
     bool removeWindowFrame(HWND hWnd, LPARAM lParam, qintptr* result);

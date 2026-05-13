@@ -63,11 +63,13 @@ public:
             items << makeSeparator();
         }
 
-        MenuItem* closeDockItem = makeMenuItem(SET_DOCK_OPEN_ACTION_CODE, TranslatableString("appshell/dock", "Close"));
+        MenuItem* closeDockItem
+            = makeMenuItem(SET_DOCK_OPEN_ACTION_CODE, TranslatableString("appshell/dock", "Close"));
         closeDockItem->setArgs(ActionData::make_arg2<QString, bool>(m_panel->objectName(), false));
         items << closeDockItem;
 
-        MenuItem* toggleFloatingItem = makeMenuItem(TOGGLE_FLOATING_ACTION_CODE, toggleFloatingActionTitle());
+        MenuItem* toggleFloatingItem = makeMenuItem(TOGGLE_FLOATING_ACTION_CODE,
+                                                    toggleFloatingActionTitle());
         toggleFloatingItem->setArgs(ActionData::make_arg1<QString>(m_panel->objectName()));
         items << toggleFloatingItem;
 
@@ -116,7 +118,9 @@ private:
 
     TranslatableString toggleFloatingActionTitle() const
     {
-        return m_panel->floating() ? TranslatableString("appshell/dock", "Dock") : TranslatableString("appshell/dock", "Undock");
+        return m_panel->floating() ? TranslatableString("appshell/dock",
+                                                        "Dock") : TranslatableString(
+            "appshell/dock", "Undock");
     }
 
     void listenFloatingChanged()
@@ -201,17 +205,20 @@ void DockPanelView::componentComplete()
     dockWidgetView->setProperty(DOCK_PANEL_PROPERTY, QVariant::fromValue(this));
     dockWidgetView->setProperty(CONTEXT_MENU_MODEL_PROPERTY, QVariant::fromValue(m_menuModel));
     dockWidgetView->setProperty(TITLEBAR_PROPERTY, QVariant::fromValue(m_titleBar));
-    dockWidgetView->setProperty(TOOLBAR_COMPONENT_PROPERTY, QVariant::fromValue(m_toolbarComponent));
+    dockWidgetView->setProperty(TOOLBAR_COMPONENT_PROPERTY,
+                                QVariant::fromValue(m_toolbarComponent));
 
     connect(m_menuModel, &AbstractMenuModel::itemsChanged, [dockWidgetView, this]() {
         if (dockWidgetView) {
-            dockWidgetView->setProperty(CONTEXT_MENU_MODEL_PROPERTY, QVariant::fromValue(m_menuModel));
+            dockWidgetView->setProperty(CONTEXT_MENU_MODEL_PROPERTY,
+                                        QVariant::fromValue(m_menuModel));
         }
     });
 
     connect(this, &DockPanelView::toolbarComponentChanged, this, [this, dockWidgetView]() {
         if (dockWidgetView) {
-            dockWidgetView->setProperty(TOOLBAR_COMPONENT_PROPERTY, QVariant::fromValue(m_toolbarComponent));
+            dockWidgetView->setProperty(TOOLBAR_COMPONENT_PROPERTY,
+                                        QVariant::fromValue(m_toolbarComponent));
         }
     });
 

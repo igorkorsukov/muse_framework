@@ -32,8 +32,8 @@ public:
     enum Method {
         SINC, FIR
     };
-    explicit SampleRateConvertor(const std::vector<float>& data, unsigned int channelsCount, unsigned int sampleRateIn,
-                                 unsigned int sampleRateOut);
+    explicit SampleRateConvertor(const std::vector<float>& data, unsigned int channelsCount,
+                                 unsigned int sampleRateIn, unsigned int sampleRateOut);
 
     //! offline convert full data set
     std::vector<float> convert();

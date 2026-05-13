@@ -38,7 +38,8 @@ using namespace muse::extensions;
 const std::string MANIFEST("manifest.json");
 const std::string DEV_EXTENSIONS("extensions/dev/");
 
-ManifestList ExtensionsLoader::loadManifestList(const io::path_t& defPath, const io::path_t& extPath) const
+ManifestList ExtensionsLoader::loadManifestList(const io::path_t& defPath,
+                                                const io::path_t& extPath) const
 {
     TRACEFUNC;
 

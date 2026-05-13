@@ -85,8 +85,10 @@ Transform Transform::operator*(const Transform& m) const
         double m12 = m_affine.m_11 * m.m_affine.m_12 + m_affine.m_12 * m.m_affine.m_22;
         double m21 = m_affine.m_21 * m.m_affine.m_11 + m_affine.m_22 * m.m_affine.m_21;
         double m22 = m_affine.m_21 * m.m_affine.m_12 + m_affine.m_22 * m.m_affine.m_22;
-        double m31 = m_affine.m_dx * m.m_affine.m_11 + m_affine.m_dy * m.m_affine.m_21 + m.m_affine.m_dx;
-        double m32 = m_affine.m_dx * m.m_affine.m_12 + m_affine.m_dy * m.m_affine.m_22 + m.m_affine.m_dy;
+        double m31 = m_affine.m_dx * m.m_affine.m_11 + m_affine.m_dy * m.m_affine.m_21
+                     + m.m_affine.m_dx;
+        double m32 = m_affine.m_dx * m.m_affine.m_12 + m_affine.m_dy * m.m_affine.m_22
+                     + m.m_affine.m_dy;
         t.m_affine.m_11 = m11;
         t.m_affine.m_12 = m12;
         t.m_affine.m_21 = m21;
@@ -97,14 +99,20 @@ Transform Transform::operator*(const Transform& m) const
     }
     case TransformationType::Project:
     {
-        double m11 = m_affine.m_11 * m.m_affine.m_11 + m_affine.m_12 * m.m_affine.m_21 + m_13 * m.m_affine.m_dx;
-        double m12 = m_affine.m_11 * m.m_affine.m_12 + m_affine.m_12 * m.m_affine.m_22 + m_13 * m.m_affine.m_dy;
+        double m11 = m_affine.m_11 * m.m_affine.m_11 + m_affine.m_12 * m.m_affine.m_21 + m_13
+                     * m.m_affine.m_dx;
+        double m12 = m_affine.m_11 * m.m_affine.m_12 + m_affine.m_12 * m.m_affine.m_22 + m_13
+                     * m.m_affine.m_dy;
         double m13 = m_affine.m_11 * m.m_13 + m_affine.m_12 * m.m_23 + m_13 * m.m_33;
-        double m21 = m_affine.m_21 * m.m_affine.m_11 + m_affine.m_22 * m.m_affine.m_21 + m_23 * m.m_affine.m_dx;
-        double m22 = m_affine.m_21 * m.m_affine.m_12 + m_affine.m_22 * m.m_affine.m_22 + m_23 * m.m_affine.m_dy;
+        double m21 = m_affine.m_21 * m.m_affine.m_11 + m_affine.m_22 * m.m_affine.m_21 + m_23
+                     * m.m_affine.m_dx;
+        double m22 = m_affine.m_21 * m.m_affine.m_12 + m_affine.m_22 * m.m_affine.m_22 + m_23
+                     * m.m_affine.m_dy;
         double m23 = m_affine.m_21 * m.m_13 + m_affine.m_22 * m.m_23 + m_23 * m.m_33;
-        double m31 = m_affine.m_dx * m.m_affine.m_11 + m_affine.m_dy * m.m_affine.m_21 + m_33 * m.m_affine.m_dx;
-        double m32 = m_affine.m_dx * m.m_affine.m_12 + m_affine.m_dy * m.m_affine.m_22 + m_33 * m.m_affine.m_dy;
+        double m31 = m_affine.m_dx * m.m_affine.m_11 + m_affine.m_dy * m.m_affine.m_21 + m_33
+                     * m.m_affine.m_dx;
+        double m32 = m_affine.m_dx * m.m_affine.m_12 + m_affine.m_dy * m.m_affine.m_22 + m_33
+                     * m.m_affine.m_dy;
         double m33 = m_affine.m_dx * m.m_13 + m_affine.m_dy * m.m_23 + m_33 * m.m_33;
         t.m_affine.m_11 = m11;
         t.m_affine.m_12 = m12;
@@ -159,8 +167,10 @@ Transform& Transform::operator*=(const Transform& o)
         double m12 = m_affine.m_11 * o.m_affine.m_12 + m_affine.m_12 * o.m_affine.m_22;
         double m21 = m_affine.m_21 * o.m_affine.m_11 + m_affine.m_22 * o.m_affine.m_21;
         double m22 = m_affine.m_21 * o.m_affine.m_12 + m_affine.m_22 * o.m_affine.m_22;
-        double m31 = m_affine.m_dx * o.m_affine.m_11 + m_affine.m_dy * o.m_affine.m_21 + o.m_affine.m_dx;
-        double m32 = m_affine.m_dx * o.m_affine.m_12 + m_affine.m_dy * o.m_affine.m_22 + o.m_affine.m_dy;
+        double m31 = m_affine.m_dx * o.m_affine.m_11 + m_affine.m_dy * o.m_affine.m_21
+                     + o.m_affine.m_dx;
+        double m32 = m_affine.m_dx * o.m_affine.m_12 + m_affine.m_dy * o.m_affine.m_22
+                     + o.m_affine.m_dy;
         m_affine.m_11 = m11;
         m_affine.m_12 = m12;
         m_affine.m_21 = m21;
@@ -172,14 +182,20 @@ Transform& Transform::operator*=(const Transform& o)
 
     case TransformationType::Project:
     {
-        double m11 = m_affine.m_11 * o.m_affine.m_11 + m_affine.m_12 * o.m_affine.m_21 + m_13 * o.m_affine.m_dx;
-        double m12 = m_affine.m_11 * o.m_affine.m_12 + m_affine.m_12 * o.m_affine.m_22 + m_13 * o.m_affine.m_dy;
+        double m11 = m_affine.m_11 * o.m_affine.m_11 + m_affine.m_12 * o.m_affine.m_21 + m_13
+                     * o.m_affine.m_dx;
+        double m12 = m_affine.m_11 * o.m_affine.m_12 + m_affine.m_12 * o.m_affine.m_22 + m_13
+                     * o.m_affine.m_dy;
         double m13 = m_affine.m_11 * o.m_13 + m_affine.m_12 * o.m_23 + m_13 * o.m_33;
-        double m21 = m_affine.m_21 * o.m_affine.m_11 + m_affine.m_22 * o.m_affine.m_21 + m_23 * o.m_affine.m_dx;
-        double m22 = m_affine.m_21 * o.m_affine.m_12 + m_affine.m_22 * o.m_affine.m_22 + m_23 * o.m_affine.m_dy;
+        double m21 = m_affine.m_21 * o.m_affine.m_11 + m_affine.m_22 * o.m_affine.m_21 + m_23
+                     * o.m_affine.m_dx;
+        double m22 = m_affine.m_21 * o.m_affine.m_12 + m_affine.m_22 * o.m_affine.m_22 + m_23
+                     * o.m_affine.m_dy;
         double m23 = m_affine.m_21 * o.m_13 + m_affine.m_22 * o.m_23 + m_23 * o.m_33;
-        double m31 = m_affine.m_dx * o.m_affine.m_11 + m_affine.m_dy * o.m_affine.m_21 + m_33 * o.m_affine.m_dx;
-        double m32 = m_affine.m_dx * o.m_affine.m_12 + m_affine.m_dy * o.m_affine.m_22 + m_33 * o.m_affine.m_dy;
+        double m31 = m_affine.m_dx * o.m_affine.m_11 + m_affine.m_dy * o.m_affine.m_21 + m_33
+                     * o.m_affine.m_dx;
+        double m32 = m_affine.m_dx * o.m_affine.m_12 + m_affine.m_dy * o.m_affine.m_22 + m_33
+                     * o.m_affine.m_dy;
         double m33 = m_affine.m_dx * o.m_13 + m_affine.m_dy * o.m_23 + m_33 * o.m_33;
         m_affine.m_11 = m11;
         m_affine.m_12 = m12;
@@ -786,13 +802,16 @@ void Transform::mapElement(double& nx, double& ny, TransformationType t) const
 #ifndef NO_QT_SUPPORT
 QTransform Transform::toQTransform(const Transform& transform)
 {
-    return QTransform(transform.m_affine.m_11, transform.m_affine.m_12, transform.m_13, transform.m_affine.m_21, transform.m_affine.m_22,
-                      transform.m_23, transform.m_affine.m_dx, transform.m_affine.m_dy, transform.m_33);
+    return QTransform(transform.m_affine.m_11, transform.m_affine.m_12, transform.m_13,
+                      transform.m_affine.m_21, transform.m_affine.m_22,
+                      transform.m_23, transform.m_affine.m_dx, transform.m_affine.m_dy,
+                      transform.m_33);
 }
 
 Transform Transform::fromQTransform(const QTransform& transform)
 {
-    return Transform(transform.m11(), transform.m12(), transform.m13(), transform.m21(), transform.m22(), transform.m23(),
+    return Transform(transform.m11(), transform.m12(), transform.m13(),
+                     transform.m21(), transform.m22(), transform.m23(),
                      transform.m31(), transform.m32(), transform.m33());
 }
 

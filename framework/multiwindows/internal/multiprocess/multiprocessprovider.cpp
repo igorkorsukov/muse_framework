@@ -43,7 +43,8 @@ static const QString METHOD_ACTIVATE_WINDOW_WITHOUT_PROJECT("METHOD_ACTIVATE_WIN
 
 static const muse::Uri PREFERENCES_URI("muse://preferences");
 static const QString METHOD_PREFERENCES_IS_OPENED("PREFERENCES_IS_OPENED");
-static const QString METHOD_ACTIVATE_WINDOW_WITH_OPENED_PREFERENCES("ACTIVATE_WINDOW_WITH_OPENED_PREFERENCES");
+static const QString METHOD_ACTIVATE_WINDOW_WITH_OPENED_PREFERENCES(
+    "ACTIVATE_WINDOW_WITH_OPENED_PREFERENCES");
 static const QString METHOD_SETTINGS_BEGIN_TRANSACTION("SETTINGS_BEGIN_TRANSACTION");
 static const QString METHOD_SETTINGS_COMMIT_TRANSACTION("SETTINGS_COMMIT_TRANSACTION");
 static const QString METHOD_SETTINGS_ROLLBACK_TRANSACTION("SETTINGS_ROLLBACK_TRANSACTION");
@@ -88,7 +89,8 @@ bool MultiProcessProvider::isInited() const
 
 void MultiProcessProvider::onMsg(const Msg& msg)
 {
-    LOGI() << msg.method << ", me: " << m_selfID << ", msg src: " << msg.srcID << ", msg dest: " << msg.destID;
+    LOGI() << msg.method << ", me: " << m_selfID << ", msg src: " << msg.srcID << ", msg dest: " <<
+        msg.destID;
 
 #define CHECK_ARGS_COUNT(c) IF_ASSERT_FAILED(msg.args.count() >= c) { return; }
 
@@ -122,7 +124,8 @@ void MultiProcessProvider::onMsg(const Msg& msg)
         } else {
             LOGW() << "Unable perform request, not found implementation of IProjectProvider";
         }
-        m_ipcChannel->response(METHOD_IS_WITHOUT_PROJECT, { QString::number(!isAnyOpened) }, msg.srcID);
+        m_ipcChannel->response(METHOD_IS_WITHOUT_PROJECT, { QString::number(
+                                                                !isAnyOpened) }, msg.srcID);
     } else if (msg.method == METHOD_ACTIVATE_WINDOW_WITHOUT_PROJECT) {
         bool isAnyOpened = false;
         if (projectProvider()) {
@@ -133,15 +136,19 @@ void MultiProcessProvider::onMsg(const Msg& msg)
         if (!isAnyOpened) {
             mainWindow()->requestShowOnFront();
             if (msg.args.count() > 0 && !msg.args.at(0).isEmpty()) {
-                dispatcher()->dispatch(msg.args.at(0).toStdString(), ActionData::make_arg1<bool>(false));
+                dispatcher()->dispatch(msg.args.at(0).toStdString(),
+                                       ActionData::make_arg1<bool>(false));
             }
         }
-        m_ipcChannel->response(METHOD_ACTIVATE_WINDOW_WITH_PROJECT, { QString::number(!isAnyOpened) }, msg.srcID);
+        m_ipcChannel->response(METHOD_ACTIVATE_WINDOW_WITH_PROJECT, { QString::number(
+                                                                          !isAnyOpened) },
+                               msg.srcID);
     }
     // Settings
     else if (msg.type == MsgType::Request && msg.method == METHOD_PREFERENCES_IS_OPENED) {
         bool isOpened = interactive()->isOpened(PREFERENCES_URI).val;
-        m_ipcChannel->response(METHOD_PREFERENCES_IS_OPENED, { QString::number(isOpened) }, msg.srcID);
+        m_ipcChannel->response(METHOD_PREFERENCES_IS_OPENED, { QString::number(
+                                                                   isOpened) }, msg.srcID);
     } else if (msg.method == METHOD_ACTIVATE_WINDOW_WITH_OPENED_PREFERENCES) {
         bool isOpened = interactive()->isOpened(PREFERENCES_URI).val;
         if (isOpened) {
@@ -167,7 +174,10 @@ void MultiProcessProvider::onMsg(const Msg& msg)
         dispatcher()->dispatch("restart");
     } else if (msg.method == METHOD_QUIT_WITH_RUNING_INSTALLATION) {
         CHECK_ARGS_COUNT(1);
-        dispatcher()->dispatch("quit", ActionData::make_arg2<bool, std::string>(false, msg.args.at(0).toStdString()));
+        dispatcher()->dispatch("quit",
+                               ActionData::make_arg2<bool, std::string>(false,
+                                                                        msg.args.at(
+                                                                            0).toStdString()));
     } else if (msg.method == METHOD_INSTANCE_CLOSED && msg.type == ipc::MsgType::Request) {
         m_ipcChannel->response(METHOD_INSTANCE_CLOSED, { }, msg.srcID);
     } else if (msg.method == METHOD_RESOURCE_CHANGED) {
@@ -182,7 +192,8 @@ bool MultiProcessProvider::isProjectAlreadyOpened(const io::path_t& projectPath)
     }
 
     int ret = 0;
-    m_ipcChannel->syncRequestToAll(METHOD_PROJECT_IS_OPENED, { projectPath.toQString() }, [&ret](const QStringList& args, const ID&) {
+    m_ipcChannel->syncRequestToAll(METHOD_PROJECT_IS_OPENED, { projectPath.toQString() },
+                                   [&ret](const QStringList& args, const ID&) {
         IF_ASSERT_FAILED(!args.empty()) {
             return false;
         }
@@ -217,7 +228,8 @@ bool MultiProcessProvider::isHasWindowWithoutProject() const
     }
 
     bool ret = false;
-    m_ipcChannel->syncRequestToAll(METHOD_IS_WITHOUT_PROJECT, {}, [&ret](const QStringList& args, const ID&) {
+    m_ipcChannel->syncRequestToAll(METHOD_IS_WITHOUT_PROJECT, {},
+                                   [&ret](const QStringList& args, const ID&) {
         IF_ASSERT_FAILED(!args.empty()) {
             return false;
         }
@@ -242,7 +254,8 @@ void MultiProcessProvider::activateWindowWithoutProject(const QStringList& args)
 #endif
 
     ID idWithNoProject;
-    m_ipcChannel->syncRequestToAll(METHOD_IS_WITHOUT_PROJECT, {}, [&idWithNoProject](const QStringList& retArgs, const ID& srcId) {
+    m_ipcChannel->syncRequestToAll(METHOD_IS_WITHOUT_PROJECT, {},
+                                   [&idWithNoProject](const QStringList& retArgs, const ID& srcId) {
         IF_ASSERT_FAILED(!retArgs.empty()) {
             return false;
         }
@@ -313,7 +326,8 @@ bool MultiProcessProvider::isPreferencesAlreadyOpened() const
     }
 
     int ret = 0;
-    m_ipcChannel->syncRequestToAll(METHOD_PREFERENCES_IS_OPENED, {}, [&ret](const QStringList& args, const ID&) {
+    m_ipcChannel->syncRequestToAll(METHOD_PREFERENCES_IS_OPENED, {},
+                                   [&ret](const QStringList& args, const ID&) {
         IF_ASSERT_FAILED(!args.empty()) {
             return false;
         }

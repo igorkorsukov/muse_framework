@@ -215,7 +215,8 @@ void XmlStreamWriter::element(const std::string_view& name, const Value& body)
     m_impl->stream << "</" << name << '>' << '\n';
 }
 
-void XmlStreamWriter::element(const std::string_view& name, const Attributes& attrs, const Value& body)
+void XmlStreamWriter::element(const std::string_view& name, const Attributes& attrs,
+                              const Value& body)
 {
     IF_ASSERT_FAILED(name.find(' ') == std::string_view::npos) {
     }

@@ -82,7 +82,8 @@ void CoreMidiOutPort::initCore()
 {
     OSStatus result;
 
-    static auto onCoreMidiNotificationReceived = [](const MIDINotification* notification, void* refCon) {
+    static auto onCoreMidiNotificationReceived
+        = [](const MIDINotification* notification, void* refCon) {
         auto self = static_cast<CoreMidiOutPort*>(refCon);
         IF_ASSERT_FAILED(self) {
             return;
@@ -119,15 +120,18 @@ void CoreMidiOutPort::initCore()
                 break;
             }
 
-            auto propertyChangeNotification = (const MIDIObjectPropertyChangeNotification*)notification;
+            auto propertyChangeNotification
+                = (const MIDIObjectPropertyChangeNotification*)notification;
 
             if (propertyChangeNotification->objectType != kMIDIObjectType_Device
                 && propertyChangeNotification->objectType != kMIDIObjectType_Destination) {
                 break;
             }
 
-            if (CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyDisplayName, 0) == kCFCompareEqualTo
-                || CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyName, 0) == kCFCompareEqualTo) {
+            if (CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyDisplayName,
+                                0) == kCFCompareEqualTo
+                || CFStringCompare(propertyChangeNotification->propertyName, kMIDIPropertyName,
+                                   0) == kCFCompareEqualTo) {
                 self->availableDevicesChanged().notify();
             }
         } break;
@@ -143,13 +147,16 @@ void CoreMidiOutPort::initCore()
         }
     };
 
-    result = MIDIClientCreate(CFSTR("MuseScore"), onCoreMidiNotificationReceived, this, &m_core->client);
+    result = MIDIClientCreate(CFSTR(
+                                  "MuseScore"), onCoreMidiNotificationReceived, this,
+                              &m_core->client);
     if (result != noErr) {
         LOGE() << "failed create midi output client";
         return;
     }
 
-    result = MIDIOutputPortCreate(m_core->client, CFSTR("MuseScore output port"), &m_core->outputPort);
+    result = MIDIOutputPortCreate(m_core->client, CFSTR(
+                                      "MuseScore output port"), &m_core->outputPort);
     if (result != noErr) {
         LOGE() << "failed create midi output port";
     }
@@ -177,7 +184,8 @@ MidiDeviceList CoreMidiOutPort::availableDevices() const
             CFStringRef stringRef = nullptr;
             char name[256];
 
-            if (MIDIObjectGetStringProperty(destRef, kMIDIPropertyDisplayName, &stringRef) != noErr) {
+            if (MIDIObjectGetStringProperty(destRef, kMIDIPropertyDisplayName,
+                                            &stringRef) != noErr) {
                 LOGE() << "Can't get property kMIDIPropertyDisplayName";
                 continue;
             }
@@ -303,7 +311,8 @@ Ret CoreMidiOutPort::sendEvent(const Event& e)
             MIDIEventList eventList;
             MIDIEventPacket* packet = MIDIEventListInit(&eventList, protocolId);
 
-            MIDIEventListAdd(&eventList, sizeof(eventList), packet, timeStamp, wordCount, e.midi20Words());
+            MIDIEventListAdd(&eventList, sizeof(eventList), packet, timeStamp, wordCount,
+                             e.midi20Words());
 
             result = MIDISendEventList(m_core->outputPort, m_core->destinationId, &eventList);
         } else {
@@ -329,7 +338,8 @@ Ret CoreMidiOutPort::sendEvent(const Event& e)
                 LOG_MIDI_W() << "Failed Sending MIDIPacketList event: " << event.to_string();
             } else {
                 LOG_MIDI_D() << "Sending MIDIPacketList event: " << event.to_string();
-                packet = MIDIPacketListAdd(&packetList, packetListSize, packet, timeStamp, length, bytesPackage);
+                packet = MIDIPacketListAdd(&packetList, packetListSize, packet, timeStamp, length,
+                                           bytesPackage);
             }
         }
 
@@ -338,7 +348,8 @@ Ret CoreMidiOutPort::sendEvent(const Event& e)
 
     if (result != noErr) {
         LOGE() << "midi send error: " << result;
-        return make_ret(Err::MidiSendError, "failed send message. Core error: " + std::to_string(result));
+        return make_ret(Err::MidiSendError,
+                        "failed send message. Core error: " + std::to_string(result));
     }
 
     return Ret(true);

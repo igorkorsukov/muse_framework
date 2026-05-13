@@ -44,10 +44,14 @@ public:
     virtual AudioResourceMetaList availableOutputResources() const = 0;
 
     // Tracks
-    virtual RetVal2<TrackId, TrackParams> addTrack(const TrackName& trackName, io::IODevice* playbackData, const TrackParams& params) = 0;
-    virtual RetVal2<TrackId, TrackParams> addTrack(const TrackName& trackName, const mpe::PlaybackData& playbackData,
+    virtual RetVal2<TrackId, TrackParams> addTrack(const TrackName& trackName,
+                                                   io::IODevice* playbackData,
                                                    const TrackParams& params) = 0;
-    virtual RetVal2<TrackId, TrackParams> addAuxTrack(const TrackName& trackName, const TrackParams& params) = 0;
+    virtual RetVal2<TrackId, TrackParams> addTrack(const TrackName& trackName,
+                                                   const mpe::PlaybackData& playbackData,
+                                                   const TrackParams& params) = 0;
+    virtual RetVal2<TrackId, TrackParams> addAuxTrack(const TrackName& trackName,
+                                                      const TrackParams& params) = 0;
 
     virtual void removeTrack(const TrackId trackId) = 0;
     virtual void removeAllTracks() = 0;
@@ -70,7 +74,8 @@ public:
 
     // Input processing
     virtual void processInput(const TrackId trackId) const = 0;
-    virtual RetVal<InputProcessingProgress> inputProcessingProgress(const TrackId trackId) const = 0;
+    virtual RetVal<InputProcessingProgress> inputProcessingProgress(
+        const TrackId trackId) const = 0;
 
     // Clear
     virtual void clearCache(const TrackId trackId) const = 0;
@@ -100,7 +105,8 @@ public:
     virtual async::Channel<secs_t> playbackPositionChanged() const = 0;
 
     // Export
-    virtual async::Promise<Ret> saveSoundTrack(io::IODevice& dstDevice, const SoundTrackFormat& format) = 0;
+    virtual async::Promise<Ret> saveSoundTrack(io::IODevice& dstDevice,
+                                               const SoundTrackFormat& format) = 0;
     virtual SaveSoundTrackProgress saveSoundTrackProgressChanged() const = 0;
     virtual void abortSavingAllSoundTracks() = 0;
 };

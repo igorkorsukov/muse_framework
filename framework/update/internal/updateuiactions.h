@@ -35,7 +35,8 @@ class UpdateUiActions : public muse::ui::IUiActionsModule, public Contextable
     ContextInject<muse::ui::IUiContextResolver> uicontextResolver = { this };
 
 public:
-    UpdateUiActions(std::shared_ptr<UpdateActionController> controller, const modularity::ContextPtr& iocCtx);
+    UpdateUiActions(std::shared_ptr<UpdateActionController> controller,
+                    const modularity::ContextPtr& iocCtx);
 
     const muse::ui::UiActionList& actionsList() const override;
 

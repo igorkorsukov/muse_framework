@@ -72,7 +72,8 @@ struct LameHandler
 };
 
 Mp3Encoder::Mp3Encoder(const SoundTrackFormat& format, io::IODevice& dstDevice)
-    : AbstractAudioEncoder(format), m_handler{std::make_unique<LameHandler>(format)}, m_dstDevice{&dstDevice}
+    : AbstractAudioEncoder(format), m_handler{std::make_unique<LameHandler>(format)},
+    m_dstDevice{&dstDevice}
 {
     DO_ASSERT(m_dstDevice);
 }
@@ -83,7 +84,8 @@ bool Mp3Encoder::begin(const samples_t /*totalSamplesNumber*/)
 {
     // LAME (lame.h): mp3buf for one encode call — worst case ≈ 1.25 * num_samples_per_channel + 7200 bytes;
     // flush needs at least 7200. Same buffer is used for encode + lame_encode_flush, hence margin + ceil.
-    const samples_t n = m_format.outputSpec.samplesPerChannel > 0 ? m_format.outputSpec.samplesPerChannel : 4096;
+    const samples_t n = m_format.outputSpec.samplesPerChannel
+                        > 0 ? m_format.outputSpec.samplesPerChannel : 4096;
     const double sz = 7200.0 + 1.25 * static_cast<double>(n) + 7200.0;
     m_outputBuffer.resize(static_cast<size_t>(std::ceil(sz)) + 512);
 
@@ -101,9 +103,12 @@ size_t Mp3Encoder::encode(const samples_t samplesPerChannel, const float* input)
         return 0;
     }
 
-    const int encodedBytes = lame_encode_buffer_interleaved_ieee_float(m_handler->flags, input, static_cast<int>(samplesPerChannel),
+    const int encodedBytes = lame_encode_buffer_interleaved_ieee_float(m_handler->flags, input,
+                                                                       static_cast<int>(
+                                                                           samplesPerChannel),
                                                                        m_outputBuffer.data(),
-                                                                       static_cast<int>(m_outputBuffer.size()));
+                                                                       static_cast<int>(
+                                                                           m_outputBuffer.size()));
 
     if (encodedBytes < 0) {
         LOGE() << "LAME encoder failed: " << encodedBytes;
@@ -111,7 +116,8 @@ size_t Mp3Encoder::encode(const samples_t samplesPerChannel, const float* input)
     }
 
     if (encodedBytes > 0) {
-        const size_t written = m_dstDevice->write(m_outputBuffer.data(), static_cast<size_t>(encodedBytes));
+        const size_t written
+            = m_dstDevice->write(m_outputBuffer.data(), static_cast<size_t>(encodedBytes));
         if (written != static_cast<size_t>(encodedBytes)) {
             return 0;
         }

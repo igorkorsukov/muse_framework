@@ -38,7 +38,8 @@ static size_t noteEventKey(int pitch, int channel)
     return h1 ^ (h2 << 1);
 }
 
-static std::optional<TransportEvent> mmcToTransportEvent(const IMMCDecoderPtr& decoder, const MMCMessage& msg)
+static std::optional<TransportEvent> mmcToTransportEvent(const IMMCDecoderPtr& decoder,
+                                                         const MMCMessage& msg)
 {
     switch (msg.command) {
     case MMCCommand::Play:
@@ -297,7 +298,8 @@ audio::samples_t VstAudioClient::process(float* output, samples_t samplesPerChan
     return samplesPerChannel;
 }
 
-ParamsMapping VstAudioClient::paramsMapping(const std::set<Steinberg::Vst::CtrlNumber>& controllers) const
+ParamsMapping VstAudioClient::paramsMapping(const std::set<Steinberg::Vst::CtrlNumber>& controllers)
+const
 {
     ParamsMapping result;
 
@@ -314,7 +316,8 @@ ParamsMapping VstAudioClient::paramsMapping(const std::set<Steinberg::Vst::CtrlN
         for (const auto& ctrlNum : controllers) {
             PluginParamId id = 0;
 
-            if (midiMapping->getMidiControllerAssignment(busIdx, 0, ctrlNum, id) != Steinberg::kResultOk) {
+            if (midiMapping->getMidiControllerAssignment(busIdx, 0, ctrlNum,
+                                                         id) != Steinberg::kResultOk) {
                 continue;
             }
 
@@ -362,7 +365,8 @@ void VstAudioClient::setUpProcessData()
     }
 
     if (!m_processData.outputs || !m_processData.inputs) {
-        m_processData.prepare(*component, m_outputSpec.samplesPerChannel, Steinberg::Vst::kSample32);
+        m_processData.prepare(*component, m_outputSpec.samplesPerChannel,
+                              Steinberg::Vst::kSample32);
     }
 
     if (!m_activeOutputBusses.empty() && !m_activeInputBusses.empty()) {
@@ -456,8 +460,10 @@ void VstAudioClient::extractInputSamples(samples_t sampleCount, const float* sou
     for (samples_t sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex) {
         size_t offset = sampleIndex * m_outputSpec.audioChannelCount;
 
-        for (audioch_t audioChannelIndex = 0; audioChannelIndex < bus.numChannels; ++audioChannelIndex) {
-            bus.channelBuffers32[audioChannelIndex][sampleIndex] = sourceBuffer[offset + audioChannelIndex];
+        for (audioch_t audioChannelIndex = 0; audioChannelIndex < bus.numChannels;
+             ++audioChannelIndex) {
+            bus.channelBuffers32[audioChannelIndex][sampleIndex]
+                = sourceBuffer[offset + audioChannelIndex];
         }
     }
 }
@@ -474,7 +480,8 @@ void VstAudioClient::fillOutputBufferInstrument(samples_t sampleCount, float* ou
         for (samples_t sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex) {
             size_t offset = sampleIndex * m_outputSpec.audioChannelCount;
 
-            for (audioch_t audioChannelIndex = 0; audioChannelIndex < bus.numChannels; ++audioChannelIndex) {
+            for (audioch_t audioChannelIndex = 0; audioChannelIndex < bus.numChannels;
+                 ++audioChannelIndex) {
                 float sample = bus.channelBuffers32[audioChannelIndex][sampleIndex];
                 output[offset + audioChannelIndex] += sample * m_volumeGain;
             }
@@ -494,7 +501,8 @@ void VstAudioClient::fillOutputBufferFx(samples_t sampleCount, float* output)
         for (samples_t sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex) {
             size_t offset = sampleIndex * m_outputSpec.audioChannelCount;
 
-            for (audioch_t audioChannelIndex = 0; audioChannelIndex < bus.numChannels; ++audioChannelIndex) {
+            for (audioch_t audioChannelIndex = 0; audioChannelIndex < bus.numChannels;
+                 ++audioChannelIndex) {
                 float sample = bus.channelBuffers32[audioChannelIndex][sampleIndex];
                 output[offset + audioChannelIndex] = sample * m_volumeGain;
             }
@@ -527,7 +535,8 @@ void VstAudioClient::processOutputEvents()
             continue;
         }
 
-        std::optional<MMCMessage> msg = m_mmcDecoder->decode(vstEvent.data.bytes, vstEvent.data.size);
+        std::optional<MMCMessage> msg
+            = m_mmcDecoder->decode(vstEvent.data.bytes, vstEvent.data.size);
         if (!msg.has_value()) {
             continue;
         }
@@ -620,7 +629,8 @@ void VstAudioClient::flushBuffers()
 void VstAudioClient::addParamChange(const ParamChangeEvent& param)
 {
     Steinberg::int32 dummyIdx = 0;
-    Steinberg::Vst::IParamValueQueue* queue = m_inputParamChanges.addParameterData(param.paramId, dummyIdx);
+    Steinberg::Vst::IParamValueQueue* queue = m_inputParamChanges.addParameterData(param.paramId,
+                                                                                   dummyIdx);
     if (queue) {
         queue->addPoint(0, param.value, dummyIdx);
     }

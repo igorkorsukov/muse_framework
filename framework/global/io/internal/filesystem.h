@@ -49,15 +49,18 @@ public:
 
     RetVal<uint64_t> fileSize(const io::path_t& path) const override;
 
-    RetVal<io::paths_t> scanFiles(const io::path_t& rootDir, const std::vector<std::string>& filters,
-                                  ScanMode mode = ScanMode::FilesInCurrentDirAndSubdirs) const override;
+    RetVal<io::paths_t> scanFiles(const io::path_t& rootDir,
+                                  const std::vector<std::string>& filters,
+                                  ScanMode mode = ScanMode::FilesInCurrentDirAndSubdirs) const
+    override;
 
     RetVal<ByteArray> readFile(const io::path_t& filePath) const override;
     Ret readFile(const io::path_t& filePath, ByteArray& data) const override;
     Ret writeFile(const io::path_t& filePath, const ByteArray& data) override;
 
     RetVal<StreamId> openStream(const io::path_t& filePath, OpenMode mode) override;
-    Ret writeToStream(StreamId fileId, const ByteArray& data, uint64_t offset = STREAM_POS_CURRENT) override;
+    Ret writeToStream(StreamId fileId, const ByteArray& data,
+                      uint64_t offset = STREAM_POS_CURRENT) override;
     Ret closeStream(StreamId fileId) override;
 
     void setAttribute(const io::path_t& path, Attribute attribute) const override;

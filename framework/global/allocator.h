@@ -31,7 +31,8 @@ namespace muse {
 #define OBJECT_ALLOCATOR(Module, ClassName) \
 public: \
     static muse::ObjectAllocator& allocator() { \
-        static muse::ObjectAllocator a(#Module, #ClassName, muse::ObjectAllocator::destroyer<ClassName>); \
+        static muse::ObjectAllocator a(#Module, #ClassName, \
+                                       muse::ObjectAllocator::destroyer<ClassName>); \
         return a; \
     } \
     static void* operator new(size_t sz) { \
@@ -45,10 +46,12 @@ public: \
         } \
     } \
     static void* operator new[](size_t sz) { \
-        return muse::ObjectAllocator::enabled() ? allocator().not_supported("new[]") : ::operator new[](sz); \
+        return muse::ObjectAllocator::enabled() ? allocator().not_supported("new[]") : ::operator \
+               new[](sz); \
     } \
     static void* operator new(size_t sz, void* ptr) { \
-        return muse::ObjectAllocator::enabled() ? allocator().not_supported("new(size_t, void*)") : ::operator new(sz, ptr); \
+        return muse::ObjectAllocator::enabled() ? allocator().not_supported("new(size_t, void*)") : \
+               ::operator new(sz, ptr); \
     } \
     static void operator delete[](void* ptr) { \
         if (muse::ObjectAllocator::enabled()) { \

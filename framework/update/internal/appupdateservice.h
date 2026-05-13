@@ -58,12 +58,16 @@ private:
     struct UpdateRequestHistory {
         QDate installedWeekBeginning;
         QDate previousRequestDay;
-        bool isValid() const { return installedWeekBeginning.isValid() && previousRequestDay.isValid(); }
+        bool isValid() const
+        {
+            return installedWeekBeginning.isValid() && previousRequestDay.isValid();
+        }
     };
 
     network::RequestHeaders prepareHeaders(const UpdateRequestHistory& history) const;
     RetVal<UpdateRequestHistory> readUpdateRequestHistory(const io::path_t& path) const;
-    Ret writeUpdateRequestHistory(const io::path_t& path, const UpdateRequestHistory& updateRequestHistory);
+    Ret writeUpdateRequestHistory(const io::path_t& path,
+                                  const UpdateRequestHistory& updateRequestHistory);
 
     RetVal<ReleaseInfo> parseRelease(const QByteArray& json) const;
 
@@ -71,7 +75,8 @@ private:
     QJsonObject resolveReleaseAsset(const QJsonObject& release) const;
 
     using PrevReleaseNotesCallback = std::function<void (const PrevReleasesNotesList&)>;
-    void downloadPreviousReleasesNotes(const Version& updateVersion, const PrevReleaseNotesCallback& finished);
+    void downloadPreviousReleasesNotes(const Version& updateVersion,
+                                       const PrevReleaseNotesCallback& finished);
 
     void clear();
 
